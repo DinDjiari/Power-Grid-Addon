@@ -109,6 +109,22 @@ public class OverheatProtectionTests {
         return thermal;
     }
 
+    /**
+     * An unwound test transformer loses about 10 % of its excess heat per tick, so a temperature set by the test
+     * would already have dropped (160 -> ~146 degC) before the fan reads it. A 100x thermal mass keeps the
+     * held temperatures stable (~0.14 K per tick); the protection logic is unaffected.
+     */
+    private static void holdTemperatureStable(GameTestHelper helper, BlockPos trafoOrigin) {
+        ThermalBehaviour thermal = thermal(helper, trafoOrigin);
+        try {
+            java.lang.reflect.Field f = ThermalBehaviour.class.getDeclaredField("thermalMass");
+            f.setAccessible(true);
+            thermal.setThermalMass(f.getFloat(thermal) * 100);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /** Servo with its shaft pointing to {@code shaft}. */
     private static void servo(GameTestHelper helper, BlockPos pos, Direction shaft) {
         helper.setBlock(pos, ModdedBlocks.SERVO.getDefaultState().setValue(ServoBlock.FACING, shaft));
@@ -175,6 +191,7 @@ public class OverheatProtectionTests {
         placeTransformer(helper, trafo);
         BlockPos main = brassFanOnTransformer(helper, trafo);
         float[] hold = { 150.0f };
+        helper.runAfterDelay(2, () -> holdTemperatureStable(helper, trafo));
         for (int t = 3; t < 290; ++t)
             helper.runAfterDelay(t, () -> thermal(helper, trafo).setTemperature(hold[0]));
         helper.runAfterDelay(40, () -> {
@@ -442,6 +459,7 @@ public class OverheatProtectionTests {
         BlockPos servoPos = switchPos.west();
         servo(helper, servoPos, Direction.EAST);
         helper.runAfterDelay(5, () -> {
+            holdTemperatureStable(helper, trafo);
             DataCableItem.Result r = DataCableItem.connect(helper.getLevel(), helper.absolutePos(socket),
                     helper.absolutePos(servoPos));
             helper.assertTrue(r.success(), "data cable connects: " + r.message().getString());
