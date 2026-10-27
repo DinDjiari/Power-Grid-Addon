@@ -7,7 +7,7 @@ Auftrag:
                                           "width": 16, "height": 16, "colors": 12, "transparent": false}},
      {"tool": "edit_texture", "args": {...}}, {"tool": "pixelize", "args": {...}}
   ]}
-Ergebnis: texture-requests/out/<auftrag>/  (Vorschau je Job, Rohbilder, result.json); Auftrag -> texture-requests/done/.
+Ergebnis: texture-requests/results/<auftrag>/  (Vorschau je Job, Rohbilder, result.json); Auftrag -> texture-requests/done/.
 """
 import json
 import os
@@ -23,7 +23,7 @@ REQ = Path("texture-requests")
 
 
 def run(req: Path) -> None:
-    out = REQ / "out" / req.stem
+    out = REQ / "results" / req.stem
     out.mkdir(parents=True, exist_ok=True)
     results = []
     jobs = json.loads(req.read_text(encoding="utf-8")).get("jobs", [])
