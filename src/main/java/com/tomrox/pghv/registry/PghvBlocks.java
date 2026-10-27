@@ -59,6 +59,15 @@ public class PghvBlocks {
                     .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
+    /** Data socket box: front socket for the data cable, connectors on top for the servo wires. */
+    public static final DeferredBlock<com.tomrox.pghv.block.DataSocketBoxBlock> DATA_SOCKET_BOX = BLOCKS.register("data_socket_box",
+            () -> new com.tomrox.pghv.block.DataSocketBoxBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_YELLOW)
+                    .strength(1.5f, 6.0f)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()));
+
     /** Cable piece placed by the laying code; no item, drops handled in code. */
     public static final DeferredBlock<CableSegmentBlock> CABLE_SEGMENT = BLOCKS.register("cable_segment",
             () -> new CableSegmentBlock(BlockBehaviour.Properties.of()

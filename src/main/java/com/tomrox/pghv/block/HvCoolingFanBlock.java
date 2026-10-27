@@ -129,19 +129,26 @@ public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFan
                         new TerminalBoundingBox(IDecoratedTerminal.NEGATIVE, 6, 1, z0 - pin, 9, 4, z0 + 2)
                                 .withColor(IDecoratedTerminal.BLUE).rotateAroundY(rotation);
 
+                // Round data socket (x 5..11, y 0.5..6.5); the three contacts sit inside it.
+                double ps = socketDepth(slot);
                 SOCKET_TERMINALS[facing.get2DDataValue()][slot][0] =
-                        new TerminalBoundingBox(SOCKET_POSITIVE_NAME, 2, 1, z0 - pin, 5, 4, z0 + 2)
+                        new TerminalBoundingBox(SOCKET_POSITIVE_NAME, 5, 0.5, z0 - ps, 7, 6.5, z0 + 1)
                                 .withColor(IDecoratedTerminal.RED).rotateAroundY(rotation);
                 SOCKET_TERMINALS[facing.get2DDataValue()][slot][1] =
-                        new TerminalBoundingBox(SOCKET_NEGATIVE_NAME, 6.5, 1, z0 - pin, 9.5, 4, z0 + 2)
+                        new TerminalBoundingBox(SOCKET_NEGATIVE_NAME, 7, 0.5, z0 - ps, 9, 6.5, z0 + 1)
                                 .withColor(IDecoratedTerminal.BLUE).rotateAroundY(rotation);
                 SOCKET_TERMINALS[facing.get2DDataValue()][slot][2] =
-                        new TerminalBoundingBox(SOCKET_CONTROL_NAME, 11, 1, z0 - pin, 14, 4, z0 + 2)
+                        new TerminalBoundingBox(SOCKET_CONTROL_NAME, 9, 0.5, z0 - ps, 11, 6.5, z0 + 1)
                                 .withColor(IDecoratedTerminal.GREEN).rotateAroundY(rotation);
                 SOCKET_AREA[facing.get2DDataValue()][slot] =
-                        rotateAabb(new AABB(1 / 16.0, 0, (z0 - pin) / 16.0, 15 / 16.0, 5 / 16.0, (z0 + 2) / 16.0), rotation);
+                        rotateAabb(new AABB(5 / 16.0, 0.5 / 16.0, (z0 - ps) / 16.0, 11 / 16.0, 6.5 / 16.0, (z0 + 1) / 16.0), rotation);
             }
         }
+    }
+
+    /** How far the round data socket sticks out of the fan front (pixels) for a slot. */
+    public static double socketDepth(int slot) {
+        return Math.max(0.5, Math.min(2.0, slot * SLOT_SIZE));
     }
 
     /** Variant: false = andesite fan (fixed speed menu), true = brass fan (automatic, target temperature menu). */

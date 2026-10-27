@@ -22,6 +22,11 @@ import com.tomrox.pghv.block.HvCoolingFanBlock;
 import com.tomrox.pghv.block.entity.HvCoolingFanBlockEntity;
 import com.tomrox.pghv.cable.CableCores;
 import com.tomrox.pghv.item.DataCableItem;
+import com.tomrox.pghv.block.DataSocketBoxBlock;
+import com.tomrox.pghv.block.entity.DataSocketBoxBlockEntity;
+import com.tomrox.pghv.registry.PghvBlocks;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.item.ItemEntity;
 import com.tomrox.pghv.registry.PghvDataComponents;
 import com.tomrox.pghv.registry.PghvItems;
 import net.minecraft.core.BlockPos;
@@ -47,7 +52,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.gametest.GameTestHolder;
-import org.patryk3211.powergrid.electricity.wire.BlockWireEntity;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 import org.patryk3211.powergrid.collections.ModdedBlocks;
 import org.patryk3211.powergrid.electricity.base.ThermalBehaviour;
@@ -129,6 +133,31 @@ public class OverheatProtectionTests {
     /** Servo with its shaft pointing to {@code shaft}. */
     private static void servo(GameTestHelper helper, BlockPos pos, Direction shaft) {
         helper.setBlock(pos, ModdedBlocks.SERVO.getDefaultState().setValue(ServoBlock.FACING, shaft));
+    }
+
+    /** Data socket box with the socket pointing to {@code facing}. */
+    private static void box(GameTestHelper helper, BlockPos pos, Direction facing) {
+        helper.setBlock(pos, PghvBlocks.DATA_SOCKET_BOX.get().defaultBlockState()
+                .setValue(DataSocketBoxBlock.HORIZONTAL_FACING, facing));
+    }
+
+    /**
+     * Fan socket -> data cable (creative, hanging) -> box at {@code boxPos}, then three ordinary Power Grid wires
+     * box terminal i -> servo terminal i (copper / iron / gold). Call a few ticks after placing.
+     */
+    private static void connectServoViaBox(GameTestHelper helper, BlockPos socket, BlockPos boxPos, BlockPos servoPos) {
+        ServerLevel level = helper.getLevel();
+        DataCableItem.Result r = DataCableItem.plug(level, helper.absolutePos(socket), List.of(),
+                helper.absolutePos(boxPos), true);
+        helper.assertTrue(r.success(), "data cable plugs in: " + r.message().getString());
+        ResourceLocation[] wireIds = { CableCores.COPPER, CableCores.IRON, CableCores.GOLD };
+        for (int i = 0; i < 3; ++i) {
+            BlockWireEndpoint a = new BlockWireEndpoint(helper.absolutePos(boxPos), i);
+            BlockWireEndpoint b = new BlockWireEndpoint(helper.absolutePos(servoPos), i);
+            HangingWireEntity w = HangingWireEntity.create(level, a, b,
+                    new ItemStack(BuiltInRegistries.ITEM.get(wireIds[i])), 0.01f);
+            helper.assertTrue(level.tryAddFreshEntityWithPassengers(w), "servo wire " + i);
+        }
     }
 
     /** Right-click with the main-hand item at an exact block-local hit position on face {@code face}. */
@@ -242,10 +271,9 @@ public class OverheatProtectionTests {
         BlockPos socket = HvCoolingFanBlock.cellOf(main, FACING, 1);
         BlockPos servoPos = new BlockPos(5, 1, 9);
         servo(helper, servoPos, Direction.UP);
+        box(helper, servoPos.above(), Direction.NORTH);
         helper.runAfterDelay(3, () -> {
-            DataCableItem.Result r = DataCableItem.connect(helper.getLevel(), helper.absolutePos(socket),
-                    helper.absolutePos(servoPos));
-            helper.assertTrue(r.success(), "data cable connects: " + r.message().getString());
+            connectServoViaBox(helper, socket, servoPos.above(), servoPos);
         });
         helper.runAfterDelay(40, () -> {
             HvCoolingFanBlockEntity fan = helper.getBlockEntity(main);
@@ -339,108 +367,101 @@ public class OverheatProtectionTests {
         helper.succeed();
     }
 
-    /** Fan -> servo with a player: three wires (copper/iron/gold) at the right terminals, 1 cable consumed. */
+    /** Fan -> box with a player: plugged in, 1 cable consumed, cores linked; servo click does nothing. */
     @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 100)
-    public static void dataCableCreatesThreeWires(GameTestHelper helper) {
+    public static void dataCablePlugsIntoBox(GameTestHelper helper) {
         PghvTestUtil.floor(helper);
         BlockPos main = fanOnFloor(helper, new BlockPos(3, 1, 3), PghvItems.BRASS_COOLING_FAN.get());
         BlockPos socket = HvCoolingFanBlock.cellOf(main, FACING, 1);
-        BlockPos servoPos = new BlockPos(6, 1, 10);
+        BlockPos boxPos = new BlockPos(6, 1, 10);
+        BlockPos box2 = new BlockPos(9, 1, 10);
+        BlockPos servoPos = new BlockPos(8, 1, 12);
+        box(helper, boxPos, Direction.NORTH);
+        box(helper, box2, Direction.NORTH);
         servo(helper, servoPos, Direction.UP);
         helper.runAfterDelay(3, () -> {
             FakePlayer player = PghvTestUtil.player(helper, GameType.SURVIVAL, main.relative(FACING, 3));
-            player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(PghvItems.DATA_CABLE.get(), 2));
+            player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(PghvItems.DATA_CABLE.get(), 3));
 
-            // Servo first: no start -> nothing happens.
-            PghvTestUtil.use(helper, player, servoPos, Direction.UP);
-            helper.assertTrue(wires(helper).isEmpty(), "no wires without start");
+            PghvTestUtil.use(helper, player, boxPos, Direction.NORTH);
+            DataSocketBoxBlockEntity be = helper.getBlockEntity(boxPos);
+            helper.assertFalse(be.isPlugged(), "no plug without start");
 
-            // Start on part 0 (any part of the brass fan selects the socket on part 1).
             PghvTestUtil.use(helper, player, main, FACING);
             GlobalPos start = player.getMainHandItem().get(PghvDataComponents.DATA_CABLE_START.get());
             helper.assertTrue(start != null && start.pos().equals(helper.absolutePos(socket)), "start = socket cell, is " + start);
 
             PghvTestUtil.use(helper, player, servoPos, Direction.UP);
-            List<HangingWireEntity> wires = wires(helper);
-            helper.assertValueEqual(wires.size(), 3, "three hanging wires");
-            helper.assertValueEqual(player.getMainHandItem().getCount(), 1, "one data cable consumed");
+            helper.assertValueEqual(player.getMainHandItem().getCount(), 3, "servo click consumes nothing");
+
+            PghvTestUtil.use(helper, player, boxPos, Direction.NORTH);
+            helper.assertTrue(be.isPlugged(), "plugged in");
+            helper.assertTrue(helper.absolutePos(socket).equals(be.getFanSocket()), "box knows the fan socket");
+            helper.assertTrue(be.getPoints().isEmpty(), "hanging cable has no waypoints");
+            helper.assertValueEqual(player.getMainHandItem().getCount(), 2, "one data cable consumed");
             helper.assertFalse(player.getMainHandItem().has(PghvDataComponents.DATA_CABLE_START.get()), "start cleared");
 
-            BlockPos socketAbs = helper.absolutePos(socket);
-            BlockPos servoAbs = helper.absolutePos(servoPos);
-            for (int i = 0; i < 3; ++i) {
-                int socketTerminal = DataCableItem.SOCKET_TERMINALS[i];
-                int servoTerminal = DataCableItem.SERVO_TERMINALS[i];
-                ResourceLocation wireId = DataCableItem.WIRES[i];
-                HangingWireEntity match = null;
-                for (HangingWireEntity w : wires) {
-                    if (w.isConnectedTo(socketAbs, socketTerminal) && w.isConnectedTo(servoAbs, servoTerminal))
-                        match = w;
-                }
-                helper.assertTrue(match != null, "wire socket " + socketTerminal + " <-> servo " + servoTerminal);
-                helper.assertTrue(BuiltInRegistries.ITEM.getKey(match.getItem()).equals(wireId),
-                        "wire " + i + " is " + wireId + ", is " + BuiltInRegistries.ITEM.getKey(match.getItem()));
-                helper.assertValueEqual(match.getWireCount(), 1, "wire " + i + " holds one item (no dupe)");
-                WireItemEntry entry = CableCores.entry(helper.getLevel().registryAccess(), wireId);
-                double length = new BlockWireEndpoint(socketAbs, socketTerminal).getExactPosition(helper.getLevel())
-                        .distanceTo(new BlockWireEndpoint(servoAbs, servoTerminal).getExactPosition(helper.getLevel()));
-                PghvTestUtil.assertNear(helper, match.getResistance(), DataCableItem.wireResistance(entry, length), 0.01,
-                        "resistance of wire " + i);
-            }
-
-            // Second attempt: already connected, nothing consumed.
+            // Same fan socket into a second box: refused, nothing consumed.
             PghvTestUtil.use(helper, player, main, FACING);
-            PghvTestUtil.use(helper, player, servoPos, Direction.UP);
-            helper.assertValueEqual(wires(helper).size(), 3, "no duplicate wires");
-            helper.assertValueEqual(player.getMainHandItem().getCount(), 1, "nothing consumed on duplicate");
-            helper.succeed();
+            PghvTestUtil.use(helper, player, box2, Direction.NORTH);
+            DataSocketBoxBlockEntity be2 = helper.getBlockEntity(box2);
+            helper.assertFalse(be2.isPlugged(), "fan socket used only once");
+            helper.assertValueEqual(player.getMainHandItem().getCount(), 2, "nothing consumed on refusal");
         });
-    }
-
-    /** Ground mode: fan -> floor waypoint -> servo lays three Power Grid block wires and powers the servo. */
-    @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 200)
-    public static void dataCableOnGround(GameTestHelper helper) {
-        PghvTestUtil.floor(helper);
-        BlockPos main = fanOnFloor(helper, new BlockPos(3, 1, 3), PghvItems.BRASS_COOLING_FAN.get());
-        BlockPos servoPos = new BlockPos(6, 1, 10);
-        servo(helper, servoPos, Direction.UP);
-        helper.runAfterDelay(3, () -> {
-            FakePlayer player = PghvTestUtil.player(helper, GameType.SURVIVAL, main.relative(FACING, 3));
-            player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(PghvItems.DATA_CABLE.get(), 16));
-            PghvTestUtil.use(helper, player, main, FACING);
-            PghvTestUtil.use(helper, player, new BlockPos(5, 0, 7), Direction.UP);
-            helper.assertValueEqual(blockWires(helper).size(), 3, "three block wires after the floor click");
-            helper.assertTrue(player.getMainHandItem().has(PghvDataComponents.DATA_CABLE_ROUTE.get()), "route kept");
-            PghvTestUtil.use(helper, player, servoPos, Direction.UP);
-            List<BlockWireEntity> wires = blockWires(helper);
-            helper.assertValueEqual(wires.size(), 3, "still three block wires (extended, not new)");
-            for (BlockWireEntity w : wires)
-                helper.assertTrue(w.getEndpoint2() != null, "block wire ends at the servo");
-            helper.assertTrue(wires(helper).isEmpty(), "no hanging wires in ground mode");
-            ItemStack hand = player.getMainHandItem();
-            helper.assertFalse(hand.has(PghvDataComponents.DATA_CABLE_ROUTE.get()), "route cleared");
-            helper.assertFalse(hand.has(PghvDataComponents.DATA_CABLE_START.get()), "start cleared");
-            helper.assertTrue(hand.getCount() < 16 && hand.getCount() > 0, "cables used by length, left " + hand.getCount());
-            int wireItems = 0;
-            for (BlockWireEntity w : wires)
-                wireItems = Math.max(wireItems, w.getWireCount());
-            helper.assertTrue(wireItems <= 16 - hand.getCount(), "no dupe: wire items " + wireItems
-                    + " <= cables used " + (16 - hand.getCount()));
-        });
-        helper.runAfterDelay(60, () -> {
+        helper.runAfterDelay(30, () -> {
+            DataSocketBoxBlockEntity be = helper.getBlockEntity(boxPos);
+            helper.assertTrue(be.isLinked(), "three cores linked");
             HvCoolingFanBlockEntity fan = helper.getBlockEntity(main);
             double supply = fan.getTerminalVoltage(HvCoolingFanBlock.SOCKET_POSITIVE, HvCoolingFanBlock.SOCKET_NEGATIVE);
-            helper.assertTrue(supply > 44.0 && supply < 47.99, "servo loads the socket via ground wires, is " + supply);
+            helper.assertTrue(supply > 47.0 && supply <= 48.05, "socket supply 48 V without load, is " + supply);
+            // Wrench-like unplug drops exactly one data cable.
+            be.unplug(true);
+            helper.assertFalse(be.isPlugged(), "unplugged");
+            List<ItemEntity> drops = helper.getLevel().getEntitiesOfClass(ItemEntity.class,
+                    new AABB(helper.absolutePos(boxPos)).inflate(2), e -> e.getItem().is(PghvItems.DATA_CABLE.get()));
+            int count = drops.stream().mapToInt(e -> e.getItem().getCount()).sum();
+            helper.assertValueEqual(count, 1, "one data cable dropped");
             helper.succeed();
         });
     }
 
-    private static List<BlockWireEntity> blockWires(GameTestHelper helper) {
-        return helper.getLevel().getEntitiesOfClass(BlockWireEntity.class, helper.getBounds().inflate(4),
-                e -> e.isAlive());
+    /** Waypoints on the floor are stored; breaking the fan pulls the plug and drops the cable at the box. */
+    @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 200)
+    public static void dataCableWaypointsAndFanRemoval(GameTestHelper helper) {
+        PghvTestUtil.floor(helper);
+        BlockPos main = fanOnFloor(helper, new BlockPos(3, 1, 3), PghvItems.BRASS_COOLING_FAN.get());
+        BlockPos boxPos = new BlockPos(6, 1, 11);
+        box(helper, boxPos, Direction.NORTH);
+        helper.runAfterDelay(3, () -> {
+            FakePlayer player = PghvTestUtil.player(helper, GameType.SURVIVAL, main.relative(FACING, 3));
+            player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(PghvItems.DATA_CABLE.get(), 1));
+            PghvTestUtil.use(helper, player, main, FACING);
+            PghvTestUtil.use(helper, player, new BlockPos(4, 0, 7), Direction.UP);
+            PghvTestUtil.use(helper, player, new BlockPos(6, 0, 9), Direction.UP);
+            helper.assertValueEqual(DataCableItem.points(player.getMainHandItem()).size(), 2, "two waypoints");
+            PghvTestUtil.use(helper, player, boxPos, Direction.NORTH);
+            DataSocketBoxBlockEntity be = helper.getBlockEntity(boxPos);
+            helper.assertTrue(be.isPlugged(), "plugged in over waypoints");
+            helper.assertValueEqual(be.getPoints().size(), 2, "box keeps the waypoints");
+            Vec3 p = be.getPoints().get(0);
+            helper.assertTrue(Math.abs(p.y - (helper.absolutePos(new BlockPos(4, 0, 7)).getY() + 1 + DataCableItem.SURFACE_OFFSET)) < 1e-6,
+                    "waypoint lies on the floor surface, y " + p.y);
+            helper.assertTrue(player.getMainHandItem().isEmpty(), "cable consumed");
+            DataSocketBoxBlockEntity reloaded = PghvTestUtil.reload(helper, boxPos);
+            helper.assertValueEqual(reloaded.getPoints().size(), 2, "waypoints survive reload");
+            helper.destroyBlock(main);
+        });
+        helper.runAfterDelay(40, () -> {
+            DataSocketBoxBlockEntity be = helper.getBlockEntity(boxPos);
+            helper.assertFalse(be.isPlugged(), "fan gone -> plug falls out");
+            List<ItemEntity> drops = helper.getLevel().getEntitiesOfClass(ItemEntity.class,
+                    new AABB(helper.absolutePos(boxPos)).inflate(2), e -> e.getItem().is(PghvItems.DATA_CABLE.get()));
+            helper.assertValueEqual(drops.stream().mapToInt(e -> e.getItem().getCount()).sum(), 1, "cable dropped at the box");
+            helper.succeed();
+        });
     }
 
-    /** Too long (> 16 blocks), andesite fan has no socket, creative does not consume. */
+    /** Too long (> 16 blocks), andesite fan has no socket, cancel, creative does not consume. */
     @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 100)
     public static void dataCableLimits(GameTestHelper helper) {
         PghvTestUtil.floor(helper);
@@ -448,8 +469,8 @@ public class OverheatProtectionTests {
         BlockPos andesite = fanOnFloor(helper, new BlockPos(10, 1, 1), PghvItems.COOLING_FAN.get());
         BlockPos far = new BlockPos(14, 1, 14);
         BlockPos near = new BlockPos(4, 1, 6);
-        servo(helper, far, Direction.UP);
-        servo(helper, near, Direction.UP);
+        box(helper, far, Direction.NORTH);
+        box(helper, near, Direction.NORTH);
         helper.runAfterDelay(3, () -> {
             FakePlayer player = PghvTestUtil.player(helper, GameType.SURVIVAL, main.relative(FACING, 3));
             player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(PghvItems.DATA_CABLE.get(), 1));
@@ -458,11 +479,11 @@ public class OverheatProtectionTests {
                     "andesite fan has no socket");
 
             PghvTestUtil.use(helper, player, main, FACING);
-            PghvTestUtil.use(helper, player, far, Direction.UP);
-            helper.assertTrue(wires(helper).isEmpty(), "too long: no wires");
+            PghvTestUtil.use(helper, player, far, Direction.NORTH);
+            DataSocketBoxBlockEntity farBox = helper.getBlockEntity(far);
+            helper.assertFalse(farBox.isPlugged(), "too long: not plugged");
             helper.assertValueEqual(player.getMainHandItem().getCount(), 1, "too long: nothing consumed");
 
-            // Sneak + right-click into the air cancels the start.
             player.setShiftKeyDown(true);
             player.gameMode.useItem(player, helper.getLevel(), player.getMainHandItem(), InteractionHand.MAIN_HAND);
             player.setShiftKeyDown(false);
@@ -471,9 +492,13 @@ public class OverheatProtectionTests {
             FakePlayer creative = PghvTestUtil.player(helper, GameType.CREATIVE, main.relative(FACING, 3));
             creative.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(PghvItems.DATA_CABLE.get(), 1));
             PghvTestUtil.use(helper, creative, main, FACING);
-            PghvTestUtil.use(helper, creative, near, Direction.UP);
-            helper.assertValueEqual(wires(helper).size(), 3, "creative connects");
+            PghvTestUtil.use(helper, creative, near, Direction.NORTH);
+            DataSocketBoxBlockEntity nearBox = helper.getBlockEntity(near);
+            helper.assertTrue(nearBox.isPlugged(), "creative plugs in");
             helper.assertValueEqual(creative.getMainHandItem().getCount(), 1, "creative: not consumed");
+            nearBox.unplug(true);
+            helper.assertTrue(helper.getLevel().getEntitiesOfClass(ItemEntity.class,
+                    new AABB(helper.absolutePos(near)).inflate(2)).isEmpty(), "creative-laid cable drops nothing");
             helper.succeed();
         });
     }
@@ -502,11 +527,10 @@ public class OverheatProtectionTests {
         helper.setBlock(switchPos.north(), sw.setValue(HvSwitchBlock.PART, 1));
         BlockPos servoPos = switchPos.west();
         servo(helper, servoPos, Direction.EAST);
+        box(helper, servoPos.above(), Direction.NORTH);
         helper.runAfterDelay(5, () -> {
             holdTemperatureStable(helper, trafo);
-            DataCableItem.Result r = DataCableItem.connect(helper.getLevel(), helper.absolutePos(socket),
-                    helper.absolutePos(servoPos));
-            helper.assertTrue(r.success(), "data cable connects: " + r.message().getString());
+            connectServoViaBox(helper, socket, servoPos.above(), servoPos);
         });
 
         // Phases: 0 heat (trip), 1 cool (reset), 2 heat (trip again), 3 done.

@@ -21,6 +21,9 @@ import com.simibubi.create.AllItems;
 import com.tomrox.pghv.block.HvCoolingFanBlock;
 import com.tomrox.pghv.block.entity.HvCoolingFanBlockEntity;
 import com.tomrox.pghv.registry.PghvItems;
+import com.tomrox.pghv.registry.PghvBlocks;
+import com.tomrox.pghv.block.entity.DataSocketBoxBlockEntity;
+import com.tomrox.pghv.block.DataSocketBoxBlock;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.element.ElementLink;
@@ -72,6 +75,8 @@ public class FanScenes {
     private static final BlockPos SWITCH = new BlockPos(0, 1, 3);
     private static final BlockPos SWITCH_2 = new BlockPos(1, 1, 3);
     private static final BlockPos GRID = new BlockPos(0, 1, 5);
+    /** Data socket box (placed during the overheat scene), socket facing east towards the fan. */
+    private static final BlockPos BOX = new BlockPos(1, 1, 1);
 
     private static final double PX = 1.0 / 16.0;
     /** Front face of pins and socket connectors for slot 2 (z0 = 32/3 px, pin depth from z0 - 3 px). */
@@ -90,6 +95,17 @@ public class FanScenes {
     private static AABB pinBox(BlockPos cell, double x0, double x1) {
         return new AABB(cell.getX() + x0 * PX, cell.getY() + PX, PIN_FRONT_Z,
                 cell.getX() + x1 * PX, cell.getY() + 4 * PX, PIN_BACK_Z);
+    }
+
+    /** Round data socket on part 1 (x 5..11, y 0.5..6.5 px, slot 2: z0 = 32/3 px, sticks out 2 px). */
+    private static AABB socketBox() {
+        double z0 = 32.0 / 3.0;
+        return new AABB(SOCKET.getX() + 5 * PX, SOCKET.getY() + 0.5 * PX, 2 + (z0 - 2) * PX,
+                SOCKET.getX() + 11 * PX, SOCKET.getY() + 6.5 * PX, 2 + (z0 + 1) * PX);
+    }
+
+    private static Vec3 socketFront() {
+        return new Vec3(SOCKET.getX() + 8 * PX, SOCKET.getY() + 3.5 * PX, 2 + (32.0 / 3.0 - 2) * PX);
     }
 
     private static Vec3 pinFront(BlockPos cell, double x0, double x1) {
@@ -364,39 +380,53 @@ public class FanScenes {
         scene.idle(100);
 
         // --- socket ---
-        scene.overlay().chaseBoundingBoxOutline(PonderPalette.RED, "sock_plus", pinBox(SOCKET, 2, 5), 90);
-        scene.overlay().chaseBoundingBoxOutline(PonderPalette.BLUE, "sock_minus", pinBox(SOCKET, 6.5, 9.5), 90);
-        scene.overlay().chaseBoundingBoxOutline(PonderPalette.GREEN, "sock_ctrl", pinBox(SOCKET, 11, 14), 90);
+        scene.overlay().chaseBoundingBoxOutline(PonderPalette.GREEN, "socket", socketBox(), 90);
         scene.overlay().showText(90)
-                .text("The socket at the bottom right has three terminals: servo supply +, servo - and the control signal")
-                .pointAt(pinFront(SOCKET, 2, 14))
+                .text("The round socket at the bottom right carries servo supply +, servo - and the control signal")
+                .pointAt(socketFront())
                 .placeNearTarget()
                 .attachKeyFrame();
         scene.idle(100);
 
-        // --- data cable ---
+        // --- box + data cable ---
         scene.world().showSection(util.select().fromTo(SERVO, SHAFT), Direction.DOWN);
+        scene.idle(10);
+        scene.world().setBlock(BOX, PghvBlocks.DATA_SOCKET_BOX.get().defaultBlockState()
+                .setValue(DataSocketBoxBlock.HORIZONTAL_FACING, Direction.EAST), false);
+        scene.world().showSection(util.select().position(BOX), Direction.DOWN);
         scene.idle(15);
         ItemStack dataCable = new ItemStack(PghvItems.DATA_CABLE.get());
         scene.overlay().showText(90)
-                .text("Right-click the socket with a Data Cable, then right-click the Servo")
-                .pointAt(pinFront(SOCKET, 2, 14))
+                .text("Right-click the fan socket with a Data Cable, then plug it into a Data Socket Box")
+                .pointAt(util.vector().blockSurface(BOX, Direction.EAST))
                 .placeNearTarget()
                 .attachKeyFrame();
         scene.idle(20);
-        scene.overlay().showControls(pinFront(SOCKET, 2, 14), Pointing.DOWN, 30).rightClick().withItem(dataCable);
+        scene.overlay().showControls(socketFront(), Pointing.DOWN, 30).rightClick().withItem(dataCable);
         scene.idle(40);
-        scene.overlay().showControls(util.vector().topOf(SERVO), Pointing.DOWN, 30).rightClick().withItem(dataCable);
+        scene.overlay().showControls(util.vector().blockSurface(BOX, Direction.EAST), Pointing.DOWN, 30)
+                .rightClick().withItem(dataCable);
         scene.idle(25);
-        wire(scene, SOCKET, HvCoolingFanBlock.SOCKET_POSITIVE, SERVO, 0, ModdedItems.WIRE::asStack);
-        scene.idle(3);
-        wire(scene, SOCKET, HvCoolingFanBlock.SOCKET_NEGATIVE, SERVO, 1, ModdedItems.IRON_WIRE::asStack);
-        scene.idle(3);
-        wire(scene, SOCKET, HvCoolingFanBlock.SOCKET_CONTROL, SERVO, 2, ModdedItems.GOLDEN_WIRE::asStack);
+        scene.world().modifyBlockEntityNBT(util.select().position(BOX), DataSocketBoxBlockEntity.class, tag -> {
+            tag.putLong("FanSocket", SOCKET.asLong());
+            tag.put("Points", new net.minecraft.nbt.ListTag());
+        });
         scene.idle(20);
         scene.overlay().showText(80)
-                .text("It lays three wires at once: copper for +, iron for - and gold for the control signal")
-                .pointAt(util.vector().topOf(SERVO))
+                .text("Right-click blocks in between to lay the cable on the floor or a wall; otherwise it hangs")
+                .pointAt(util.vector().topOf(2, 0, 1))
+                .placeNearTarget();
+        scene.idle(90);
+
+        wire(scene, BOX, DataSocketBoxBlock.TERMINAL_POSITIVE, SERVO, 0, ModdedItems.WIRE::asStack);
+        scene.idle(3);
+        wire(scene, BOX, DataSocketBoxBlock.TERMINAL_NEGATIVE, SERVO, 1, ModdedItems.IRON_WIRE::asStack);
+        scene.idle(3);
+        wire(scene, BOX, DataSocketBoxBlock.TERMINAL_CONTROL, SERVO, 2, ModdedItems.GOLDEN_WIRE::asStack);
+        scene.idle(20);
+        scene.overlay().showText(80)
+                .text("Wire the connectors on top of the box to the Servo: + to coil +, - to coil -, control to control")
+                .pointAt(util.vector().topOf(BOX))
                 .placeNearTarget();
         scene.idle(90);
 
@@ -418,7 +448,7 @@ public class FanScenes {
         scene.idle(20);
         scene.world().modifyBlockEntityNBT(util.select().position(MAIN), HvCoolingFanBlockEntity.class,
                 tag -> tag.putBoolean("Tripped", true));
-        scene.effects().emitParticles(pinFront(SOCKET, 2, 14).add(0, 0.3, -0.2),
+        scene.effects().emitParticles(socketFront().add(0, 0.3, -0.2),
                 scene.effects().simpleParticleEmitter(ParticleTypes.SMOKE, new Vec3(0, 0.03, 0)), 2, 12);
         turnServo(scene, util, 32);
         scene.idle(80);
@@ -439,11 +469,11 @@ public class FanScenes {
         // --- direction ---
         scene.overlay().showText(90)
                 .text("If the switch moves the wrong way, right-click the socket with a Wrench to reverse the servo direction")
-                .pointAt(pinFront(SOCKET, 2, 14))
+                .pointAt(socketFront())
                 .placeNearTarget()
                 .attachKeyFrame();
         scene.idle(20);
-        scene.overlay().showControls(pinFront(SOCKET, 2, 14), Pointing.DOWN, 40).rightClick()
+        scene.overlay().showControls(socketFront(), Pointing.DOWN, 40).rightClick()
                 .withItem(AllItems.WRENCH.asStack());
         scene.idle(80);
         scene.markAsFinished();

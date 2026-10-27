@@ -95,9 +95,10 @@ wahrscheinlichsten Compile-/Laufzeitfehler:
 - Kabelbox: Facing per `BlockStateProperties.HORIZONTAL_FACING` (= PG `HorizontalElectricBlock.HORIZONTAL_FACING`), Adern per NBT `Cores` (Liste von Strings) mit Redraw ⇒ BlockColor färbt die Kappen um. Terminal-Positionen für die Linien (Box Ost: Terminals entlang z 3,5/8/12,5 px) aus der Rotation geschätzt – Lage im Spiel prüfen.
 - Pin-/Steckdosen-/Wertefeld-Positionen in den Szenen aus den Klickboxen in `HvCoolingFanBlock`/`CoolingFanTopBlockEntity` für facing north, slot 2 gerechnet.
 
-## Datenkabel am Boden (feature/feinschliff)
-- `WireItem.connect(Level, ItemStack, Player=null, IWireEndpoint, IWireEndpoint)` öffentlich-statisch; mit `player == null`
-  nimmt Power Grid die Drahtmenge aus dem übergebenen Stack (`PlayerUtilities.hasEnoughItems/removeItems`).
-- `WireItem.alternateWirePlacement(null)`, `BlockTrace.findPath/alternatePath/alignPosition`, `BlockWireEntity.segments`,
-  `getTotalLength()`, `getWireCount()`, `BlockWireEntityEndpoint(entity, true)` + `read/write(CompoundTag)`.
-- `Vec3.with(Axis, double)`, `Vec3i.get(Axis)`, `Direction.getNearest(double, double, double)`.
+## Datenstecker-Box / Stecker-Kabel (feature/feinschliff)
+- `HorizontalElectricBlock.horizontalNorthTerminals`, `getStateForPlacement` überschrieben (Buchse aus der Wand).
+- BER: `Sheets.cutoutBlockSheet()`, `TextureAtlasSprite.getU/getV` mit Anteil 0..1 (1.21), `VertexConsumer.addVertex(Pose, …)
+  .setColor/.setUv/.setOverlay/.setLight/.setNormal(Pose, …)`, `LevelRenderer.getLightColor(Level, BlockPos)`,
+  `AABB.minmax`, `BlockEntityRenderer.getViewDistance/shouldRenderOffScreen`.
+- Texturen unter textures/block landen automatisch im Block-Atlas (Atlas-Quelle „directory block“).
+- Ponder: `scene.world().setBlock(pos, state, false)` + `modifyBlockEntityNBT` für die Box.

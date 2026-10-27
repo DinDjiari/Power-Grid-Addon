@@ -1,0 +1,41 @@
+name: Gemini-Texturen
+
+on:
+  push:
+    paths:
+      - 'texture-requests/*.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gemini-textures-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  textures:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r tools/gemini-texture-mcp/requirements.txt
+      - name: Aufträge abarbeiten
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_IMAGE_MODEL: ${{ vars.GEMINI_IMAGE_MODEL }}
+        run: |
+          if [ -z "$GEMINI_IMAGE_MODEL" ]; then unset GEMINI_IMAGE_MODEL; fi
+          python -u tools/gemini-texture-mcp/batch.py
+      - name: Ergebnisse committen
+        run: |
+          git config user.name "gemini-textures[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && exit 0
+          git commit -m "Texturen von Gemini erzeugt (${GITHUB_SHA::7})"
+          git pull --rebase
+          git push
