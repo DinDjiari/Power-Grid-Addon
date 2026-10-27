@@ -11,7 +11,7 @@ Vorgehen:
 3. Dedicated Server (runServer) starten, Log auf Fehler zu pghv prüfen (Registries, Rezepte, Loot-Tables, Tags, Modelle).
 4. NeoForge-GameTests für alle Punkte in CLAUDE.md Abschnitt 4 schreiben und mit runGameTestServer ausführen, bis alle grün sind. Besonders: Item-Dupes beim Kabel-Trennen, Multiblock-Abbau des Lüfters, Neuaufbau der Kabel-Verbindungen nach Chunk-Neuladen, Konstruktor-Reihenfolge in SmartBlockEntity (Felder ohne Initializer).
 5. runClient starten und prüfen, dass das Spiel ohne Modell-/Texturfehler lädt. Gib mir dann eine kurze Liste, was ich im Spiel optisch prüfen soll.
-6. Jeden Fix in docs/BUGLOG.md eintragen.
+6. Jeden Fix in docs/BUGLOG.md eintragen und einzeln committen (Branch fix/erster-build, am Ende pushen).
 
 Frag mich nur bei Designentscheidungen. Am Ende: Bericht auf Deutsch (behobene Bugs, Teststatus je Feature, offene Punkte) und Pfad zum fertigen Jar.
 ```

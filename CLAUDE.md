@@ -16,7 +16,7 @@ Der Code wurde **ohne Build** geschrieben (kein Maven-Zugang). Liste der ungepr�
 - Designs, Texturen, Modell-Geometrie, IDs, Blockstate-Properties und Spielmechanik laut Spezifikation **nicht eigenmächtig ändern**. Nur Fehler beheben. Designfragen an Tom.
 - Kleinste mögliche Korrekturen; nach jeder Änderungsrunde erneut bauen.
 - Keine Assets von Create/Power Grid ins Repo kopieren (Lizenz). Power-Grid-Jar liegt nur lokal in `libs/` und wird nicht eingecheckt.
-- Jeder Fix bekommt eine Zeile in `docs/BUGLOG.md` (Datum, Datei, Symptom, Ursache, Fix).
+- Jeder Fix bekommt eine Zeile in `docs/BUGLOG.md` (Datum, Datei, Symptom, Ursache, Fix) und einen eigenen Git-Commit mit aussagekräftiger Nachricht (Deutsch). Arbeiten auf einem Branch `fix/erster-build`, am Ende pushen; `main` nur nach Toms OK mergen.
 
 ## Ablauf
 1. **Umgebung**: `java -version` (21?). Sonst `winget install Microsoft.OpenJDK.21`. Power-Grid-Jar 0.6.2 (NeoForge 1.21.1) nach `libs\powergrid-mc1.21.1-0.6.2.jar` (Modrinth-Projekt `eWiBLJ9R`, z.B. über `https://api.modrinth.com/v2/project/eWiBLJ9R/version?game_versions=["1.21.1"]&loaders=["neoforge"]`).
