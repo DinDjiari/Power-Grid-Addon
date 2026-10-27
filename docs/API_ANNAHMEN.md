@@ -56,3 +56,13 @@ wahrscheinlichsten Compile-/Laufzeitfehler:
 - `ValueBoxTransform.testHit(LevelAccessor, BlockPos, BlockState, Vec3)` überschreibbar (wie Power Grids CustomValueBoxTransformer).
 - Wertefeld auf der Oberseite: Drehung `rotateYDegrees(facing+180).rotateXDegrees(90)` wie `ValueBoxTransform.Sided` für UP – Lage/Leserichtung im Spiel prüfen.
 - Zweiter BlockEntityType `pghv:cooling_fan_top` für denselben Block (Teile 2/3), eigener Ticker im Block (`getTicker` überschrieben).
+
+## Nachtrag Messing-Trafolüfter (`brass_cooling_fan`)
+- Variante wird in `addBehaviours` (Super-Konstruktor von `SmartBlockEntity`) über `getBlockState().getBlock()` bestimmt – setzt voraus, dass `BlockEntity` den Zustand vor `addBehaviours` setzt (Vanilla: ja). `isBrass()` liest den Block jedes Mal neu, kein gespeichertes Feld.
+- Eigene BlockEntityTypes `pghv:brass_cooling_fan` und `pghv:brass_cooling_fan_top` mit denselben Klassen (`HvCoolingFanBlockEntity`, `CoolingFanTopBlockEntity`); `IBE.getBlockEntityType()` liefert je nach Block-Variante den passenden Typ.
+- `AllConfigs.server().kinetics.maxRotationSpeed.get()` (ConfigInt, Standard 256; geprüft gegen Create-Quelle 6.0.11) als Obergrenze für die Luftstrom-Stärke; Zugriff auf dem Client in try/catch (Fallback 256), falls die Server-Config dort noch nicht geladen ist. Da der Andesit-Lüfter bei 100 % schon 256 liefert, wirkt „Luftstrom ×2“ nur unterhalb 50 % Drehzahl.
+- `ValueSettingsBoard(title, maxValue, milestoneInterval, rows, formatter)` (Record, geprüft) für das °C-Board (max 24, Marken alle 4 = 20 °C).
+- Übersetzungen mit `%1$s … %%` (Vanilla-`TranslatableContents` setzt `%%` als Prozentzeichen um).
+- Partial `pghv:block/brass_cooling_fan/rotor` setzt `models/block/brass_cooling_fan/rotor.json` voraus (Asset-Worker); fehlt die Datei, zeigt der Rotor das Missing-Model.
+- `ThermalBehaviour.getTemperature()` liefert auch auf dem Client den synchronisierten Wert (für die Goggles-Zeile „Automatik …“, wie bisher beim Andesit-Lüfter angenommen).
+- Rotor-Animation ×2 = bis 120 °/Tick: bei 4-zähligem Rotor kann der Stroboskop-Effekt die Drehung rückwärts/langsam wirken lassen – optisch prüfen.

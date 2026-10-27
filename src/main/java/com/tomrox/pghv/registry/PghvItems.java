@@ -32,6 +32,9 @@ public class PghvItems {
     public static final DeferredItem<BlockItem> COOLING_FAN =
             ITEMS.registerSimpleBlockItem("cooling_fan", PghvBlocks.COOLING_FAN, new Item.Properties());
 
+    public static final DeferredItem<BlockItem> BRASS_COOLING_FAN =
+            ITEMS.registerSimpleBlockItem("brass_cooling_fan", PghvBlocks.BRASS_COOLING_FAN, new Item.Properties());
+
     public static final DeferredItem<BlockItem> CABLE_BOX =
             ITEMS.registerSimpleBlockItem("cable_box", PghvBlocks.CABLE_BOX, new Item.Properties());
 

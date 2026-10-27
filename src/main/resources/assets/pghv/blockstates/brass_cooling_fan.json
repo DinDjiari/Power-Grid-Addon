@@ -1,0 +1,184 @@
+{
+  "variants": {
+    "facing=north,part=0,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part0_slot0"
+    },
+    "facing=north,part=0,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part0_slot1"
+    },
+    "facing=north,part=0,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part0_slot2"
+    },
+    "facing=north,part=1,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part1_slot0"
+    },
+    "facing=north,part=1,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part1_slot1"
+    },
+    "facing=north,part=1,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part1_slot2"
+    },
+    "facing=north,part=2,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part2_slot0"
+    },
+    "facing=north,part=2,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part2_slot1"
+    },
+    "facing=north,part=2,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part2_slot2"
+    },
+    "facing=north,part=3,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part3_slot0"
+    },
+    "facing=north,part=3,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part3_slot1"
+    },
+    "facing=north,part=3,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part3_slot2"
+    },
+    "facing=east,part=0,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part0_slot0",
+      "y": 90
+    },
+    "facing=east,part=0,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part0_slot1",
+      "y": 90
+    },
+    "facing=east,part=0,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part0_slot2",
+      "y": 90
+    },
+    "facing=east,part=1,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part1_slot0",
+      "y": 90
+    },
+    "facing=east,part=1,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part1_slot1",
+      "y": 90
+    },
+    "facing=east,part=1,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part1_slot2",
+      "y": 90
+    },
+    "facing=east,part=2,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part2_slot0",
+      "y": 90
+    },
+    "facing=east,part=2,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part2_slot1",
+      "y": 90
+    },
+    "facing=east,part=2,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part2_slot2",
+      "y": 90
+    },
+    "facing=east,part=3,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part3_slot0",
+      "y": 90
+    },
+    "facing=east,part=3,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part3_slot1",
+      "y": 90
+    },
+    "facing=east,part=3,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part3_slot2",
+      "y": 90
+    },
+    "facing=south,part=0,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part0_slot0",
+      "y": 180
+    },
+    "facing=south,part=0,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part0_slot1",
+      "y": 180
+    },
+    "facing=south,part=0,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part0_slot2",
+      "y": 180
+    },
+    "facing=south,part=1,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part1_slot0",
+      "y": 180
+    },
+    "facing=south,part=1,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part1_slot1",
+      "y": 180
+    },
+    "facing=south,part=1,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part1_slot2",
+      "y": 180
+    },
+    "facing=south,part=2,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part2_slot0",
+      "y": 180
+    },
+    "facing=south,part=2,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part2_slot1",
+      "y": 180
+    },
+    "facing=south,part=2,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part2_slot2",
+      "y": 180
+    },
+    "facing=south,part=3,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part3_slot0",
+      "y": 180
+    },
+    "facing=south,part=3,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part3_slot1",
+      "y": 180
+    },
+    "facing=south,part=3,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part3_slot2",
+      "y": 180
+    },
+    "facing=west,part=0,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part0_slot0",
+      "y": 270
+    },
+    "facing=west,part=0,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part0_slot1",
+      "y": 270
+    },
+    "facing=west,part=0,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part0_slot2",
+      "y": 270
+    },
+    "facing=west,part=1,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part1_slot0",
+      "y": 270
+    },
+    "facing=west,part=1,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part1_slot1",
+      "y": 270
+    },
+    "facing=west,part=1,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part1_slot2",
+      "y": 270
+    },
+    "facing=west,part=2,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part2_slot0",
+      "y": 270
+    },
+    "facing=west,part=2,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part2_slot1",
+      "y": 270
+    },
+    "facing=west,part=2,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part2_slot2",
+      "y": 270
+    },
+    "facing=west,part=3,slot=0": {
+      "model": "pghv:block/brass_cooling_fan/part3_slot0",
+      "y": 270
+    },
+    "facing=west,part=3,slot=1": {
+      "model": "pghv:block/brass_cooling_fan/part3_slot1",
+      "y": 270
+    },
+    "facing=west,part=3,slot=2": {
+      "model": "pghv:block/brass_cooling_fan/part3_slot2",
+      "y": 270
+    }
+  }
+}

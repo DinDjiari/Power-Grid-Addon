@@ -90,6 +90,13 @@ import java.util.List;
  * AIR FLOW
  *   Like Power Grid's electric fan: IAirCurrentSource, direction = facing, strength ~ f (speed value 256 * f,
  *   no flow below f = 0.05). One Create AirCurrent per cell, so the whole 2x2 face blows (parts 1..3 use PartAirSource).
+ *
+ * BRASS VARIANT (pghv:brass_cooling_fan, same class, variant from HvCoolingFanBlock.isBrass() of the block state)
+ *   The menu sets the target temperature T_t = 40..160 degC in 5 degC steps (raw value 0..24, default 80 degC).
+ *   Every REGULATE_INTERVAL ticks: T = highest temperature of the transformers behind the fan (none -> s = 0),
+ *   s = clamp((T - T_t + 5) / 30, 0, 1), rounded to 5 % steps (NBT "AutoPercent", synchronised). The wire
+ *   resistance R(s) = R0 / s^2 is therefore rewritten at most every 20 ticks and only in 5 % steps.
+ *   Rotor animation x2, COOLING_GAIN x2 (BRASS_COOLING_GAIN), air speed x2 capped at Create's maxRotationSpeed.
  */
 public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHaveGoggleInformation, IAirCurrentSource {
     // ---- electrical ----
@@ -106,6 +113,8 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
     // ---- cooling ----
     /** Added dissipation factor per unit fan fraction (1 = +100 % per full fan). */
     public static final float COOLING_GAIN = 1.0f;
+    /** Brass fan: twice the cooling effect. */
+    public static final float BRASS_COOLING_GAIN = 2.0f;
     public static final float OVERHEAT_TEMPERATURE = 175.0f;
     private static final int COOLING_INTERVAL = 2;
     private static final float MAX_FRACTION = 1.2f;
@@ -113,14 +122,38 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
     // ---- animation / sync ----
     public static final int FAN_STEPS = 100;
     public static final int FAN_MAX_STEPS = 120;
-    public static final float FAN_MAX_DEG_PER_TICK = 60.0f;
+    /**
+     * Rotor speed at 100 % in degrees per tick. Kept low enough that the 4-blade rotor does not strobe (at 60 fps the
+     * brass fan's 2x = 45 deg/tick is 15 deg per frame, well below the 45 deg half period), so 2x is visibly 2x.
+     */
+    public static final float FAN_MAX_DEG_PER_TICK = 22.5f;
     private static final float AIR_SPEED_AT_FULL = 256.0f;
     private static final float OFF_THRESHOLD = 0.05f;
+
+    // ---- brass variant (automatic control) ----
+    /** Target temperature menu: TARGET_MIN + raw * TARGET_STEP degC, raw 0..TARGET_SETTING_MAX. */
+    public static final int TARGET_MIN = 40;
+    public static final int TARGET_STEP = 5;
+    public static final int TARGET_SETTING_MAX = 24; // 160 degC
+    public static final int TARGET_DEFAULT = 8;      // 80 degC
+    private static final int TARGET_BOARD_MILESTONE = 4; // every 20 degC
+    /** Controller: s = clamp((T - T_target + OFFSET) / BAND, 0, 1). */
+    public static final float CONTROL_OFFSET = 5.0f;
+    public static final float CONTROL_BAND = 30.0f;
+    public static final int CONTROL_STEP_PERCENT = 5;
+    public static final int REGULATE_INTERVAL = 20;
+    public static final float BRASS_SPEED_FACTOR = 2.0f;
+    /** Create's default maxRotationSpeed, used if the server config is not available. */
+    private static final float DEFAULT_AIR_SPEED_CAP = 256.0f;
 
     // Set in addBehaviours / buildCircuit (called during the super constructor): no initializers!
     private FanSpeedBehaviour speed;
     private ElectricWire fanWire;
     private int appliedSetting;
+
+    // Brass: regulator output 0..100 % in 5 % steps (synchronised) and regulation timer (server)
+    private int autoPercent;
+    private int regulateTimer;
 
     // Server side
     private float fanSmooth;
@@ -156,8 +189,62 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
-        speed = new FanSpeedBehaviour(Component.translatable("pghv.gui.cooling_fan.speed"), this, new SpeedBox());
+        // Runs in the super constructor; the block state is already set, so the variant can be read here.
+        boolean brass = isBrass();
+        speed = new FanSpeedBehaviour(Component.translatable(brass ? "pghv.gui.brass_cooling_fan.target"
+                : "pghv.gui.cooling_fan.speed"), this, new SpeedBox(), brass);
         behaviours.add(speed);
+    }
+
+    /** True if this is the main part of a brass fan (derived from the block, no stored field). */
+    public boolean isBrass() {
+        return getBlockState().getBlock() instanceof HvCoolingFanBlock block && block.isBrass();
+    }
+
+    /** Brass: target temperature in degC from the menu. */
+    public int getTargetTemperature() {
+        int raw = speed == null ? TARGET_DEFAULT : speed.getValue();
+        return TARGET_MIN + raw * TARGET_STEP;
+    }
+
+    /** Brass: regulator output 0..100 % (5 % steps). */
+    public int getAutoPercent() {
+        return autoPercent;
+    }
+
+    /** Regulator characteristic (without quantisation): speed 0..1 for temperature T and target T_t. */
+    public static float controlSpeed(float temperature, float target) {
+        return Mth.clamp((temperature - target + CONTROL_OFFSET) / CONTROL_BAND, 0.0f, 1.0f);
+    }
+
+    /** Highest valid temperature of the transformers behind the fan, or NaN if there is none. */
+    public float getHottestTransformerTemperature() {
+        float hottest = Float.NaN;
+        for (TransformerBlockEntity trafo : findTransformers()) {
+            ThermalBehaviour thermal = trafo.getBehaviour(ThermalBehaviour.TYPE);
+            if (thermal == null)
+                continue;
+            float t = thermal.getTemperature();
+            if (t <= ThermalBehaviour.ABSOLUTE_ZERO || !Float.isFinite(t))
+                continue; // not initialised yet
+            if (Float.isNaN(hottest) || t > hottest)
+                hottest = t;
+        }
+        return hottest;
+    }
+
+    private void regulate() {
+        float hottest = getHottestTransformerTemperature();
+        int percent = 0;
+        if (!Float.isNaN(hottest)) {
+            float s = controlSpeed(hottest, getTargetTemperature());
+            percent = Math.round(s * 100.0f / CONTROL_STEP_PERCENT) * CONTROL_STEP_PERCENT;
+        }
+        percent = Mth.clamp(percent, 0, 100);
+        if (percent != autoPercent) {
+            autoPercent = percent;
+            sendData();
+        }
     }
 
     /** Raw menu value 0..SETTING_MAX (shown by the value box on top of the fan, see CoolingFanTopBlockEntity). */
@@ -171,9 +258,19 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
             speed.setValue(value);
     }
 
-    /** Speed setting 0..1 from the menu. */
+    /** Speed setting 0..1: from the menu (andesite) or from the regulator (brass). */
     public float getSetting() {
+        if (isBrass())
+            return autoPercent / 100.0f;
         return speed == null ? 1.0f : speed.getValue() / (float) SETTING_MAX;
+    }
+
+    /** Electric power currently drawn by the fan in W (server side, 0 before the first solve). */
+    public double getElectricPower() {
+        if (fanWire == null)
+            return 0;
+        double p = Math.abs(fanWire.power());
+        return Double.isFinite(p) ? p : 0;
     }
 
     private static double resistanceFor(float setting) {
@@ -208,8 +305,19 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
     }
 
     private void tickServer() {
-        if (speed != null && fanWire != null && speed.getValue() != appliedSetting) {
-            appliedSetting = speed.getValue();
+        int wanted;
+        if (isBrass()) {
+            // Automatic: re-evaluate at most every REGULATE_INTERVAL ticks, output in 5 % steps.
+            if (--regulateTimer <= 0) {
+                regulateTimer = REGULATE_INTERVAL;
+                regulate();
+            }
+            wanted = autoPercent;
+        } else {
+            wanted = speed == null ? -1 : speed.getValue();
+        }
+        if (speed != null && fanWire != null && wanted != appliedSetting) {
+            appliedSetting = wanted;
             fanWire.setResistance(resistanceFor(getSetting()));
         }
 
@@ -236,8 +344,14 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         }
     }
 
-    private void tickFanAnimation() {
+    /** Target rotor speed in degrees per tick for the current (synchronised) fan speed; brass x2. */
+    public float getRotorTargetSpeed() {
         float target = FAN_MAX_DEG_PER_TICK * fanSteps / FAN_STEPS;
+        return isBrass() ? target * BRASS_SPEED_FACTOR : target;
+    }
+
+    private void tickFanAnimation() {
+        float target = getRotorTargetSpeed();
         fanRotSpeed += (target - fanRotSpeed) * 0.08f;
         if (target == 0 && fanRotSpeed < 0.05f)
             fanRotSpeed = 0;
@@ -288,6 +402,11 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         return result;
     }
 
+    /** Added dissipation factor per unit fan fraction: 1 (andesite) or 2 (brass). */
+    public float getCoolingGain() {
+        return isBrass() ? BRASS_COOLING_GAIN : COOLING_GAIN;
+    }
+
     private void coolTransformers(float fraction) {
         for (TransformerBlockEntity trafo : findTransformers()) {
             ThermalBehaviour thermal = trafo.getBehaviour(ThermalBehaviour.TYPE);
@@ -302,7 +421,7 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
             float df = thermal.maxPower() / (OVERHEAT_TEMPERATURE - ambient);
             if (!Float.isFinite(df) || df <= 0)
                 continue;
-            double power = COOLING_GAIN * fraction * df * (temperature - ambient);
+            double power = getCoolingGain() * fraction * df * (temperature - ambient);
             thermal.applyTickPower(-power * COOLING_INTERVAL);
             if (thermal.getTemperature() < ambient)
                 thermal.setTemperature(ambient);
@@ -424,7 +543,19 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         float f = getFanFraction();
         if (f < OFF_THRESHOLD)
             return 0;
-        return Math.min(f, 1.0f) * AIR_SPEED_AT_FULL;
+        float airSpeed = Math.min(f, 1.0f) * AIR_SPEED_AT_FULL;
+        if (isBrass())
+            airSpeed = Math.min(airSpeed * BRASS_SPEED_FACTOR, airSpeedCap());
+        return airSpeed;
+    }
+
+    /** Create's upper limit for rotation speeds (server config maxRotationSpeed, default 256). */
+    private static float airSpeedCap() {
+        try {
+            return AllConfigs.server().kinetics.maxRotationSpeed.get();
+        } catch (RuntimeException e) {
+            return DEFAULT_AIR_SPEED_CAP; // config not loaded (yet) on this side
+        }
     }
 
     @Override
@@ -464,6 +595,7 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
             fanSmooth = fanSteps / (float) FAN_STEPS;
         if (!clientPacket)
             lastTarget = fanSmooth;
+        autoPercent = Mth.clamp(tag.getInt("AutoPercent"), 0, 100);
         if (clientPacket && airCurrent != null)
             rebuildAllCurrents();
     }
@@ -472,6 +604,8 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
     protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
         super.write(tag, registries, clientPacket);
         tag.putInt("FanSteps", fanSteps);
+        if (isBrass())
+            tag.putInt("AutoPercent", autoPercent);
     }
 
     // ---- goggles ----
@@ -493,6 +627,16 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
                 .append(Component.literal(Math.round(voltage) + " V, " + Math.round(power) + " W")
                         .withStyle(ChatFormatting.AQUA)));
 
+        if (isBrass()) {
+            float hottest = getHottestTransformerTemperature();
+            Component auto = Float.isNaN(hottest)
+                    ? Component.translatable("pghv.gui.brass_cooling_fan.auto_no_trafo",
+                            getTargetTemperature(), autoPercent)
+                    : Component.translatable("pghv.gui.brass_cooling_fan.auto",
+                            getTargetTemperature(), Math.round(hottest), autoPercent);
+            tooltip.add(Component.literal("    ").append(auto.copy().withStyle(ChatFormatting.GOLD)));
+        }
+
         List<TransformerBlockEntity> trafos = findTransformers();
         if (trafos.isEmpty()) {
             tooltip.add(Component.literal("    ")
@@ -513,22 +657,51 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
 
     // ---- value box ----
 
-    /** Fan speed menu like Create's rotation speed controller: 0..100 % in 1 % steps, default 100 %. */
+    /**
+     * Andesite: fan speed menu like Create's rotation speed controller, 0..100 % in 1 % steps, default 100 %.
+     * Brass (targetTemperature = true): target temperature 40..160 degC in 5 degC steps, default 80 degC.
+     */
     public static class FanSpeedBehaviour extends ScrollValueBehaviour {
+        private final boolean targetTemperature;
+
         public FanSpeedBehaviour(Component label, SmartBlockEntity be, ValueBoxTransform slot) {
+            this(label, be, slot, false);
+        }
+
+        public FanSpeedBehaviour(Component label, SmartBlockEntity be, ValueBoxTransform slot, boolean targetTemperature) {
             super(label, be, slot);
-            between(0, SETTING_MAX);
-            withFormatter(i -> (i * SETTING_STEP_PERCENT) + " %");
-            value = SETTING_MAX;
+            this.targetTemperature = targetTemperature;
+            if (targetTemperature) {
+                between(0, TARGET_SETTING_MAX);
+                withFormatter(FanSpeedBehaviour::formatTarget);
+                value = TARGET_DEFAULT;
+            } else {
+                between(0, SETTING_MAX);
+                withFormatter(i -> (i * SETTING_STEP_PERCENT) + " %");
+                value = SETTING_MAX;
+            }
+        }
+
+        public boolean isTargetTemperature() {
+            return targetTemperature;
+        }
+
+        private static String formatTarget(int raw) {
+            return (TARGET_MIN + raw * TARGET_STEP) + " °C";
         }
 
         @Override
         public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
+            if (targetTemperature)
+                return new ValueSettingsBoard(label, max, TARGET_BOARD_MILESTONE, ImmutableList.of(Component.literal("°C")),
+                        new ValueSettingsFormatter(this::formatSettings));
             return new ValueSettingsBoard(label, max, BOARD_MILESTONE, ImmutableList.of(Component.literal("%")),
                     new ValueSettingsFormatter(this::formatSettings));
         }
 
         public MutableComponent formatSettings(ValueSettings settings) {
+            if (targetTemperature)
+                return Component.literal(formatTarget(settings.value()));
             return Component.literal((settings.value() * SETTING_STEP_PERCENT) + " %");
         }
     }

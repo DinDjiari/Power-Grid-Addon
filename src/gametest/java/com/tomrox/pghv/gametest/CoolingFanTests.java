@@ -68,7 +68,7 @@ public class CoolingFanTests {
             helper.assertValueEqual(state.getValue(HvCoolingFanBlock.PART), part, "part index at " + cell);
             helper.assertValueEqual(state.getValue(HvCoolingFanBlock.SLOT), slot, "slot of part " + part);
             boolean hasBe = helper.getLevel().getBlockEntity(helper.absolutePos(cell)) != null;
-            helper.assertValueEqual(hasBe, part == 0, "block entity only on part 0 (part " + part + ")");
+            helper.assertValueEqual(hasBe, part != 1, "block entity on part 0 (main) and parts 2/3 (value box on top), none on part 1 (part " + part + ")");
         }
         return helper.getBlockState(main);
     }

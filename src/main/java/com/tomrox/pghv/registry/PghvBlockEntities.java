@@ -49,6 +49,23 @@ public class PghvBlockEntities {
                             PghvBlocks.COOLING_FAN.get())
                     .build(null));
 
+    /**
+     * Brass cooling fan: same classes as the andesite fan, but own block entity types (each type is bound to
+     * exactly one block, the variant is read from the block state).
+     */
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<HvCoolingFanBlockEntity>> BRASS_COOLING_FAN =
+            BLOCK_ENTITIES.register("brass_cooling_fan", () -> BlockEntityType.Builder
+                    .of((pos, state) -> new HvCoolingFanBlockEntity(PghvBlockEntities.BRASS_COOLING_FAN.get(), pos, state),
+                            PghvBlocks.BRASS_COOLING_FAN.get())
+                    .build(null));
+
+    /** Upper cells of the brass fan: target temperature value box on top. */
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CoolingFanTopBlockEntity>> BRASS_COOLING_FAN_TOP =
+            BLOCK_ENTITIES.register("brass_cooling_fan_top", () -> BlockEntityType.Builder
+                    .of((pos, state) -> new CoolingFanTopBlockEntity(PghvBlockEntities.BRASS_COOLING_FAN_TOP.get(), pos, state),
+                            PghvBlocks.BRASS_COOLING_FAN.get())
+                    .build(null));
+
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CableBoxBlockEntity>> CABLE_BOX =
             BLOCK_ENTITIES.register("cable_box", () -> BlockEntityType.Builder
                     .of((pos, state) -> new CableBoxBlockEntity(PghvBlockEntities.CABLE_BOX.get(), pos, state),

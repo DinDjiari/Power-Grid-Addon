@@ -1,4 +1,5 @@
 {
+  "block.pghv.brass_cooling_fan": "Brass Transformer Fan",
   "block.pghv.cable_box": "Cable Box",
   "block.pghv.cable_segment": "Underground Cable",
   "block.pghv.cooling_fan": "Transformer Cooling Fan",
@@ -34,6 +35,9 @@
   "pghv.cable.tooltip.usage2": "Right-click a block face: anchor point",
   "pghv.cable.tooltip.usage3": "Sneak + right-click into the air: cancel",
   "pghv.cable.unknown_core": "unknown wire",
+  "pghv.gui.brass_cooling_fan.auto": "Automatic: target %1$s °C, transformer %2$s °C, speed %3$s %%",
+  "pghv.gui.brass_cooling_fan.auto_no_trafo": "Automatic: target %1$s °C, no transformer, speed %2$s %%",
+  "pghv.gui.brass_cooling_fan.target": "Target temperature",
   "pghv.gui.cooling_fan.cooling": "Cooling",
   "pghv.gui.cooling_fan.no_trafo": "No transformer behind the fan",
   "pghv.gui.cooling_fan.power": "Fan power",

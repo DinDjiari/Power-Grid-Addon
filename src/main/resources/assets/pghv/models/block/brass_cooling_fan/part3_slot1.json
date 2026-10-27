@@ -1,0 +1,182 @@
+{
+  "credit": "pghv brass transformer fan (own brass grille/blades; brass_casing/axis referenced from Create, pins from Power Grid)",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "grille": "pghv:block/brass_cooling_fan_grille",
+    "side": "create:block/brass_casing",
+    "blades": "pghv:block/brass_cooling_fan_blades",
+    "axis": "create:block/axis",
+    "axis_top": "create:block/axis_top",
+    "particle": "create:block/brass_casing"
+  },
+  "elements": [
+    {
+      "name": "grille_front",
+      "from": [
+        0,
+        0,
+        5.3533
+      ],
+      "to": [
+        16,
+        16,
+        5.3533
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#grille"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#grille"
+        }
+      }
+    },
+    {
+      "name": "grille_back",
+      "from": [
+        0,
+        0,
+        10.6467
+      ],
+      "to": [
+        16,
+        16,
+        10.6467
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#grille"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#grille"
+        }
+      }
+    },
+    {
+      "name": "frame_right",
+      "from": [
+        0,
+        0,
+        5.3333
+      ],
+      "to": [
+        4,
+        16,
+        10.6667
+      ],
+      "faces": {
+        "east": {
+          "uv": [
+            0.0,
+            0,
+            8.0,
+            2.6667
+          ],
+          "texture": "#side"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0,
+            8.0,
+            2.6667
+          ],
+          "texture": "#side"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0,
+            8.0,
+            2.6667
+          ],
+          "texture": "#side"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0,
+            8.0,
+            2.6667
+          ],
+          "texture": "#side"
+        }
+      }
+    },
+    {
+      "name": "frame_top",
+      "from": [
+        0,
+        12,
+        5.3333
+      ],
+      "to": [
+        16,
+        16,
+        10.6667
+      ],
+      "faces": {
+        "east": {
+          "uv": [
+            8.0,
+            0,
+            16.0,
+            2.6667
+          ],
+          "texture": "#side"
+        },
+        "west": {
+          "uv": [
+            8.0,
+            0,
+            16.0,
+            2.6667
+          ],
+          "texture": "#side"
+        },
+        "up": {
+          "uv": [
+            8.0,
+            0,
+            16.0,
+            2.6667
+          ],
+          "texture": "#side"
+        },
+        "down": {
+          "uv": [
+            8.0,
+            0,
+            16.0,
+            2.6667
+          ],
+          "texture": "#side"
+        }
+      }
+    }
+  ]
+}
