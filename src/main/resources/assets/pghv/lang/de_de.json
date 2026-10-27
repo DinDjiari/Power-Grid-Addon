@@ -6,7 +6,6 @@
   "item.pghv.bare_cable": "Blankes Mehrleiterkabel",
   "item.pghv.underground_cable": "Erdkabel (isoliert)",
   "itemGroup.pghv.main": "Power Grid: High Voltage",
-  "pghv.cable.goggles.burnt": "Durchgebrannt",
   "pghv.cable.goggles.core": "Ader %1$s: %2$s",
   "pghv.cable.goggles.current": "Strom: %1$s A (max. %2$s A)",
   "pghv.cable.goggles.length": "Länge: %s Blöcke",

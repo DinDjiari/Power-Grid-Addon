@@ -50,7 +50,7 @@ public class CoolingFanBehaviourTests {
         helper.runAfterDelay(2, () -> {
             PghvTestUtil.voltageSource(helper, SOURCE, HvCoolingFanBlockEntity.RATED_VOLTAGE);
             PghvTestUtil.wire(helper, SOURCE, 0, MAIN, 0, 0.01f);
-            PghvTestUtil.wire(helper, SOURCE, 1, HvCoolingFanBlock.cellOf(MAIN, FACING, 1), 1, 0.01f);
+            PghvTestUtil.wire(helper, SOURCE, 1, MAIN, 1, 0.01f);
         });
     }
 
@@ -91,6 +91,25 @@ public class CoolingFanBehaviourTests {
             Pig pig = helper.findOneEntity(EntityType.PIG);
             double moved = pig.getZ() - z0[0];
             helper.assertTrue(moved > 1.0, "pig should be blown south, moved " + moved);
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 200)
+    public static void fanBlowsFromAllFourCells(GameTestHelper helper) {
+        poweredFan(helper);
+        // Cell of part 3 (one right, one up) - the original single current only covered part 0.
+        BlockPos start = HvCoolingFanBlock.cellOf(MAIN, FACING, 3).relative(FACING, 2);
+        double[] z0 = new double[1];
+        helper.runAfterDelay(60, () -> {
+            helper.setBlock(start.below(), net.minecraft.world.level.block.Blocks.STONE);
+            Pig pig = helper.spawnWithNoFreeWill(EntityType.PIG, start);
+            z0[0] = pig.getZ();
+        });
+        helper.runAfterDelay(120, () -> {
+            Pig pig = helper.findOneEntity(EntityType.PIG);
+            double moved = pig.getZ() - z0[0];
+            helper.assertTrue(moved > 1.0, "pig in front of the upper right cell should be blown south, moved " + moved);
             helper.succeed();
         });
     }

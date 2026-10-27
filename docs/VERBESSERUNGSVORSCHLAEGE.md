@@ -36,7 +36,7 @@ Original-Power-Grid-Voltmeter und ist daher vermutlich ein Effekt dieser Softwar
 
 ## Kühllüfter
 
-5. **Luftstrom nur aus einer der vier Zellen** *(Designfrage an Tom)*
+5. **Luftstrom nur aus einer der vier Zellen** *(UMGESETZT: Tom wünscht volle 2×2-Fläche)*
    Create bläst nur aus der Hauptzelle (unten links), nicht aus der ganzen 2×2-Fläche. Ein Lüfter dieser
    Größe würde realistischer auf der vollen Fläche blasen. Dazu bräuchte es vier Luftströme oder eine
    eigene Entity-Schiebelogik.
@@ -53,7 +53,7 @@ Original-Power-Grid-Voltmeter und ist daher vermutlich ein Effekt dieser Softwar
 8. **Kabelvorschau beim Verlegen** *(mittel, Bedienkomfort)*
    Beim Verlegen sieht man den künftigen Kabelweg nicht, nur Chat-Meldungen. Eine Linie oder Umrisse der
    Pfadzellen auf dem Client wie bei Power Grids Draht-Vorschau würden Fehlplatzierungen vermeiden.
-9. **Durchgebrannte Adern nur durch Neuverlegen reparierbar** *(Designfrage)*
+9. **Durchgebrannte Adern nur durch Neuverlegen reparierbar** *(ERLEDIGT: Durchbrennen auf Toms Wunsch entfernt)*
    Nach einer Überlast muss das ganze Kabel getrennt und neu verlegt werden. Möglich wäre eine Reparatur
    per Rechtsklick mit einem passenden Draht an der Box.
 10. **Unterirdische Kabelabschnitte** *(Designfrage)*

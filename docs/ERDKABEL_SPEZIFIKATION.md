@@ -23,7 +23,7 @@ Build im Sandbox NICHT möglich (Maven gesperrt) – nur statisch prüfen, API i
 ## Werte je Ader (aus Power Grids Datapack-Registry `powergrid:wire_types`, Klasse WireRegistry/WireItemEntry)
 - Erlaubt als Ader: jedes Item mit WireItemEntry, das `cord == false` und `insulated == false` ist (Kupfer `powergrid:wire`, `powergrid:iron_wire`, `powergrid:golden_wire`, auch Drähte anderer Addons).
 - Widerstand pro Block Kabellänge je Ader: R_block = resistancePerItem × itemsPerMeter (Formel bitte an Power Grids eigener Längen/Widerstands-Rechnung prüfen und ggf. angleichen; dokumentieren).
-- Maximalstrom je Ader: maximumCurrent (in Goggles/Tooltip anzeigen; Überlast-Verhalten optional: Kabel „brennt durch“ = Verbindung trennen + Rauchpartikel, wenn |I| > maximumCurrent für > 2 s).
+- Maximalstrom je Ader: maximumCurrent (in Goggles/Tooltip anzeigen; kein Durchbrennen (auf Wunsch des Auftraggebers entfernt); Goggles färben den Strom rot über maximumCurrent).
 - Bare-Cable-Rezept-Ausgabe: 2 Stück (PG-Draht: itemsPerMeter 0.5 → 1 Draht = 2 m). Isolier-Rezept: 1 bare_cable + 8 dried_kelp → 1 underground_cable. Zahlen in den Rezept-JSONs einstellbar (Feld `count`).
 
 ## Kabelbox – Geometrie (north-lokal, Pixel 0..16, Buchse zeigt nach `facing`, facing=north → Buchse auf der −z-Seite)

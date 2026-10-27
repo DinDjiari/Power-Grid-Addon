@@ -52,7 +52,7 @@ Bitte die Punkte der Reihe nach abhaken. Fehlerausgaben (Gradle oder `logs/lates
 - [ ] Goggles an der Box: Adern, Widerstand, Länge, verbunden
 - [ ] Welt speichern/laden und weit weggehen (Chunks entladen) → Verbindung danach wieder aktiv
 - [ ] Segment abbauen → ganzes Kabel weg, Länge × Erdkabel droppt einmal (kein Dupe, auch bei Explosion)
-- [ ] Überlast über Max.-Strom > 2 s → nur diese Ader brennt durch (Rauch), Goggles „Durchgebrannt“
+- [ ] Überlast: Adern brennen NICHT durch (entfernt auf Toms Wunsch); Goggles zeigen Strom rot über Max.
 
 ## 4. Texturen und Optik
 - [ ] Lüfter-Textur: Stahlgrau mit Messingakzenten, keine Streckung oder verdrehten UVs; Standard-Trafo behält seine Originaltextur

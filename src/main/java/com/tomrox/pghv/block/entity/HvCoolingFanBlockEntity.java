@@ -89,7 +89,7 @@ import java.util.List;
  *
  * AIR FLOW
  *   Like Power Grid's electric fan: IAirCurrentSource, direction = facing, strength ~ f (speed value 256 * f,
- *   no flow below f = 0.05). Create's AirCurrent covers one block column starting at the main cell only.
+ *   no flow below f = 0.05). One Create AirCurrent per cell, so the whole 2x2 face blows (parts 1..3 use PartAirSource).
  */
 public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHaveGoggleInformation, IAirCurrentSource {
     // ---- electrical ----
@@ -135,6 +135,8 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
 
     // Air current (as in ElectricFanBlockEntity)
     private AirCurrent airCurrent;
+    /** Air sources of the other three cells (part 1..3); same speed and direction as the main cell. */
+    private PartAirSource[] partSources;
     private int airCurrentUpdateCooldown;
     private int entitySearchCooldown;
     private boolean updateAirFlow;
@@ -143,6 +145,7 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
     public HvCoolingFanBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         airCurrent = new AirCurrent(this);
+        partSources = new PartAirSource[] { new PartAirSource(1), new PartAirSource(2), new PartAirSource(3) };
         updateAirFlow = true;
     }
 
@@ -308,7 +311,7 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         }
         if (updateAirFlow) {
             updateAirFlow = false;
-            airCurrent.rebuild();
+            rebuildAllCurrents();
             sendData();
         }
         if (getSpeed() == 0)
@@ -316,8 +319,71 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         if (entitySearchCooldown-- <= 0) {
             entitySearchCooldown = 5;
             airCurrent.findEntities();
+            for (PartAirSource part : partSources)
+                part.current.findEntities();
         }
         airCurrent.tick();
+        for (PartAirSource part : partSources)
+            part.current.tick();
+    }
+
+    private void rebuildAllCurrents() {
+        airCurrent.rebuild();
+        if (partSources != null) {
+            for (PartAirSource part : partSources)
+                part.current.rebuild();
+        }
+    }
+
+    /** Air current source for one of the three secondary cells; everything but the position comes from the main BE. */
+    private final class PartAirSource implements IAirCurrentSource {
+        private final int part;
+        private final AirCurrent current;
+
+        private PartAirSource(int part) {
+            this.part = part;
+            this.current = new AirCurrent(this);
+        }
+
+        @Override
+        public AirCurrent getAirCurrent() {
+            return current;
+        }
+
+        @Nullable
+        @Override
+        public Level getAirCurrentWorld() {
+            return level;
+        }
+
+        @Override
+        public BlockPos getAirCurrentPos() {
+            BlockState state = getBlockState();
+            if (!state.hasProperty(HvCoolingFanBlock.FACING))
+                return worldPosition;
+            return HvCoolingFanBlock.cellOf(worldPosition, state.getValue(HvCoolingFanBlock.FACING), part);
+        }
+
+        @Override
+        public float getSpeed() {
+            return HvCoolingFanBlockEntity.this.getSpeed();
+        }
+
+        @Override
+        public Direction getAirflowOriginSide() {
+            return HvCoolingFanBlockEntity.this.getAirflowOriginSide();
+        }
+
+        @Nullable
+        @Override
+        public Direction getAirFlowDirection() {
+            return HvCoolingFanBlockEntity.this.getAirFlowDirection();
+        }
+
+        @Override
+        public boolean isSourceRemoved() {
+            return HvCoolingFanBlockEntity.this.isRemoved();
+        }
     }
 
     public void blockInFrontChanged() {
@@ -386,7 +452,7 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         if (!clientPacket)
             lastTarget = fanSmooth;
         if (clientPacket && airCurrent != null)
-            airCurrent.rebuild();
+            rebuildAllCurrents();
     }
 
     @Override
