@@ -44,8 +44,8 @@ import org.patryk3211.powergrid.electricity.base.TerminalBoundingBox;
  *   - The data cable from a brass fan is plugged into the front socket (DataCableItem).
  *   - Terminal 0 = servo +, 1 = servo -, 2 = control signal; ordinary Power Grid wires go from here to the servo.
  * HORIZONTAL_FACING = direction the socket points to. Placed on a wall: socket points out of the wall;
- * otherwise towards the player. Geometry (north-local, pixels): body x 4..12, y 1..13, z 10..16;
- * socket collar x 5..11, y 4..10, z 9..10; connectors on top at x 5 / 8 / 11, z 13, y 13..15.
+ * otherwise towards the player. Geometry (north-local, pixels): body x 4..12, y 1..11, z 10..16;
+ * socket collar x 5..11, y 4..10, z 9..10; connectors on top at x 5 / 8 / 11, z 13, y 11.5..14.
  */
 @MethodsReturnNonnullByDefault
 public class DataSocketBoxBlock extends HorizontalElectricBlock implements IBE<DataSocketBoxBlockEntity> {
@@ -55,17 +55,17 @@ public class DataSocketBoxBlock extends HorizontalElectricBlock implements IBE<D
 
     private static final TerminalBoundingBox[] TERMINALS = new TerminalBoundingBox[] {
             new TerminalBoundingBox(Component.translatable("pghv.terminal.servo_positive").withStyle(ChatFormatting.RED),
-                    3.75, 13, 11.75, 6.25, 16, 14.25).withColor(IDecoratedTerminal.RED),
+                    3.75, 11, 11.75, 6.25, 14, 14.25).withColor(IDecoratedTerminal.RED),
             new TerminalBoundingBox(Component.translatable("pghv.terminal.servo_negative").withStyle(ChatFormatting.BLUE),
-                    6.75, 13, 11.75, 9.25, 16, 14.25).withColor(IDecoratedTerminal.BLUE),
+                    6.75, 11, 11.75, 9.25, 14, 14.25).withColor(IDecoratedTerminal.BLUE),
             new TerminalBoundingBox(Component.translatable("pghv.terminal.servo_control").withStyle(ChatFormatting.DARK_GREEN),
-                    9.75, 13, 11.75, 12.25, 16, 14.25).withColor(IDecoratedTerminal.GREEN)
+                    9.75, 11, 11.75, 12.25, 14, 14.25).withColor(IDecoratedTerminal.GREEN)
     };
 
     private static final VoxelShape SHAPE = Shapes.or(
-            box(4, 1, 10, 12, 13, 16),
+            box(4, 1, 10, 12, 11, 16),
             box(5, 4, 9, 11, 10, 10),
-            box(4, 13, 11.5, 12, 15, 14.5));
+            box(4, 11, 11.5, 12, 14, 14.5));
 
     public DataSocketBoxBlock(Properties settings) {
         super(settings);
