@@ -11,5 +11,7 @@ Fan models under assets/pghv/models/ are original; the transformer that the fan 
 No Create textures are included.
 cable_box.png, cable_segment.png (textures/block/) and bare_cable*.png, underground_cable*.png (textures/item/) are original pixel-art textures created for this addon (generated with PIL); copper/iron tones only chosen to match Create/PowerGrid, no pixels copied. Cable models are original.
 
-Cooling fan (v5): own pixel art in the style of Create's encased fan (no Create pixels or files copied; Create assets are
-All Rights Reserved). The pins reference PowerGrid's texture powergrid:block/wire_connector (Apache-2.0) at runtime.
+Cooling fan: the block, rotor and item models are original geometry that REFERENCE Create's textures at runtime
+(create:block/fan_casing, fan_side, fan_blades, axis, axis_top), scaled to 2x2. No Create texture or model file is included
+(Create assets are All Rights Reserved); Create is a required dependency. The pins reference PowerGrid's texture
+powergrid:block/wire_connector (Apache-2.0) at runtime.
