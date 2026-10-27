@@ -282,9 +282,14 @@ public class BrassCoolingFanTests {
             HvCoolingFanBlockEntity andesite = helper.getBlockEntity(andesiteMain);
             helper.assertTrue(brass.getFanFraction() > 0.95f, "brass fan at full speed, is " + brass.getFanFraction());
             helper.assertTrue(andesite.getFanFraction() > 0.95f, "andesite fan at full speed, is " + andesite.getFanFraction());
-            thermal(helper, andesiteTrafo).setTemperature(start);
-            thermal(helper, brassTrafo).setTemperature(start);
-            thermal(helper, reference).setTemperature(start);
+            // An unwound transformer has a tiny thermal mass and loses a third of its excess heat within 4 ticks,
+            // too fast for the evaluation below. Scaling the mass of all three equally only slows the decay down;
+            // the compared ratios stay the same.
+            for (BlockPos trafo : new BlockPos[] { andesiteTrafo, brassTrafo, reference }) {
+                ThermalBehaviour th = thermal(helper, trafo);
+                th.setThermalMass(thermalMass(th) * 8);
+                th.setTemperature(start);
+            }
         });
         // Evaluate as soon as the reference has lost 20 % of its excess temperature (the brass transformer is then
         // still well above 65 degC, i.e. the brass fan stays at 100 %).
@@ -300,6 +305,16 @@ public class BrassCoolingFanTests {
                 done[0] = true;
                 evaluateCooling(helper, start, andesiteTrafo, brassTrafo, reference);
             });
+        }
+    }
+
+    private static float thermalMass(ThermalBehaviour thermal) {
+        try {
+            java.lang.reflect.Field f = ThermalBehaviour.class.getDeclaredField("thermalMass");
+            f.setAccessible(true);
+            return f.getFloat(thermal);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
         }
     }
 
