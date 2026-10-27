@@ -50,3 +50,9 @@ wahrscheinlichsten Compile-/Laufzeitfehler:
 - `Block.playerWillDestroy(Level, BlockPos, BlockState, Player)` gibt in 1.21.1 `BlockState` zurück.
 - `com.mojang.logging.LogUtils` verfügbar.
 - Erzwungenes synchrones Chunk-Laden beim Trennen (max. 256 Blöcke) – vertretbar, beobachten.
+
+## Nachtrag Wertefeld oben (Kühllüfter)
+- `ScrollValueBehaviour.setValue(int)` überschreibbar (nicht final); öffentliches Feld `value`.
+- `ValueBoxTransform.testHit(LevelAccessor, BlockPos, BlockState, Vec3)` überschreibbar (wie Power Grids CustomValueBoxTransformer).
+- Wertefeld auf der Oberseite: Drehung `rotateYDegrees(facing+180).rotateXDegrees(90)` wie `ValueBoxTransform.Sided` für UP – Lage/Leserichtung im Spiel prüfen.
+- Zweiter BlockEntityType `pghv:cooling_fan_top` für denselben Block (Teile 2/3), eigener Ticker im Block (`getTicker` überschrieben).

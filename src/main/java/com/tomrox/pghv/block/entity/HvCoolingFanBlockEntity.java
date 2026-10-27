@@ -160,6 +160,17 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         behaviours.add(speed);
     }
 
+    /** Raw menu value 0..SETTING_MAX (shown by the value box on top of the fan, see CoolingFanTopBlockEntity). */
+    public int getSpeedValue() {
+        return speed == null ? SETTING_MAX : speed.getValue();
+    }
+
+    /** Sets the menu value (server side, forwarded from the top value box). */
+    public void setSpeedValue(int value) {
+        if (speed != null && speed.getValue() != value)
+            speed.setValue(value);
+    }
+
     /** Speed setting 0..1 from the menu. */
     public float getSetting() {
         return speed == null ? 1.0f : speed.getValue() / (float) SETTING_MAX;
@@ -522,8 +533,16 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         }
     }
 
-    /** Value box on the front face of the main part, follows facing and slot. */
+    /**
+     * Value box of the main part: kept for the stored setting, but hidden and not clickable -
+     * the visible box sits centred on top of the fan (CoolingFanTopBlockEntity.TopBox).
+     */
     public static class SpeedBox extends ValueBoxTransform {
+        @Override
+        public boolean testHit(LevelAccessor level, BlockPos pos, BlockState state, Vec3 localHit) {
+            return false;
+        }
+
         @Override
         public Vec3 getLocalOffset(LevelAccessor level, BlockPos pos, BlockState state) {
             // Expressed for facing SOUTH (front = +z); rotateHorizontally turns it to the real facing.

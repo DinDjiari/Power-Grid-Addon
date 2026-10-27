@@ -1,0 +1,12 @@
+--release
+21
+-proc:none
+-Xmaxerrs
+5000
+-d
+/tmp/jcy
+src/main/java/com/tomrox/pghv/block/entity/CoolingFanTopBlockEntity.java
+src/main/java/com/tomrox/pghv/block/entity/HvCoolingFanBlockEntity.java
+src/main/java/com/tomrox/pghv/block/HvCoolingFanBlock.java
+src/main/java/com/tomrox/pghv/registry/PghvBlockEntities.java
+src/gametest/java/com/tomrox/pghv/gametest/CoolingFanBehaviourTests.java
