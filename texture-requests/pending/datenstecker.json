@@ -1,0 +1,17 @@
+{"jobs": [
+  {"tool": "generate_texture", "args": {
+    "prompt": "Side panel of a small industrial electrical junction box: brass frame on the outer 1-pixel border, dark grey-brown metal plate inside with subtle scratches, four small brass rivets near the corners, a thin yellow-black warning stripe near the bottom. Create mod brass casing style.",
+    "out_path": "texture-requests/results/datenstecker/data_socket_box.png", "width": 16, "height": 16, "colors": 12}},
+  {"tool": "generate_texture", "args": {
+    "prompt": "Front view of a round 3-pin industrial data socket: a circular grey metal collar, dark black inside, three small round contacts inside arranged in a triangle: one yellow, one blue, one red. Viewed straight on, centered, filling the image.",
+    "out_path": "texture-requests/results/datenstecker/data_socket_6.png", "width": 6, "height": 6, "colors": 8, "transparent": true}},
+  {"tool": "generate_texture", "args": {
+    "prompt": "Front view of a round blue plastic industrial plug face with a yellow pin and a red pin and a dark center, straight on, filling the image.",
+    "out_path": "texture-requests/results/datenstecker/data_plug_front_4.png", "width": 4, "height": 4, "colors": 6}},
+  {"tool": "generate_texture", "args": {
+    "prompt": "Inventory item icon: a coiled blue insulated data cable with a round blue plug at the end showing a yellow and a red pin, Minecraft item style, dark outline, isometric-free flat icon.",
+    "out_path": "texture-requests/results/datenstecker/data_cable_item.png", "width": 16, "height": 16, "colors": 14, "transparent": true}},
+  {"tool": "generate_texture", "args": {
+    "prompt": "Inventory item icon of a small brass and dark grey electrical box with a round socket on the front and three small white ceramic terminals on top, Minecraft item style, three-quarter view.",
+    "out_path": "texture-requests/results/datenstecker/data_socket_box_item.png", "width": 16, "height": 16, "colors": 14, "transparent": true}}
+]}
