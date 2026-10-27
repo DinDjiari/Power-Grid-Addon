@@ -68,6 +68,16 @@ Spezifikation: `docs/UEBERHITZUNGSSCHUTZ_SPEZIFIKATION.md`. Automatisch: `Overhe
 - [ ] Welt speichern/laden im ausgelösten Zustand: bleibt ausgelöst, Richtung bleibt
 - [ ] Servo-Tempo: bei 48 V erste Bewegung ca. 7 U/min (180° ≈ 4 s), danach bis 32 U/min; prüfen, dass der Schalter rechtzeitig vor 175 °C öffnet
 
+## 3d. Ponder-Szenen (Taste W über dem Item im Inventar)
+- [ ] Spiel auf **Englisch**: über Trafo-Kühllüfter, Messing-Trafolüfter, Datenkabel, Kabelbox, Erdkabel und blankem Kabel erscheint „Hold [W] to Ponder“; Szenen öffnen ohne Absturz, keine Roh-Keys (`pghv.ponder...`) sichtbar
+- [ ] Spiel auf **Deutsch**: dieselben Szenen zeigen deutsche Titel und Texte (Umlaute, °C, „100 %“ korrekt, kein „Format error“)
+- [ ] Ponder-Index: Kategorie „Power Grid: High Voltage“ mit Lüfter-Icon, enthält alle sechs Items
+- [ ] Szene „Transformatoren kühlen“: Trafo + Lüfter rasten sichtbar ein, Slot-Wechsel vorne/mittig/hinten, Pins rot/blau umrandet und Drähte hängen an den Pins, Rotor dreht (100 % → 50 % → 100 %), Wertefeld-Markierung oben mittig, Gegenstände werden nach vorne weggeblasen
+- [ ] Szene „Automatische Trafokühlung“: Rotor steht bei „kalt“, dreht hoch (30/65/100 %), doppelt so schnell, stoppt wieder
+- [ ] Szene „Überhitzungsschutz“: Steckdosen-Markierungen rot/blau/grün auf der Steckdose, 3 Drähte Kupfer/Eisen/Gold Steckdose → Servo, Servo dreht, HV-Schalter öffnet bei „155 °C“ und schließt bei „100 °C“ (Richtung stimmt?), Rauch an der Steckdose
+- [ ] Szene „Erdkabel verlegen“: Boxen drehen die Buchse zum Kabel, Segmente erscheinen der Reihe nach, (5,1,5) unterirdisch markiert, Kappen werden Kupfer/Eisen/Gold, die drei Farblinien enden auf den richtigen Anschlüssen
+- [ ] Log: keine Fehler zu `pghv:ponder/*.nbt` oder fehlenden Lang-Keys
+
 ## 4. Texturen und Optik
 - [ ] Lüfter: Creates Lüftertextur auf 2×2 vergrößert (Create-Texturen laden, kein lila-schwarz), 2 kleine Keramik-Connectoren unten links (Polarität per Highlight), durchsichtig; Standard-Trafo behält seine Originaltextur
 - [ ] Lüfter bläst aus allen 4 Zellen (Entity vor jeder Zelle wird weggeschoben)

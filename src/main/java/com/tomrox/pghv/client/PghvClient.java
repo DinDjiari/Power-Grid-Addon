@@ -16,7 +16,9 @@
 package com.tomrox.pghv.client;
 
 import com.tomrox.pghv.Pghv;
+import com.tomrox.pghv.client.ponder.PghvPonderPlugin;
 import com.tomrox.pghv.registry.PghvBlockEntities;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -41,5 +43,7 @@ public class PghvClient {
     public static void onClientSetup(FMLClientSetupEvent event) {
         // Partial-Modelle (Create/Flywheel) beim Client-Setup anmelden
         PghvPartialModels.init();
+        // Ponder scenes (W in the inventory); Ponder registers all plugins at FMLLoadCompleteEvent.
+        event.enqueueWork(() -> PonderIndex.addPlugin(new PghvPonderPlugin()));
     }
 }
