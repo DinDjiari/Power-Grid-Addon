@@ -26,6 +26,10 @@ public class PghvPartialModels {
     public static final PartialModel COOLING_FAN_ROTOR =
             PartialModel.of(ResourceLocation.fromNamespaceAndPath("pghv", "block/cooling_fan/rotor"));
 
+    /** Rotor of the brass fan (models/block/brass_cooling_fan/rotor.json, from the asset worker). */
+    public static final PartialModel BRASS_COOLING_FAN_ROTOR =
+            PartialModel.of(ResourceLocation.fromNamespaceAndPath("pghv", "block/brass_cooling_fan/rotor"));
+
     public static void init() {
     }
 }

@@ -64,7 +64,7 @@ public class HvCoolingFanRenderer extends SafeBlockEntityRenderer<HvCoolingFanBl
         ms.translate(dx, dy, dz);
         ms.mulPose(Axis.ZP.rotation(spin));
         ms.translate(-0.5, -0.5, -0.5);
-        CachedBuffers.partial(PghvPartialModels.COOLING_FAN_ROTOR, state)
+        CachedBuffers.partial(be.isBrass() ? PghvPartialModels.BRASS_COOLING_FAN_ROTOR : PghvPartialModels.COOLING_FAN_ROTOR, state)
                 .light(light)
                 .renderInto(ms, vb);
         ms.popPose();

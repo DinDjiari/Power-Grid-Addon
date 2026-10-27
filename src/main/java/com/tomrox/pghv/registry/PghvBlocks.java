@@ -43,6 +43,14 @@ public class PghvBlocks {
                     .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
+    /** Brass variant: automatic speed control from the transformer temperature (same class, brass = true). */
+    public static final DeferredBlock<HvCoolingFanBlock> BRASS_COOLING_FAN = BLOCKS.register("brass_cooling_fan",
+            () -> new HvCoolingFanBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0f, 6.0f)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion(), true));
+
     public static final DeferredBlock<CableBoxBlock> CABLE_BOX = BLOCKS.register("cable_box",
             () -> new CableBoxBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_ORANGE)

@@ -34,6 +34,7 @@ public class PghvClient {
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(PghvBlockEntities.HV_VOLTMETER.get(), HvGaugeRenderer::new);
         event.registerBlockEntityRenderer(PghvBlockEntities.COOLING_FAN.get(), HvCoolingFanRenderer::new);
+        event.registerBlockEntityRenderer(PghvBlockEntities.BRASS_COOLING_FAN.get(), HvCoolingFanRenderer::new);
     }
 
     @SubscribeEvent

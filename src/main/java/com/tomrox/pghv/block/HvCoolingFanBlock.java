@@ -106,12 +106,25 @@ public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFan
         }
     }
 
+    /** Variant: false = andesite fan (fixed speed menu), true = brass fan (automatic, target temperature menu). */
+    private final boolean brass;
+
     public HvCoolingFanBlock(Properties properties) {
+        this(properties, false);
+    }
+
+    public HvCoolingFanBlock(Properties properties, boolean brass) {
         super(properties);
+        this.brass = brass;
         registerDefaultState(stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(PART, 0)
                 .setValue(SLOT, 2));
+    }
+
+    /** True for the brass variant (pghv:brass_cooling_fan). */
+    public boolean isBrass() {
+        return brass;
     }
 
     @Override
@@ -400,7 +413,7 @@ public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFan
 
     @Override
     public BlockEntityType<? extends HvCoolingFanBlockEntity> getBlockEntityType() {
-        return PghvBlockEntities.COOLING_FAN.get();
+        return brass ? PghvBlockEntities.BRASS_COOLING_FAN.get() : PghvBlockEntities.COOLING_FAN.get();
     }
 
     @Override
@@ -409,7 +422,8 @@ public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFan
         if (part == 0)
             return IBE.super.newBlockEntity(pos, state);
         if (part >= 2) // upper cells carry the speed value box on top of the fan
-            return new CoolingFanTopBlockEntity(PghvBlockEntities.COOLING_FAN_TOP.get(), pos, state);
+            return new CoolingFanTopBlockEntity(brass ? PghvBlockEntities.BRASS_COOLING_FAN_TOP.get()
+                    : PghvBlockEntities.COOLING_FAN_TOP.get(), pos, state);
         return null;
     }
 

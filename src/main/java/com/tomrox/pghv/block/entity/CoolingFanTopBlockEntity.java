@@ -37,6 +37,7 @@ import java.util.List;
  * Block entity of the two upper cells (part 2 and 3) of the cooling fan. It only carries the speed value box,
  * centred on top of the fan (on the edge shared by part 2 and 3, so both halves are clickable), like Create's
  * rotation speed controller. The value is stored in the main part (HvCoolingFanBlockEntity) and mirrored here.
+ * Brass fan: the same box sets the target temperature (40..160 degC); the mode follows the block variant.
  */
 public class CoolingFanTopBlockEntity extends SmartBlockEntity {
     // Set in addBehaviours (super constructor) - no initializer.
@@ -48,7 +49,10 @@ public class CoolingFanTopBlockEntity extends SmartBlockEntity {
 
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-        speed = new TopSpeedBehaviour(this);
+        // Runs in the super constructor; the block state (and thus the variant) is already known.
+        BlockState state = getBlockState();
+        boolean brass = state.getBlock() instanceof HvCoolingFanBlock block && block.isBrass();
+        speed = new TopSpeedBehaviour(this, brass);
         behaviours.add(speed);
     }
 
@@ -74,7 +78,12 @@ public class CoolingFanTopBlockEntity extends SmartBlockEntity {
         private final CoolingFanTopBlockEntity owner;
 
         public TopSpeedBehaviour(CoolingFanTopBlockEntity be) {
-            super(Component.translatable("pghv.gui.cooling_fan.speed"), be, new TopBox());
+            this(be, false);
+        }
+
+        public TopSpeedBehaviour(CoolingFanTopBlockEntity be, boolean brass) {
+            super(Component.translatable(brass ? "pghv.gui.brass_cooling_fan.target" : "pghv.gui.cooling_fan.speed"),
+                    be, new TopBox(), brass);
             this.owner = be;
         }
 

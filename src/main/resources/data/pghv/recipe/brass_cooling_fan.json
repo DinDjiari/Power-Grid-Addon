@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " T ",
+    " F ",
+    " B "
+  ],
+  "key": {
+    "T": {
+      "item": "create:electron_tube"
+    },
+    "F": {
+      "item": "pghv:cooling_fan"
+    },
+    "B": {
+      "item": "create:brass_ingot"
+    }
+  },
+  "result": {
+    "id": "pghv:brass_cooling_fan",
+    "count": 1
+  }
+}

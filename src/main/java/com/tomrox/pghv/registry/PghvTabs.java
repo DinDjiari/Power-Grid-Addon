@@ -43,6 +43,7 @@ public class PghvTabs {
                     .displayItems((params, output) -> {
                         output.accept(PghvItems.HV_VOLTMETER.get());
                         output.accept(PghvItems.COOLING_FAN.get());
+                        output.accept(PghvItems.BRASS_COOLING_FAN.get());
                         output.accept(PghvItems.CABLE_BOX.get());
                         for (CableCores cores : CREATIVE_CORES)
                             output.accept(cable(PghvItems.BARE_CABLE.get(), cores));

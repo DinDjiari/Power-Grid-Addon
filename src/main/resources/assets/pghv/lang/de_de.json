@@ -1,4 +1,5 @@
 {
+  "block.pghv.brass_cooling_fan": "Messing-Trafolüfter",
   "block.pghv.cable_box": "Kabelbox",
   "block.pghv.cable_segment": "Erdkabel",
   "block.pghv.cooling_fan": "Trafo-Kühllüfter",
@@ -34,6 +35,9 @@
   "pghv.cable.tooltip.usage2": "Rechtsklick auf Blockfläche: Ankerpunkt",
   "pghv.cable.tooltip.usage3": "Schleichen + Rechtsklick in die Luft: Abbrechen",
   "pghv.cable.unknown_core": "unbekannter Draht",
+  "pghv.gui.brass_cooling_fan.auto": "Automatik: Ziel %1$s °C, Trafo %2$s °C, Drehzahl %3$s %%",
+  "pghv.gui.brass_cooling_fan.auto_no_trafo": "Automatik: Ziel %1$s °C, kein Trafo, Drehzahl %2$s %%",
+  "pghv.gui.brass_cooling_fan.target": "Zieltemperatur",
   "pghv.gui.cooling_fan.cooling": "Kühlung",
   "pghv.gui.cooling_fan.no_trafo": "Kein Trafo hinter dem Lüfter",
   "pghv.gui.cooling_fan.power": "Lüfterleistung",
