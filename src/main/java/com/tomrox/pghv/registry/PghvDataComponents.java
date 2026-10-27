@@ -48,4 +48,14 @@ public class PghvDataComponents {
                     .persistent(GlobalPos.CODEC)
                     .networkSynchronized(GlobalPos.STREAM_CODEC)
                     .build());
+
+    /**
+     * Data cable laid on the ground: the three open block-wire ends (keys "W0".."W2", each a Power Grid
+     * BlockWireEntityEndpoint written with write(CompoundTag)). Only while laying; DATA_CABLE_START stays set.
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<net.minecraft.nbt.CompoundTag>> DATA_CABLE_ROUTE =
+            DATA_COMPONENTS.register("data_cable_route", () -> DataComponentType.<net.minecraft.nbt.CompoundTag>builder()
+                    .persistent(net.minecraft.nbt.CompoundTag.CODEC)
+                    .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.COMPOUND_TAG)
+                    .build());
 }

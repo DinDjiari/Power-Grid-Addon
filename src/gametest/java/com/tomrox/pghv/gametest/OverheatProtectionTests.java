@@ -47,6 +47,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.gametest.GameTestHolder;
+import org.patryk3211.powergrid.electricity.wire.BlockWireEntity;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 import org.patryk3211.powergrid.collections.ModdedBlocks;
 import org.patryk3211.powergrid.electricity.base.ThermalBehaviour;
@@ -394,6 +395,49 @@ public class OverheatProtectionTests {
             helper.assertValueEqual(player.getMainHandItem().getCount(), 1, "nothing consumed on duplicate");
             helper.succeed();
         });
+    }
+
+    /** Ground mode: fan -> floor waypoint -> servo lays three Power Grid block wires and powers the servo. */
+    @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 200)
+    public static void dataCableOnGround(GameTestHelper helper) {
+        PghvTestUtil.floor(helper);
+        BlockPos main = fanOnFloor(helper, new BlockPos(3, 1, 3), PghvItems.BRASS_COOLING_FAN.get());
+        BlockPos servoPos = new BlockPos(6, 1, 10);
+        servo(helper, servoPos, Direction.UP);
+        helper.runAfterDelay(3, () -> {
+            FakePlayer player = PghvTestUtil.player(helper, GameType.SURVIVAL, main.relative(FACING, 3));
+            player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(PghvItems.DATA_CABLE.get(), 16));
+            PghvTestUtil.use(helper, player, main, FACING);
+            PghvTestUtil.use(helper, player, new BlockPos(5, 0, 7), Direction.UP);
+            helper.assertValueEqual(blockWires(helper).size(), 3, "three block wires after the floor click");
+            helper.assertTrue(player.getMainHandItem().has(PghvDataComponents.DATA_CABLE_ROUTE.get()), "route kept");
+            PghvTestUtil.use(helper, player, servoPos, Direction.UP);
+            List<BlockWireEntity> wires = blockWires(helper);
+            helper.assertValueEqual(wires.size(), 3, "still three block wires (extended, not new)");
+            for (BlockWireEntity w : wires)
+                helper.assertTrue(w.getEndpoint2() != null, "block wire ends at the servo");
+            helper.assertTrue(wires(helper).isEmpty(), "no hanging wires in ground mode");
+            ItemStack hand = player.getMainHandItem();
+            helper.assertFalse(hand.has(PghvDataComponents.DATA_CABLE_ROUTE.get()), "route cleared");
+            helper.assertFalse(hand.has(PghvDataComponents.DATA_CABLE_START.get()), "start cleared");
+            helper.assertTrue(hand.getCount() < 16 && hand.getCount() > 0, "cables used by length, left " + hand.getCount());
+            int wireItems = 0;
+            for (BlockWireEntity w : wires)
+                wireItems = Math.max(wireItems, w.getWireCount());
+            helper.assertTrue(wireItems <= 16 - hand.getCount(), "no dupe: wire items " + wireItems
+                    + " <= cables used " + (16 - hand.getCount()));
+        });
+        helper.runAfterDelay(60, () -> {
+            HvCoolingFanBlockEntity fan = helper.getBlockEntity(main);
+            double supply = fan.getTerminalVoltage(HvCoolingFanBlock.SOCKET_POSITIVE, HvCoolingFanBlock.SOCKET_NEGATIVE);
+            helper.assertTrue(supply > 44.0 && supply < 47.99, "servo loads the socket via ground wires, is " + supply);
+            helper.succeed();
+        });
+    }
+
+    private static List<BlockWireEntity> blockWires(GameTestHelper helper) {
+        return helper.getLevel().getEntitiesOfClass(BlockWireEntity.class, helper.getBounds().inflate(4),
+                e -> e.isAlive());
     }
 
     /** Too long (> 16 blocks), andesite fan has no socket, creative does not consume. */
