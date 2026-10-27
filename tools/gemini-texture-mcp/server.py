@@ -67,22 +67,35 @@ def _png_b64(img: PILImage.Image) -> str:
     return base64.b64encode(buf.getvalue()).decode()
 
 
+CALL_TIMEOUT = float(os.environ.get("GEMINI_TIMEOUT", "150"))
+
+
+def _with_timeout(fn, what: str):
+    """fn() in einem Daemon-Thread mit hartem Zeitlimit (ein hängender Aufruf blockiert sonst alles)."""
+    import threading
+    box: dict = {}
+
+    def run():
+        try:
+            box["v"] = fn()
+        except BaseException as e:  # noqa: BLE001
+            box["e"] = e
+    t = threading.Thread(target=run, daemon=True)
+    t.start()
+    t.join(CALL_TIMEOUT)
+    if t.is_alive():
+        raise TimeoutError(f"{what}: keine Antwort nach {CALL_TIMEOUT:.0f} s")
+    if "e" in box:
+        raise box["e"]
+    return box["v"]
+
+
 def _gemini_image(prompt: str, refs: list[PILImage.Image], model: str) -> PILImage.Image:
-    """Ein Bild von Gemini holen. Erst Interactions-API, sonst klassisches generate_content."""
+    """Ein Bild von Gemini holen: erst generate_content, sonst Interactions-API. Jeweils mit Zeitlimit."""
     client = _client()
     errors = []
-    if hasattr(client, "interactions"):
-        try:
-            inp = [{"type": "text", "text": prompt}] + [
-                {"type": "image", "data": _png_b64(r), "mime_type": "image/png"} for r in refs]
-            it = client.interactions.create(model=model, input=inp if refs else prompt,
-                                            response_format={"type": "image", "mime_type": "image/jpeg",
-                                                             "aspect_ratio": "1:1", "image_size": "1K"})
-            data = it.output_image.data
-            return PILImage.open(io.BytesIO(base64.b64decode(data))).convert("RGBA")
-        except Exception as e:  # noqa: BLE001 – Fallback versuchen
-            errors.append(f"interactions: {e}")
-    try:
+
+    def via_generate_content():
         from google.genai import types
         contents = [prompt] + [types.Part.from_bytes(data=base64.b64decode(_png_b64(r)), mime_type="image/png")
                                for r in refs]
@@ -93,9 +106,34 @@ def _gemini_image(prompt: str, refs: list[PILImage.Image], model: str) -> PILIma
         for part in resp.candidates[0].content.parts:
             if getattr(part, "inline_data", None) and part.inline_data.data:
                 return PILImage.open(io.BytesIO(part.inline_data.data)).convert("RGBA")
-        errors.append("generate_content: keine Bilddaten in der Antwort")
-    except Exception as e:  # noqa: BLE001
-        errors.append(f"generate_content: {e}")
+        raise RuntimeError("keine Bilddaten in der Antwort")
+
+    def via_interactions():
+        inp = [{"type": "text", "text": prompt}] + [
+            {"type": "image", "data": _png_b64(r), "mime_type": "image/png"} for r in refs]
+        it = client.interactions.create(model=model, input=inp if refs else prompt,
+                                        response_format={"type": "image", "mime_type": "image/jpeg",
+                                                         "aspect_ratio": "1:1", "image_size": "1K"})
+        img = getattr(it, "output_image", None)
+        if img is None or not getattr(img, "data", None):
+            raise RuntimeError(f"kein Bild, Status {getattr(it, 'status', '?')}, Fehler {getattr(it, 'errors', None)}")
+        return PILImage.open(io.BytesIO(base64.b64decode(img.data))).convert("RGBA")
+
+    attempts = [("generate_content", via_generate_content)]
+    if hasattr(client, "interactions"):
+        attempts.append(("interactions", via_interactions))
+    for name, fn in attempts:
+        try:
+            print(f"[gemini] {name} ({model}) …", file=sys.stderr, flush=True)
+            return _with_timeout(fn, name)
+        except Exception as e:  # noqa: BLE001
+            msg = str(e)
+            print(f"[gemini] {name} fehlgeschlagen: {msg[:300]}", file=sys.stderr, flush=True)
+            errors.append(f"{name}: {msg}")
+            if "RESOURCE_EXHAUSTED" in msg and "limit: 0" in msg:
+                errors.append("HINWEIS: Bildmodelle sind im kostenlosen Kontingent gesperrt (limit 0) – "
+                              "in Google AI Studio die Abrechnung (Billing) für das Projekt aktivieren.")
+                break
     raise RuntimeError("Gemini lieferte kein Bild – " + " | ".join(errors))
 
 
