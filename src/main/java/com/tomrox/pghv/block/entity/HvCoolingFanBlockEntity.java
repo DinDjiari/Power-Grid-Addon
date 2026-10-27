@@ -223,6 +223,9 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         boolean brass = isBrass();
         speed = new FanSpeedBehaviour(Component.translatable(brass ? "pghv.gui.brass_cooling_fan.target"
                 : "pghv.gui.cooling_fan.speed"), this, new SpeedBox(), brass);
+        // Hidden box: also inactive, otherwise Create's ValueSettingsInputHandler swallows every right-click of a
+        // FakePlayer (deployer) on the main part. The visible box is on top (CoolingFanTopBlockEntity).
+        speed.onlyActiveWhen(() -> false);
         behaviours.add(speed);
     }
 
