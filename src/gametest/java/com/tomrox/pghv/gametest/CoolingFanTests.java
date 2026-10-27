@@ -253,7 +253,7 @@ public class CoolingFanTests {
         helper.runAfterDelay(2, () -> {
             PghvTestUtil.voltageSource(helper, source, HvCoolingFanBlockEntity.RATED_VOLTAGE);
             PghvTestUtil.wire(helper, source, 0, main, 0, 0.01f);
-            PghvTestUtil.wire(helper, source, 1, HvCoolingFanBlock.cellOf(main, facing, 1), 1, 0.01f);
+            PghvTestUtil.wire(helper, source, 1, main, 1, 0.01f);
         });
 
         float start = 150.0f;

@@ -50,7 +50,7 @@ public class CoolingFanBehaviourTests {
         helper.runAfterDelay(2, () -> {
             PghvTestUtil.voltageSource(helper, SOURCE, HvCoolingFanBlockEntity.RATED_VOLTAGE);
             PghvTestUtil.wire(helper, SOURCE, 0, MAIN, 0, 0.01f);
-            PghvTestUtil.wire(helper, SOURCE, 1, HvCoolingFanBlock.cellOf(MAIN, FACING, 1), 1, 0.01f);
+            PghvTestUtil.wire(helper, SOURCE, 1, MAIN, 1, 0.01f);
         });
     }
 

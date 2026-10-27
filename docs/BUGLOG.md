@@ -18,3 +18,4 @@
 | 2026-10-27 | HvCoolingFanBlockEntity.SpeedBox | Compile-Fehler: rotate() fehlt | ValueBoxTransform.rotate ist in Create 6 abstrakt | rotate wie Sided (yRot = facing + 180°) |
 | 2026-10-27 | HvCoolingFanBlockEntity | Lüfter bläst nur aus 1 von 4 Zellen | nur ein AirCurrent (Hauptzelle) | je Zelle ein AirCurrent (PartAirSource), Test fanBlowsFromAllFourCells |
 | 2026-10-27 | CableBoxBlockEntity | Adern brennen bei Überlast durch | Toms Entscheidung: Mechanik entfernen | Durchbrennen entfernt, Test cableOverloadNeverBurns |
+| 2026-10-27 | HvCoolingFanBlock | Pins sollen beide unten links sitzen (Toms Skizze) | Pins auf Teil 0 und 1 verteilt | beide Terminals auf Teil 0 (plus x11..14, minus x6..9), Tests angepasst |

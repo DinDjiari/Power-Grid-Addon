@@ -70,8 +70,8 @@ import org.patryk3211.powergrid.utility.PlayerUtilities;
  *
  * Local coordinates below are for facing = NORTH (front = -z), in 1/16 units; they are rotated for other facings.
  *   panel:  z0 .. z0 + 16/3 with z0 = slot * 16/3
- *   pins:   part 0: x 11..14, y 1..4, z (z0-p)..(z0+2);  part 1: x 2..5, same y/z;  p = min(3, z0)
- *   terminal 0 (plus, red) belongs to part 0, terminal 1 (minus, blue) to part 1.
+ *   pins:   both on part 0 (lower left seen from the front): plus x 11..14, minus x 6..9; y 1..4, z (z0-p)..(z0+2);
+ *           p = min(3, z0). Terminal 0 = plus (red), terminal 1 = minus (blue).
  */
 public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFanBlockEntity> {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -82,7 +82,7 @@ public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFan
 
     /** [facing 2D index][slot] */
     private static final VoxelShape[][] SHAPES = new VoxelShape[4][3];
-    /** [facing 2D index][slot][0 = part 0 plus, 1 = part 1 minus] */
+    /** [facing 2D index][slot][0 = plus, 1 = minus], both on part 0 */
     private static final TerminalBoundingBox[][][] TERMINALS = new TerminalBoundingBox[4][3][2];
 
     static {
@@ -97,7 +97,7 @@ public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFan
                         new TerminalBoundingBox(IDecoratedTerminal.POSITIVE, 11, 1, z0 - pin, 14, 4, z0 + 2)
                                 .withColor(IDecoratedTerminal.RED).rotateAroundY(rotation);
                 TERMINALS[facing.get2DDataValue()][slot][1] =
-                        new TerminalBoundingBox(IDecoratedTerminal.NEGATIVE, 2, 1, z0 - pin, 5, 4, z0 + 2)
+                        new TerminalBoundingBox(IDecoratedTerminal.NEGATIVE, 6, 1, z0 - pin, 9, 4, z0 + 2)
                                 .withColor(IDecoratedTerminal.BLUE).rotateAroundY(rotation);
             }
         }
@@ -345,8 +345,8 @@ public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFan
     @Override
     public ITerminalPlacement terminal(BlockState state, int index) {
         int part = state.getValue(PART);
-        if (index < 0 || index > 1 || part != index)
-            return null; // terminal 0 -> part 0, terminal 1 -> part 1, parts 2/3 have none
+        if (index < 0 || index > 1 || part != 0)
+            return null; // both terminals sit on part 0, parts 1..3 have none
         return TERMINALS[state.getValue(FACING).get2DDataValue()][state.getValue(SLOT)][index];
     }
 
