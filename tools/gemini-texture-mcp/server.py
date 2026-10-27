@@ -76,7 +76,7 @@ def _gemini_image(prompt: str, refs: list[PILImage.Image], model: str) -> PILIma
             inp = [{"type": "text", "text": prompt}] + [
                 {"type": "image", "data": _png_b64(r), "mime_type": "image/png"} for r in refs]
             it = client.interactions.create(model=model, input=inp if refs else prompt,
-                                            response_format={"type": "image", "mime_type": "image/png",
+                                            response_format={"type": "image", "mime_type": "image/jpeg",
                                                              "aspect_ratio": "1:1", "image_size": "1K"})
             data = it.output_image.data
             return PILImage.open(io.BytesIO(base64.b64decode(data))).convert("RGBA")
