@@ -10,3 +10,7 @@ its brass tones match hv_voltmeter.png. No pixels are copied from PowerGrid.
 Fan models under assets/pghv/models/ are original; the transformer that the fan is mounted on is PowerGrid's own block (not included).
 No Create textures are included.
 cable_box.png, cable_segment.png (textures/block/) and bare_cable*.png, underground_cable*.png (textures/item/) are original pixel-art textures created for this addon (generated with PIL); copper/iron tones only chosen to match Create/PowerGrid, no pixels copied. Cable models are original.
+
+Cooling fan (v4): the block, rotor and item models are original geometry that REFERENCE Create's textures at runtime
+(create:block/fan_casing, fan_side, fan_blades, axis, axis_top). No Create texture or model file is included in this
+repository or jar (Create assets are All Rights Reserved); Create is a required dependency. cooling_fan.png only holds the pins.
