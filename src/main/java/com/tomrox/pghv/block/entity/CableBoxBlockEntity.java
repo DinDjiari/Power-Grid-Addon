@@ -348,7 +348,6 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
                 wires[i] = null;
             }
             currents[i] = 0;
-            overTicks[i] = 0;
         }
         wiresBuilt = false;
         linked = false;

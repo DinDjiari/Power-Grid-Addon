@@ -24,3 +24,4 @@
 | 2026-10-27 | cooling_fan Modelle | Tom: Create-Fan-Look gewünscht | eigenes Design | Modelle auf Create-Encased-Fan-Look 2×2 umgestellt (Create-Texturen referenziert) |
 | 2026-10-27 | cooling_fan Modelle/Textur | Create-Texturen nur referenziert, Pins schlicht | Toms Wunsch: eigene verbesserte Textur, PG-Keramik-Pins, bulliger | eigene Create-Stil-Textur, PG wire_connector verkleinert, breite Flügel |
 | 2026-10-27 | cooling_fan Modelle | Tom: Original-Create-Textur 2×2 statt eigener | – | Create-Texturen referenziert + 2×-skaliert, Keramik-Pins beibehalten |
+| 2026-10-27 | CableBoxBlockEntity.dropWires | Compile-Fehler: overTicks unbekannt | Feld beim Entfernen des Durchbrennens gelöscht, Verweis blieb | Zeile entfernt |
