@@ -18,6 +18,7 @@ package com.tomrox.pghv.registry;
 import com.tomrox.pghv.Pghv;
 import com.tomrox.pghv.cable.CableCores;
 import com.tomrox.pghv.cable.CableLaying;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -39,5 +40,12 @@ public class PghvDataComponents {
             DATA_COMPONENTS.register("cable_laying", () -> DataComponentType.<CableLaying>builder()
                     .persistent(CableLaying.CODEC)
                     .networkSynchronized(CableLaying.STREAM_CODEC)
+                    .build());
+
+    /** Data cable: socket cell (part 1 of a brass fan) chosen as start, only while connecting. */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<GlobalPos>> DATA_CABLE_START =
+            DATA_COMPONENTS.register("data_cable_start", () -> DataComponentType.<GlobalPos>builder()
+                    .persistent(GlobalPos.CODEC)
+                    .networkSynchronized(GlobalPos.STREAM_CODEC)
                     .build());
 }

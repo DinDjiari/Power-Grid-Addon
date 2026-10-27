@@ -38,7 +38,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
@@ -54,6 +58,7 @@ import org.jetbrains.annotations.Nullable;
 import org.patryk3211.powergrid.electricity.base.ElectricBlockEntity;
 import org.patryk3211.powergrid.electricity.base.ThermalBehaviour;
 import org.patryk3211.powergrid.electricity.sim.ElectricWire;
+import org.patryk3211.powergrid.electricity.sim.node.ProvidedVoltageSourceCoupling;
 import org.patryk3211.powergrid.electricity.transformer.TransformerBlock;
 import org.patryk3211.powergrid.electricity.transformer.TransformerBlockEntity;
 
@@ -97,6 +102,14 @@ import java.util.List;
  *   s = clamp((T - T_t + 5) / 30, 0, 1), rounded to 5 % steps (NBT "AutoPercent", synchronised). The wire
  *   resistance R(s) = R0 / s^2 is therefore rewritten at most every 20 ticks and only in 5 % steps.
  *   Rotor animation x2, COOLING_GAIN x2 (BRASS_COOLING_GAIN), air speed x2 capped at Create's maxRotationSpeed.
+ *
+ * OVERHEAT PROTECTION (brass only, docs/UEBERHITZUNGSSCHUTZ_SPEZIFIKATION.md)
+ *   Socket on part 1, terminals 2 (+), 3 (-), 4 (control), galvanically separated from the 240 V input:
+ *   48 V source between 2 and 3 (0.5 ohm) feeds the servo coil, control source between 4 and 3 (10 ohm)
+ *   gives 0 V (ready) or direction x 2.5 V (tripped, servo turns 180 deg). Every PROTECT_INTERVAL ticks:
+ *   trip at T >= 155 degC, reset at T <= 100 degC (T = hottest transformer as for the regulator; no transformer:
+ *   never trips, a tripped state is kept until a transformer cools down to 100 degC). Direction +1/-1 is
+ *   toggled with the wrench on the socket. "Tripped" and "ServoReversed" are saved and synchronised.
  */
 public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHaveGoggleInformation, IAirCurrentSource {
     // ---- electrical ----
@@ -146,6 +159,15 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
     /** Create's default maxRotationSpeed, used if the server config is not available. */
     private static final float DEFAULT_AIR_SPEED_CAP = 256.0f;
 
+    // ---- brass variant (overheat protection via servo) ----
+    public static final float SUPPLY_VOLTAGE = 48.0f; // servo needs ~160 W for its 32 RPM (P/480*94.25); 24 V gave only 9 W idle
+    public static final float SUPPLY_RESISTANCE = 0.5f;
+    public static final float CONTROL_VOLTAGE = 2.5f;
+    public static final float CONTROL_RESISTANCE = 10.0f;
+    public static final float TRIP_TEMPERATURE = 155.0f;
+    public static final float RESET_TEMPERATURE = 100.0f;
+    public static final int PROTECT_INTERVAL = 5;
+
     // Set in addBehaviours / buildCircuit (called during the super constructor): no initializers!
     private FanSpeedBehaviour speed;
     private ElectricWire fanWire;
@@ -154,6 +176,14 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
     // Brass: regulator output 0..100 % in 5 % steps (synchronised) and regulation timer (server)
     private int autoPercent;
     private int regulateTimer;
+
+    // Brass overheat protection: sources set in buildCircuit (super constructor, no initializers!),
+    // state saved/synchronised; servo direction +1 unless reversed.
+    private ProvidedVoltageSourceCoupling supplySource;
+    private ProvidedVoltageSourceCoupling controlSource;
+    private boolean tripped;
+    private boolean servoReversed;
+    private int protectTimer;
 
     // Server side
     private float fanSmooth;
@@ -273,6 +303,87 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         return Double.isFinite(p) ? p : 0;
     }
 
+    // ---- overheat protection (brass) ----
+
+    /** Hysteresis: next protection state for the current state and temperature (NaN = no transformer). */
+    public static boolean nextTripped(boolean tripped, float temperature) {
+        if (Float.isNaN(temperature))
+            return tripped; // no transformer: never trip, keep a tripped state
+        if (!tripped && temperature >= TRIP_TEMPERATURE)
+            return true;
+        if (tripped && temperature <= RESET_TEMPERATURE)
+            return false;
+        return tripped;
+    }
+
+    public boolean isTripped() {
+        return tripped;
+    }
+
+    /** Servo direction: +1 (clockwise, default) or -1. */
+    public int getServoDirection() {
+        return servoReversed ? -1 : 1;
+    }
+
+    /** Control voltage U(4) - U(3) set by the protection: 0 V ready, direction x 2.5 V tripped. */
+    public float getControlVoltage() {
+        return tripped ? getServoDirection() * CONTROL_VOLTAGE : 0.0f;
+    }
+
+    /** Server: toggles the servo direction (wrench on the socket). */
+    public void toggleServoDirection() {
+        servoReversed = !servoReversed;
+        applyControlVoltage();
+        setChanged();
+        sendData();
+    }
+
+    public Component getServoDirectionName() {
+        return Component.translatable(servoReversed ? "pghv.gui.brass_cooling_fan.direction_left"
+                : "pghv.gui.brass_cooling_fan.direction_right");
+    }
+
+    /** Sets the protection state directly (server, tests); applies the control voltage. */
+    public void setTripped(boolean value) {
+        if (tripped == value)
+            return;
+        tripped = value;
+        applyControlVoltage();
+        setChanged();
+        sendData();
+    }
+
+    /** Measured voltage between two terminals of this fan (V), 0 if not available. */
+    public double getTerminalVoltage(int plus, int minus) {
+        if (electricBehaviour == null)
+            return 0;
+        var a = electricBehaviour.getTerminal(plus);
+        var b = electricBehaviour.getTerminal(minus);
+        if (a == null || b == null)
+            return 0;
+        double u = a.getVoltage() - b.getVoltage();
+        return Double.isFinite(u) ? u : 0;
+    }
+
+    private void applyControlVoltage() {
+        if (controlSource != null)
+            controlSource.setVoltage(getControlVoltage());
+    }
+
+    private void protect() {
+        boolean next = nextTripped(tripped, getHottestTransformerTemperature());
+        if (next == tripped)
+            return;
+        setTripped(next);
+        if (next && level instanceof ServerLevel server) {
+            BlockState state = getBlockState();
+            BlockPos socket = HvCoolingFanBlock.cellOf(worldPosition, state.getValue(HvCoolingFanBlock.FACING), 1);
+            Vec3 c = Vec3.atCenterOf(socket);
+            server.playSound(null, socket, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.6f, 0.6f);
+            server.sendParticles(ParticleTypes.SMOKE, c.x, c.y, c.z, 8, 0.3, 0.3, 0.3, 0.01);
+        }
+    }
+
     private static double resistanceFor(float setting) {
         if (setting < OFF_THRESHOLD)
             return R_OFF;
@@ -285,9 +396,24 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
     public void buildCircuit(CircuitBuilder builder) {
         // Runs in the super constructor: do not touch 'speed' or any field with an initializer here.
         // resistance() is deliberately not used (it throws for blocks of other mods).
-        builder.setTerminalCount(2);
+        boolean brass = isBrass();
+        builder.setTerminalCount(brass ? HvCoolingFanBlock.BRASS_TERMINAL_COUNT : HvCoolingFanBlock.ANDESITE_TERMINAL_COUNT);
         fanWire = builder.connect((float) R0, builder.terminalNode(0), builder.terminalNode(1));
         appliedSetting = -1; // force the next server tick to write the real resistance
+        if (brass) {
+            // Socket (galvanically separated from terminals 0/1): servo supply and control signal.
+            supplySource = new ProvidedVoltageSourceCoupling(builder.terminalNode(HvCoolingFanBlock.SOCKET_POSITIVE),
+                    builder.terminalNode(HvCoolingFanBlock.SOCKET_NEGATIVE), SUPPLY_RESISTANCE, SUPPLY_VOLTAGE);
+            builder.add(supplySource);
+            controlSource = new ProvidedVoltageSourceCoupling(builder.terminalNode(HvCoolingFanBlock.SOCKET_CONTROL),
+                    builder.terminalNode(HvCoolingFanBlock.SOCKET_NEGATIVE), CONTROL_RESISTANCE, 0.0f);
+            // Provider: survives circuit rebuilds and reads the current state before every solve.
+            controlSource.setVoltageProvider(this::getControlVoltage);
+            builder.add(controlSource);
+        } else {
+            supplySource = null;
+            controlSource = null;
+        }
     }
 
     // ---- tick ----
@@ -311,6 +437,10 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
             if (--regulateTimer <= 0) {
                 regulateTimer = REGULATE_INTERVAL;
                 regulate();
+            }
+            if (--protectTimer <= 0) {
+                protectTimer = PROTECT_INTERVAL;
+                protect();
             }
             wanted = autoPercent;
         } else {
@@ -596,6 +726,9 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         if (!clientPacket)
             lastTarget = fanSmooth;
         autoPercent = Mth.clamp(tag.getInt("AutoPercent"), 0, 100);
+        tripped = tag.getBoolean("Tripped");
+        servoReversed = tag.getBoolean("ServoReversed");
+        applyControlVoltage();
         if (clientPacket && airCurrent != null)
             rebuildAllCurrents();
     }
@@ -604,8 +737,11 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
     protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
         super.write(tag, registries, clientPacket);
         tag.putInt("FanSteps", fanSteps);
-        if (isBrass())
+        if (isBrass()) {
             tag.putInt("AutoPercent", autoPercent);
+            tag.putBoolean("Tripped", tripped);
+            tag.putBoolean("ServoReversed", servoReversed);
+        }
     }
 
     // ---- goggles ----
@@ -635,6 +771,15 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
                     : Component.translatable("pghv.gui.brass_cooling_fan.auto",
                             getTargetTemperature(), Math.round(hottest), autoPercent);
             tooltip.add(Component.literal("    ").append(auto.copy().withStyle(ChatFormatting.GOLD)));
+            Component state = tripped
+                    ? Component.translatable("pghv.gui.brass_cooling_fan.protection_tripped").withStyle(ChatFormatting.RED)
+                    : Component.translatable("pghv.gui.brass_cooling_fan.protection_ready").withStyle(ChatFormatting.GREEN);
+            tooltip.add(Component.literal("    ").append(Component.translatable("pghv.gui.brass_cooling_fan.protection", state)
+                    .withStyle(ChatFormatting.GRAY)));
+            tooltip.add(Component.literal("    ").append(Component.translatable("pghv.gui.brass_cooling_fan.servo_direction",
+                    getServoDirectionName().copy().withStyle(ChatFormatting.AQUA)).withStyle(ChatFormatting.GRAY)));
+            tooltip.add(Component.literal("    ").append(Component.translatable("pghv.gui.brass_cooling_fan.protection_limits",
+                    Math.round(TRIP_TEMPERATURE), Math.round(RESET_TEMPERATURE)).withStyle(ChatFormatting.DARK_GRAY)));
         }
 
         List<TransformerBlockEntity> trafos = findTransformers();

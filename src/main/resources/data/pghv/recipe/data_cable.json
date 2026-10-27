@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "powergrid:wire"
+    },
+    {
+      "item": "powergrid:iron_wire"
+    },
+    {
+      "item": "powergrid:golden_wire"
+    }
+  ],
+  "result": {
+    "id": "pghv:data_cable",
+    "count": 1
+  }
+}

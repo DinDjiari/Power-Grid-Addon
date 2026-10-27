@@ -27,6 +27,8 @@ import com.tomrox.pghv.block.entity.CoolingFanTopBlockEntity;
 import com.tomrox.pghv.registry.PghvBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
 import org.patryk3211.powergrid.electricity.transformer.TransformerMediumBlock;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -52,6 +54,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -75,6 +78,10 @@ import org.patryk3211.powergrid.utility.PlayerUtilities;
  *   panel:  z0 .. z0 + 16/3 with z0 = slot * 16/3
  *   pins:   both on part 0 (lower left seen from the front): plus x 11..14, minus x 6..9; y 1..4, z (z0-p)..(z0+2);
  *           p = min(3, z0). Terminal 0 = plus (red), terminal 1 = minus (blue).
+ *   socket (brass only, docs/UEBERHITZUNGSSCHUTZ_SPEZIFIKATION.md): on part 1 (lower right seen from the front),
+ *           y 1..4, same depth as the pins: terminal 2 = servo +24 V x 2..5, terminal 3 = servo - x 6.5..9.5,
+ *           terminal 4 = control x 11..14. Click area of the socket plate (wrench: servo direction) x 1..15, y 0..5.
+ *   The brass fan therefore has 5 terminals, the andesite fan 2 (terminalCount() is per block instance).
  */
 public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFanBlockEntity> {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -87,6 +94,25 @@ public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFan
     private static final VoxelShape[][] SHAPES = new VoxelShape[4][3];
     /** [facing 2D index][slot][0 = plus, 1 = minus], both on part 0 */
     private static final TerminalBoundingBox[][][] TERMINALS = new TerminalBoundingBox[4][3][2];
+
+    /** Brass fan socket on part 1: terminal indices. */
+    public static final int SOCKET_POSITIVE = 2;
+    public static final int SOCKET_NEGATIVE = 3;
+    public static final int SOCKET_CONTROL = 4;
+    public static final int BRASS_TERMINAL_COUNT = 5;
+    public static final int ANDESITE_TERMINAL_COUNT = 2;
+    /** [facing 2D index][slot][terminal - SOCKET_POSITIVE], all on part 1 (brass only) */
+    private static final TerminalBoundingBox[][][] SOCKET_TERMINALS = new TerminalBoundingBox[4][3][3];
+    /** [facing 2D index][slot] click area of the socket plate on part 1, block-local units 0..1 */
+    private static final AABB[][] SOCKET_AREA = new AABB[4][3];
+    private static final double SOCKET_HIT_EPSILON = 1.0e-3;
+
+    private static final Component SOCKET_POSITIVE_NAME =
+            Component.translatable("pghv.terminal.servo_positive").withStyle(ChatFormatting.RED);
+    private static final Component SOCKET_NEGATIVE_NAME =
+            Component.translatable("pghv.terminal.servo_negative").withStyle(ChatFormatting.BLUE);
+    private static final Component SOCKET_CONTROL_NAME =
+            Component.translatable("pghv.terminal.servo_control").withStyle(ChatFormatting.DARK_GREEN);
 
     static {
         for (Direction facing : Direction.Plane.HORIZONTAL) {
@@ -102,6 +128,18 @@ public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFan
                 TERMINALS[facing.get2DDataValue()][slot][1] =
                         new TerminalBoundingBox(IDecoratedTerminal.NEGATIVE, 6, 1, z0 - pin, 9, 4, z0 + 2)
                                 .withColor(IDecoratedTerminal.BLUE).rotateAroundY(rotation);
+
+                SOCKET_TERMINALS[facing.get2DDataValue()][slot][0] =
+                        new TerminalBoundingBox(SOCKET_POSITIVE_NAME, 2, 1, z0 - pin, 5, 4, z0 + 2)
+                                .withColor(IDecoratedTerminal.RED).rotateAroundY(rotation);
+                SOCKET_TERMINALS[facing.get2DDataValue()][slot][1] =
+                        new TerminalBoundingBox(SOCKET_NEGATIVE_NAME, 6.5, 1, z0 - pin, 9.5, 4, z0 + 2)
+                                .withColor(IDecoratedTerminal.BLUE).rotateAroundY(rotation);
+                SOCKET_TERMINALS[facing.get2DDataValue()][slot][2] =
+                        new TerminalBoundingBox(SOCKET_CONTROL_NAME, 11, 1, z0 - pin, 14, 4, z0 + 2)
+                                .withColor(IDecoratedTerminal.GREEN).rotateAroundY(rotation);
+                SOCKET_AREA[facing.get2DDataValue()][slot] =
+                        rotateAabb(new AABB(1 / 16.0, 0, (z0 - pin) / 16.0, 15 / 16.0, 5 / 16.0, (z0 + 2) / 16.0), rotation);
             }
         }
     }
@@ -147,13 +185,16 @@ public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFan
 
     /** Rotates a box given in block-local units (0..1) around the block centre; same maths as TerminalBoundingBox. */
     private static VoxelShape rotateBox(AABB b, Rotation rotation) {
-        AABB r = switch (rotation) {
+        return Shapes.create(rotateAabb(b, rotation));
+    }
+
+    private static AABB rotateAabb(AABB b, Rotation rotation) {
+        return switch (rotation) {
             case CLOCKWISE_90 -> new AABB(1 - b.maxZ, b.minY, b.minX, 1 - b.minZ, b.maxY, b.maxX);
             case CLOCKWISE_180 -> new AABB(1 - b.maxX, b.minY, 1 - b.maxZ, 1 - b.minX, b.maxY, 1 - b.minZ);
             case COUNTERCLOCKWISE_90 -> new AABB(b.minZ, b.minY, 1 - b.maxX, b.maxZ, b.maxY, 1 - b.minX);
             default -> b;
         };
-        return Shapes.create(r);
     }
 
     /** Cell of the given part, derived from the main cell. */
@@ -355,15 +396,40 @@ public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFan
 
     @Override
     public int terminalCount() {
-        return 2;
+        // Per block instance: brass and andesite are separate blocks, so the count may differ by variant.
+        return brass ? BRASS_TERMINAL_COUNT : ANDESITE_TERMINAL_COUNT;
     }
 
     @Override
     public ITerminalPlacement terminal(BlockState state, int index) {
+        if (!state.hasProperty(PART))
+            return null;
         int part = state.getValue(PART);
-        if (index < 0 || index > 1 || part != 0)
-            return null; // both terminals sit on part 0, parts 1..3 have none
-        return TERMINALS[state.getValue(FACING).get2DDataValue()][state.getValue(SLOT)][index];
+        int facing = state.getValue(FACING).get2DDataValue();
+        int slot = state.getValue(SLOT);
+        if (index == 0 || index == 1)
+            return part == 0 ? TERMINALS[facing][slot][index] : null; // power pins on part 0
+        if (brass && index >= SOCKET_POSITIVE && index <= SOCKET_CONTROL)
+            return part == 1 ? SOCKET_TERMINALS[facing][slot][index - SOCKET_POSITIVE] : null; // socket on part 1
+        return null;
+    }
+
+    /** Cell that carries the socket (part 1) of the fan containing pos. */
+    public static BlockPos socketPos(BlockPos pos, BlockState state) {
+        return cellOf(mainPos(pos, state), state.getValue(FACING), 1);
+    }
+
+    /** True if {@code local} (block-local hit position 0..1) lies on the socket plate of a brass fan's part 1. */
+    public boolean isSocketHit(BlockState state, Vec3 local) {
+        if (!brass || !state.is(this) || state.getValue(PART) != 1)
+            return false;
+        AABB area = SOCKET_AREA[state.getValue(FACING).get2DDataValue()][state.getValue(SLOT)];
+        return area.inflate(SOCKET_HIT_EPSILON).contains(local);
+    }
+
+    /** Socket click area (block-local, 0..1) for the given state, for tests and hit simulation. */
+    public static AABB socketArea(BlockState state) {
+        return SOCKET_AREA[state.getValue(FACING).get2DDataValue()][state.getValue(SLOT)];
     }
 
     @Override
@@ -376,9 +442,23 @@ public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFan
 
     @Override
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
-        // Wrench: switch the panel position.
-        cycleSlot(context.getLevel(), context.getClickedPos(), state);
-        return InteractionResult.sidedSuccess(context.getLevel().isClientSide);
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        // Brass: wrench on the socket plate toggles the servo direction of the overheat protection.
+        Vec3 local = context.getClickLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
+        if (isSocketHit(state, local)) {
+            if (!level.isClientSide && level.getBlockEntity(mainPos(pos, state)) instanceof HvCoolingFanBlockEntity fan) {
+                fan.toggleServoDirection();
+                Player player = context.getPlayer();
+                if (player != null)
+                    player.displayClientMessage(Component.translatable("pghv.message.servo_direction",
+                            fan.getServoDirectionName()), true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        // Otherwise: switch the panel position.
+        cycleSlot(level, pos, state);
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override

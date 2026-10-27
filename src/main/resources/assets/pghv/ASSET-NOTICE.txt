@@ -18,3 +18,4 @@ powergrid:block/wire_connector (Apache-2.0) at runtime.
 Brass transformer fan: brass_cooling_fan_grille.png and brass_cooling_fan_blades.png are original pixel art made for this
 addon (no Create pixels copied). The models reference create:block/brass_casing, axis and axis_top at runtime (not included)
 and powergrid:block/wire_connector for the pins.
+data_cable.png is original pixel art made for this addon. The brass fan's data socket reuses powergrid:block/wire_connector.
