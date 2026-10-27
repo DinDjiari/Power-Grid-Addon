@@ -65,12 +65,12 @@ import java.util.List;
  *
  * ELECTRIC
  *   Rated 240 V / 300 W at 100 % speed -> R0 = 240^2 / 300 = 192 ohm.
- *   Speed setting s (0..1, menu in 5 % steps): R(s) = R0 / s^2 for s >= 0.05, otherwise R_OFF = 1e9.
+ *   Speed setting s (0..1, menu 0..100 % in 1 % steps): R(s) = R0 / s^2 for s >= 0.05, otherwise R_OFF = 1e9.
  *   At rated voltage P = U^2 s^2 / R0 = 300 W * s^2, i.e. the speed fraction f = sqrt(P / 300) = U/240 * s.
  *   Under-voltage therefore slows the fan down proportionally. f is taken from the real wire power
  *   (wire.power()), low-pass filtered on the server (factor 0.1/tick) and synchronised as integer steps
  *   (NBT "FanSteps", FAN_STEPS = 100 %). The wire resistance depends only on the setting, so it is
- *   written exactly when the setting changes (a 15 % hysteresis would swallow 5 % steps).
+ *   written exactly when the setting changes (no hysteresis, so every 1 % step takes effect).
  *
  * COOLING (no mixin, no persistent state)
  *   ThermalBehaviour dissipates P_diss = df * (T - Ta) every tick (df = dissipationFactor, thermal mass m).
@@ -97,9 +97,11 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
     public static final float RATED_POWER = 300.0f;
     public static final double R0 = (double) RATED_VOLTAGE * RATED_VOLTAGE / RATED_POWER;
     public static final double R_OFF = 1.0e9;
-    /** Menu steps: value 0..SETTING_MAX = 0..100 %. */
-    public static final int SETTING_MAX = 20;
-    public static final int SETTING_STEP_PERCENT = 5;
+    /** Menu value 0..SETTING_MAX = 0..100 % in 1 % steps (like Create's rotation speed controller, % instead of RPM). */
+    public static final int SETTING_MAX = 100;
+    public static final int SETTING_STEP_PERCENT = 1;
+    /** Milestone interval of the value settings board (like the speed controller's 32 RPM marks). */
+    private static final int BOARD_MILESTONE = 10;
 
     // ---- cooling ----
     /** Added dissipation factor per unit fan fraction (1 = +100 % per full fan). */
@@ -156,6 +158,17 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         super.addBehaviours(behaviours);
         speed = new FanSpeedBehaviour(Component.translatable("pghv.gui.cooling_fan.speed"), this, new SpeedBox());
         behaviours.add(speed);
+    }
+
+    /** Raw menu value 0..SETTING_MAX (shown by the value box on top of the fan, see CoolingFanTopBlockEntity). */
+    public int getSpeedValue() {
+        return speed == null ? SETTING_MAX : speed.getValue();
+    }
+
+    /** Sets the menu value (server side, forwarded from the top value box). */
+    public void setSpeedValue(int value) {
+        if (speed != null && speed.getValue() != value)
+            speed.setValue(value);
     }
 
     /** Speed setting 0..1 from the menu. */
@@ -500,7 +513,7 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
 
     // ---- value box ----
 
-    /** Fan speed menu: 0..100 % in 5 % steps, default 100 %. */
+    /** Fan speed menu like Create's rotation speed controller: 0..100 % in 1 % steps, default 100 %. */
     public static class FanSpeedBehaviour extends ScrollValueBehaviour {
         public FanSpeedBehaviour(Component label, SmartBlockEntity be, ValueBoxTransform slot) {
             super(label, be, slot);
@@ -511,7 +524,7 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
 
         @Override
         public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
-            return new ValueSettingsBoard(label, max, 5, ImmutableList.of(Component.literal("%")),
+            return new ValueSettingsBoard(label, max, BOARD_MILESTONE, ImmutableList.of(Component.literal("%")),
                     new ValueSettingsFormatter(this::formatSettings));
         }
 
@@ -520,8 +533,16 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         }
     }
 
-    /** Value box on the front face of the main part, follows facing and slot. */
+    /**
+     * Value box of the main part: kept for the stored setting, but hidden and not clickable -
+     * the visible box sits centred on top of the fan (CoolingFanTopBlockEntity.TopBox).
+     */
     public static class SpeedBox extends ValueBoxTransform {
+        @Override
+        public boolean testHit(LevelAccessor level, BlockPos pos, BlockState state, Vec3 localHit) {
+            return false;
+        }
+
         @Override
         public Vec3 getLocalOffset(LevelAccessor level, BlockPos pos, BlockState state) {
             // Expressed for facing SOUTH (front = +z); rotateHorizontally turns it to the real facing.

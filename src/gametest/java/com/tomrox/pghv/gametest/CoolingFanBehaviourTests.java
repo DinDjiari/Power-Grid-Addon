@@ -115,6 +115,24 @@ public class CoolingFanBehaviourTests {
     }
 
     @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 200)
+    public static void fanTopValueBoxForwardsSpeed(GameTestHelper helper) {
+        poweredFan(helper);
+        helper.runAfterDelay(20, () -> {
+            BlockPos top2 = HvCoolingFanBlock.cellOf(MAIN, FACING, 2);
+            BlockPos top3 = HvCoolingFanBlock.cellOf(MAIN, FACING, 3);
+            com.tomrox.pghv.block.entity.CoolingFanTopBlockEntity box = helper.getBlockEntity(top2);
+            helper.assertTrue(helper.getBlockEntity(top3) instanceof com.tomrox.pghv.block.entity.CoolingFanTopBlockEntity,
+                    "upper right cell carries a value box too");
+            box.getBehaviour(ScrollValueBehaviour.TYPE).setValue(40);
+        });
+        helper.runAfterDelay(40, () -> {
+            HvCoolingFanBlockEntity fan = helper.getBlockEntity(MAIN);
+            helper.assertValueEqual(fan.getSpeedValue(), 40, "value set on top is stored in the main part");
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 200)
     public static void fanWithoutPowerNoWind(GameTestHelper helper) {
         PghvTestUtil.floor(helper);
         FakePlayer player = PghvTestUtil.player(helper, GameType.SURVIVAL, MAIN.relative(FACING, 3));

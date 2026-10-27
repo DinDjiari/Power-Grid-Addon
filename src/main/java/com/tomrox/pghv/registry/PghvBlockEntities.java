@@ -18,6 +18,7 @@ package com.tomrox.pghv.registry;
 import com.tomrox.pghv.Pghv;
 import com.tomrox.pghv.block.entity.CableBoxBlockEntity;
 import com.tomrox.pghv.block.entity.CableSegmentBlockEntity;
+import com.tomrox.pghv.block.entity.CoolingFanTopBlockEntity;
 import com.tomrox.pghv.block.entity.HvCoolingFanBlockEntity;
 import com.tomrox.pghv.block.entity.HvVoltmeterBlockEntity;
 import net.minecraft.core.registries.Registries;
@@ -38,6 +39,13 @@ public class PghvBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<HvCoolingFanBlockEntity>> COOLING_FAN =
             BLOCK_ENTITIES.register("cooling_fan", () -> BlockEntityType.Builder
                     .of((pos, state) -> new HvCoolingFanBlockEntity(PghvBlockEntities.COOLING_FAN.get(), pos, state),
+                            PghvBlocks.COOLING_FAN.get())
+                    .build(null));
+
+    /** Upper cells of the cooling fan: only the speed value box on top. */
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CoolingFanTopBlockEntity>> COOLING_FAN_TOP =
+            BLOCK_ENTITIES.register("cooling_fan_top", () -> BlockEntityType.Builder
+                    .of((pos, state) -> new CoolingFanTopBlockEntity(PghvBlockEntities.COOLING_FAN_TOP.get(), pos, state),
                             PghvBlocks.COOLING_FAN.get())
                     .build(null));
 

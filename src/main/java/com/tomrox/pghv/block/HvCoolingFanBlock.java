@@ -21,6 +21,9 @@ package com.tomrox.pghv.block;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import com.tomrox.pghv.block.entity.HvCoolingFanBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.tomrox.pghv.block.entity.CoolingFanTopBlockEntity;
 import com.tomrox.pghv.registry.PghvBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -402,6 +405,20 @@ public class HvCoolingFanBlock extends ElectricBlock implements IBE<HvCoolingFan
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return state.getValue(PART) == 0 ? IBE.super.newBlockEntity(pos, state) : null;
+        int part = state.getValue(PART);
+        if (part == 0)
+            return IBE.super.newBlockEntity(pos, state);
+        if (part >= 2) // upper cells carry the speed value box on top of the fan
+            return new CoolingFanTopBlockEntity(PghvBlockEntities.COOLING_FAN_TOP.get(), pos, state);
+        return null;
+    }
+
+    /** Ticks both the main block entity and the value-box block entities of the upper cells. */
+    @Override
+    public <S extends BlockEntity> BlockEntityTicker<S> getTicker(Level level, BlockState state, BlockEntityType<S> type) {
+        return (l, p, s, be) -> {
+            if (be instanceof SmartBlockEntity smart)
+                smart.tick();
+        };
     }
 }
