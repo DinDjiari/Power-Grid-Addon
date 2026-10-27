@@ -1,4 +1,16 @@
-# Ungeprüfte API-Annahmen (zuerst prüfen, wenn der Build scheitert)
+# API-Annahmen
+
+## Status nach erstem Build (2026-10-27)
+Gebaut gegen NeoForge 21.1.231, Create 6.0.10-280, Power Grid 0.6.2 (Modrinth-Jar). Alle Annahmen unten sind
+damit **geprüft**: Der Code kompiliert, Server und Client starten ohne `pghv`-Fehler, 34 GameTests sind grün
+(`./gradlew runGameTestServer`). Abweichungen, die korrigiert werden mussten, stehen in `docs/BUGLOG.md`:
+- `ValueBoxTransform.rotate(...)` ist in Create 6 abstrakt (SpeedBox des Lüfters).
+- Registrate `MC1.21-1.3.0+67` liegt nur in `https://mvn.devos.one/snapshots`.
+- Gradle 8.12: `idea.module.downloadSources` statt `downloadSourceJars`; Konfiguration `localRuntime` muss angelegt werden.
+- ejml kommt per Jar-in-Jar mit dem Power-Grid-Jar, kein eigener `localRuntime`-Eintrag nötig.
+- Laufzeit bestätigt: `makeSimpleConnection`-Drähte werden nicht gespeichert; die Kabelbox baut sie nach Entladen/Laden neu auf (GameTest `cablereloadrebuildswires`).
+
+## Ursprüngliche Liste (vor dem ersten Build geschrieben)
 
 Der Code wurde ohne Zugriff auf Maven geschrieben. Power-Grid-APIs sind gegen dessen Quellcode
 (github.com/patryk3211/PowerGrid, Branch architectury-1.21.1/dev) geprüft. Create-, Flywheel-, NeoForge- und

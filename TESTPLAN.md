@@ -1,6 +1,8 @@
 # Testplan Test-PC (Minecraft 1.21.1, NeoForge 21.1.231)
 
-Stand: Quellcode wurde nur geschrieben und statisch geprüft, noch nie kompiliert oder gestartet.
+Stand 2026-10-27: Build, Dedicated Server, Client (bis in eine Testwelt) und 34 automatische GameTests laufen
+fehlerfrei (`./gradlew runGameTestServer`, Tests in `src/gametest`). Abschnitt 0 ist damit erledigt; offen ist
+vor allem die **optische** Prüfung (Modelle, Texturen, Animation, Goggles-Texte) und das Verhalten mit echten Spielern.
 Bitte die Punkte der Reihe nach abhaken. Fehlerausgaben (Gradle oder `logs/latest.log`) an Claude schicken.
 
 ## 0. Build

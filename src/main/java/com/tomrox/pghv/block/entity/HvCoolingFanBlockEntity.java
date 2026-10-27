@@ -19,6 +19,7 @@
 package com.tomrox.pghv.block.entity;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.fan.AirCurrent;
 import com.simibubi.create.content.kinetics.fan.IAirCurrentSource;
@@ -30,6 +31,8 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatt
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import com.tomrox.pghv.block.HvCoolingFanBlock;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -458,6 +461,13 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
             // Expressed for facing SOUTH (front = +z); rotateHorizontally turns it to the real facing.
             double z0 = state.getValue(HvCoolingFanBlock.SLOT) * HvCoolingFanBlock.SLOT_SIZE;
             return rotateHorizontally(state, VecHelper.voxelSpace(10, 7, 16 - z0 - 0.2));
+        }
+
+        @Override
+        public void rotate(LevelAccessor level, BlockPos pos, BlockState state, PoseStack ms) {
+            // Wie ValueBoxTransform.Sided fuer die Seite = facing (Front zeigt nach facing).
+            float yRot = AngleHelper.horizontalAngle(state.getValue(HvCoolingFanBlock.FACING)) + 180;
+            TransformStack.of(ms).rotateYDegrees(yRot);
         }
     }
 }
