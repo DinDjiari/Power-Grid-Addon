@@ -1,0 +1,49 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "Apache-2.0"
+
+[[mods]]
+modId = "pghv"
+version = "${version}"
+displayName = "Power Grid: High Voltage"
+authors = "Tomrox GmbH"
+description = '''
+Hochspannungs-Addon fuer Create: Power Grid.
+Fuegt ein Messing-Voltmeter mit Messbereichen bis 2 MV, einen Trafo-Kuehllueffter
+(flache 2x2-Platte, 240 V, Drehzahlmenue) und Mehrleiter-Erdkabel mit Kabelboxen hinzu.
+'''
+
+[[dependencies.pghv]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.pghv]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.pghv]]
+modId = "create"
+type = "required"
+versionRange = "[6.0.9,6.1.0)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.pghv]]
+modId = "architectury"
+type = "required"
+versionRange = "[13.0.8,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.pghv]]
+modId = "powergrid"
+type = "required"
+versionRange = "[0.6.2,)"
+ordering = "AFTER"
+side = "BOTH"

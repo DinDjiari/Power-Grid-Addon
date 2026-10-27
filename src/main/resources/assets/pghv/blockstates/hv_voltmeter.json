@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "pghv:block/hv_voltmeter"
+    },
+    "facing=east": {
+      "model": "pghv:block/hv_voltmeter",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "pghv:block/hv_voltmeter",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "pghv:block/hv_voltmeter",
+      "y": 270
+    }
+  }
+}

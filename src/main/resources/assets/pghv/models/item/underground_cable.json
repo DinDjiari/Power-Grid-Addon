@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "pghv:item/underground_cable",
+    "layer1": "pghv:item/underground_cable_core1",
+    "layer2": "pghv:item/underground_cable_core2",
+    "layer3": "pghv:item/underground_cable_core3"
+  }
+}

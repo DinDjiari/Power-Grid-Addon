@@ -1,0 +1,75 @@
+{
+  "parent": "block/block",
+  "texture_size": [
+    32,
+    32
+  ],
+  "textures": {
+    "0": "pghv:block/cable_segment",
+    "particle": "pghv:block/cable_segment"
+  },
+  "elements": [
+    {
+      "name": "arm_west",
+      "from": [
+        0,
+        0,
+        5.5
+      ],
+      "to": [
+        5.5,
+        4,
+        10.5
+      ],
+      "faces": {
+        "west": {
+          "uv": [
+            4,
+            6,
+            6.5,
+            8
+          ],
+          "texture": "#0",
+          "cullface": "west"
+        },
+        "north": {
+          "uv": [
+            5.25,
+            0,
+            8,
+            2
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2.75,
+            2
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            3,
+            2,
+            5.75,
+            4.5
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            3,
+            2,
+            5.75,
+            4.5
+          ],
+          "texture": "#0",
+          "cullface": "down"
+        }
+      }
+    }
+  ]
+}

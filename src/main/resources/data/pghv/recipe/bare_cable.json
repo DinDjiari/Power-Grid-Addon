@@ -1,0 +1,16 @@
+{
+  "type": "pghv:cable_assembly",
+  "category": "misc",
+  "wires": [
+    {
+      "item": "powergrid:wire"
+    },
+    {
+      "item": "powergrid:iron_wire"
+    },
+    {
+      "item": "powergrid:golden_wire"
+    }
+  ],
+  "count": 2
+}

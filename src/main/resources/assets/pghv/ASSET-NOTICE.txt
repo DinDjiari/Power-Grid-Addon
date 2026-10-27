@@ -1,0 +1,12 @@
+Assets of "Power Grid: High Voltage" (pghv)
+
+Source: patryk3211/PowerGrid (https://github.com/patryk3211/PowerGrid), licensed under Apache-2.0.
+hv_voltmeter.png (assets/pghv/textures/block/) is a modified derivative of PowerGrid's conductive_gauge.png:
+only the andesite casing areas are recoloured to brass; dial, metal back plate, copper strip and terminals are unchanged.
+The voltmeter models use PowerGrid's original gauge models (powergrid: namespace) as parents.
+cooling_fan.png (assets/pghv/textures/block/) is an original 64x64 pixel-art texture created for this addon (generated with PIL);
+its steel-grey tones were chosen to match the look of PowerGrid's transformer/medium.png and electric_fan.png,
+its brass tones match hv_voltmeter.png. No pixels are copied from PowerGrid.
+Fan models under assets/pghv/models/ are original; the transformer that the fan is mounted on is PowerGrid's own block (not included).
+No Create textures are included.
+cable_box.png, cable_segment.png (textures/block/) and bare_cable*.png, underground_cable*.png (textures/item/) are original pixel-art textures created for this addon (generated with PIL); copper/iron tones only chosen to match Create/PowerGrid, no pixels copied. Cable models are original.

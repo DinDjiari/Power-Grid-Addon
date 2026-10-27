@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "NNN",
+    "SCS",
+    " I "
+  ],
+  "key": {
+    "N": {
+      "item": "powergrid:wire_connector"
+    },
+    "S": {
+      "item": "create:copper_sheet"
+    },
+    "C": {
+      "item": "create:copper_casing"
+    },
+    "I": {
+      "item": "create:iron_sheet"
+    }
+  },
+  "result": {
+    "id": "pghv:cable_box",
+    "count": 1
+  }
+}

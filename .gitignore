@@ -1,0 +1,25 @@
+# Gradle
+.gradle/
+build/
+out/
+repo/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+eclipse/
+
+# Run-Verzeichnisse und generierte Daten
+run/
+runs/
+run-data/
+src/generated/
+
+# Power-Grid-Jar nicht einchecken (Nutzer legt es lokal ab)
+libs/*.jar

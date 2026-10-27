@@ -1,0 +1,789 @@
+{
+  "parent": "block/block",
+  "texture_size": [
+    64,
+    64
+  ],
+  "textures": {
+    "0": "pghv:block/cable_box",
+    "particle": "pghv:block/cable_box"
+  },
+  "elements": [
+    {
+      "name": "body",
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        13,
+        15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            7,
+            0,
+            10.5,
+            3.25
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            10.5,
+            0,
+            14,
+            3.25
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            7,
+            0,
+            10.5,
+            3.25
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            7,
+            0,
+            10.5,
+            3.25
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            3.5,
+            3.5
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            3.5,
+            0,
+            7,
+            3.5
+          ],
+          "texture": "#0",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "name": "terminal0_insulator",
+      "from": [
+        2,
+        13,
+        6.5
+      ],
+      "to": [
+        5,
+        15,
+        9.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            4,
+            0.75,
+            4.5
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0,
+            4,
+            0.75,
+            4.5
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            0,
+            4,
+            0.75,
+            4.5
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            0,
+            4,
+            0.75,
+            4.5
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "terminal0_cap",
+      "from": [
+        2,
+        15,
+        6.5
+      ],
+      "to": [
+        5,
+        16,
+        9.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            4,
+            1.75,
+            4.25
+          ],
+          "texture": "#0",
+          "tintindex": 0
+        },
+        "south": {
+          "uv": [
+            1,
+            4,
+            1.75,
+            4.25
+          ],
+          "texture": "#0",
+          "tintindex": 0
+        },
+        "east": {
+          "uv": [
+            1,
+            4,
+            1.75,
+            4.25
+          ],
+          "texture": "#0",
+          "tintindex": 0
+        },
+        "west": {
+          "uv": [
+            1,
+            4,
+            1.75,
+            4.25
+          ],
+          "texture": "#0",
+          "tintindex": 0
+        },
+        "up": {
+          "uv": [
+            2,
+            4,
+            2.75,
+            4.75
+          ],
+          "texture": "#0",
+          "tintindex": 0,
+          "cullface": "up"
+        }
+      }
+    },
+    {
+      "name": "terminal1_insulator",
+      "from": [
+        6.5,
+        13,
+        6.5
+      ],
+      "to": [
+        9.5,
+        15,
+        9.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            4,
+            0.75,
+            4.5
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0,
+            4,
+            0.75,
+            4.5
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            0,
+            4,
+            0.75,
+            4.5
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            0,
+            4,
+            0.75,
+            4.5
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "terminal1_cap",
+      "from": [
+        6.5,
+        15,
+        6.5
+      ],
+      "to": [
+        9.5,
+        16,
+        9.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            4,
+            1.75,
+            4.25
+          ],
+          "texture": "#0",
+          "tintindex": 1
+        },
+        "south": {
+          "uv": [
+            1,
+            4,
+            1.75,
+            4.25
+          ],
+          "texture": "#0",
+          "tintindex": 1
+        },
+        "east": {
+          "uv": [
+            1,
+            4,
+            1.75,
+            4.25
+          ],
+          "texture": "#0",
+          "tintindex": 1
+        },
+        "west": {
+          "uv": [
+            1,
+            4,
+            1.75,
+            4.25
+          ],
+          "texture": "#0",
+          "tintindex": 1
+        },
+        "up": {
+          "uv": [
+            2,
+            4,
+            2.75,
+            4.75
+          ],
+          "texture": "#0",
+          "tintindex": 1,
+          "cullface": "up"
+        }
+      }
+    },
+    {
+      "name": "terminal2_insulator",
+      "from": [
+        11,
+        13,
+        6.5
+      ],
+      "to": [
+        14,
+        15,
+        9.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            4,
+            0.75,
+            4.5
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0,
+            4,
+            0.75,
+            4.5
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            0,
+            4,
+            0.75,
+            4.5
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            0,
+            4,
+            0.75,
+            4.5
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "terminal2_cap",
+      "from": [
+        11,
+        15,
+        6.5
+      ],
+      "to": [
+        14,
+        16,
+        9.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            4,
+            1.75,
+            4.25
+          ],
+          "texture": "#0",
+          "tintindex": 2
+        },
+        "south": {
+          "uv": [
+            1,
+            4,
+            1.75,
+            4.25
+          ],
+          "texture": "#0",
+          "tintindex": 2
+        },
+        "east": {
+          "uv": [
+            1,
+            4,
+            1.75,
+            4.25
+          ],
+          "texture": "#0",
+          "tintindex": 2
+        },
+        "west": {
+          "uv": [
+            1,
+            4,
+            1.75,
+            4.25
+          ],
+          "texture": "#0",
+          "tintindex": 2
+        },
+        "up": {
+          "uv": [
+            2,
+            4,
+            2.75,
+            4.75
+          ],
+          "texture": "#0",
+          "tintindex": 2,
+          "cullface": "up"
+        }
+      }
+    },
+    {
+      "name": "socket_flange_left",
+      "from": [
+        3,
+        0,
+        0.5
+      ],
+      "to": [
+        5.5,
+        9,
+        1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1.875,
+            5,
+            2.5,
+            7.25
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            6.5,
+            5,
+            6.625,
+            7.25
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            0,
+            7.5,
+            0.625,
+            7.625
+          ],
+          "texture": "#0",
+          "cullface": "down"
+        },
+        "west": {
+          "uv": [
+            8.5,
+            5,
+            8.625,
+            7.25
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0,
+            7.5,
+            0.625,
+            7.625
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "socket_flange_right",
+      "from": [
+        10.5,
+        0,
+        0.5
+      ],
+      "to": [
+        13,
+        9,
+        1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            5,
+            0.625,
+            7.25
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            6.5,
+            5,
+            6.625,
+            7.25
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            0,
+            7.5,
+            0.625,
+            7.625
+          ],
+          "texture": "#0",
+          "cullface": "down"
+        },
+        "east": {
+          "uv": [
+            8.5,
+            5,
+            8.625,
+            7.25
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0,
+            7.5,
+            0.625,
+            7.625
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "socket_flange_top",
+      "from": [
+        5.5,
+        4,
+        0.5
+      ],
+      "to": [
+        10.5,
+        9,
+        1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.625,
+            5,
+            1.875,
+            6.25
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            6.5,
+            5,
+            7.75,
+            5.125
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0,
+            7.5,
+            1.25,
+            7.625
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "socket_collar_left",
+      "from": [
+        4.5,
+        0,
+        0
+      ],
+      "to": [
+        5.5,
+        5,
+        0.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4.5,
+            5,
+            4.75,
+            6.25
+          ],
+          "texture": "#0",
+          "cullface": "north"
+        },
+        "east": {
+          "uv": [
+            6.5,
+            5,
+            6.625,
+            6.25
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0,
+            7.5,
+            0.25,
+            7.625
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            8.5,
+            5,
+            8.625,
+            6.25
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            0,
+            7.5,
+            0.25,
+            7.625
+          ],
+          "texture": "#0",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "name": "socket_collar_right",
+      "from": [
+        10.5,
+        0,
+        0
+      ],
+      "to": [
+        11.5,
+        5,
+        0.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3,
+            5,
+            3.25,
+            6.25
+          ],
+          "texture": "#0",
+          "cullface": "north"
+        },
+        "west": {
+          "uv": [
+            6.5,
+            5,
+            6.625,
+            6.25
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0,
+            7.5,
+            0.25,
+            7.625
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            8.5,
+            5,
+            8.625,
+            6.25
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            0,
+            7.5,
+            0.25,
+            7.625
+          ],
+          "texture": "#0",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "name": "socket_collar_top",
+      "from": [
+        5.5,
+        4,
+        0
+      ],
+      "to": [
+        10.5,
+        5,
+        0.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3.25,
+            5,
+            4.5,
+            5.25
+          ],
+          "texture": "#0",
+          "cullface": "north"
+        },
+        "down": {
+          "uv": [
+            6.5,
+            5,
+            7.75,
+            5.125
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0,
+            7.5,
+            1.25,
+            7.625
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "socket_opening",
+      "from": [
+        5.5,
+        0,
+        0.75
+      ],
+      "to": [
+        10.5,
+        4,
+        1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            5,
+            5,
+            6.25,
+            6
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ]
+}

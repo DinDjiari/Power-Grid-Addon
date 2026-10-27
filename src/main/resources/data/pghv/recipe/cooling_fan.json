@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SBS",
+    "BFB",
+    "SES"
+  ],
+  "key": {
+    "S": {
+      "item": "create:iron_sheet"
+    },
+    "B": {
+      "item": "create:brass_sheet"
+    },
+    "F": {
+      "item": "powergrid:electric_fan"
+    },
+    "E": {
+      "item": "create:electron_tube"
+    }
+  },
+  "result": {
+    "id": "pghv:cooling_fan",
+    "count": 1
+  }
+}

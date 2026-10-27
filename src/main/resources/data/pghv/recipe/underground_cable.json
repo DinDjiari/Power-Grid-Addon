@@ -1,0 +1,11 @@
+{
+  "type": "pghv:cable_insulation",
+  "category": "misc",
+  "core": {
+    "item": "pghv:bare_cable"
+  },
+  "insulation": {
+    "item": "minecraft:dried_kelp"
+  },
+  "count": 1
+}

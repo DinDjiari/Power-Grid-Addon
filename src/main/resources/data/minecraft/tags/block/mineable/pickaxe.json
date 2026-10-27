@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "pghv:hv_voltmeter",
+    "pghv:cooling_fan",
+    "pghv:cable_box"
+  ]
+}
