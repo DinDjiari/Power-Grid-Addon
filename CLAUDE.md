@@ -7,7 +7,7 @@ Umgebung: Windows (PowerShell). Gradle über `.\gradlew.bat`. Java 21 nötig.
 NeoForge-1.21.1-Addon (Mod-ID `pghv`) für **Create: Power Grid 0.6.2** (Mod-ID `powergrid`) mit Create 6.0.10.
 Inhalt:
 1. **HV-Voltmeter** (`hv_voltmeter`): Power-Grid-Voltmeter, nur Andesit→Messing umgefärbt; Messbereiche 20 kV / 200 kV / 2 MV.
-2. **Trafo-Kühllüfter** (`cooling_fan`): eckiger grauer Box-Ventilator (Doppelrahmen, 4 Aluminium-Flügel, kein Gitter, kein Messing, durchsichtig mit Motorkreuz hinten; Kupfer-Pins im Power-Grid-Stil beide unten links), 2×2 Blöcke, ⅓ Block dick, 3 Tiefenpositionen (slot 0/1/2), rastet beim Draufklicken auf die große Seite des Power-Grid-Medium-Trafos ein, 240 V / 300 W, Drehzahlmenü (Create-Wertepanel), kühlt den Trafo, bläst Entities weg (Create-Luftstrom aus allen 4 Zellen).
+2. **Trafo-Kühllüfter** (`cooling_fan`): Create-Encased-Fan-Look auf 2×2 hochskaliert (Modelle verweisen auf Create-Texturen fan_casing/fan_side/fan_blades/axis, nichts kopiert; Gitter vorn und hinten, durchsichtig; Kupfer-Pins im Power-Grid-Stil beide unten links), 2×2 Blöcke, ⅓ Block dick, 3 Tiefenpositionen (slot 0/1/2), rastet beim Draufklicken auf die große Seite des Power-Grid-Medium-Trafos ein, 240 V / 300 W, Drehzahlmenü (Create-Wertepanel), kühlt den Trafo, bläst Entities weg (Create-Luftstrom aus allen 4 Zellen).
 3. **Mehrleiter-Erdkabel**: 3 beliebige Power-Grid-Drähte → `bare_cable`; + 8 getrockneter Seetang → `underground_cable`; Verlegen zwischen zwei `cable_box` mit Ankerpunkten; jede Ader ein eigener Leiter. Spezifikation: `docs/ERDKABEL_SPEZIFIKATION.md`.
 
 Der Code wurde **ohne Build** geschrieben (kein Maven-Zugang). Liste der ungeprüften Annahmen: `docs/API_ANNAHMEN.md`. Testcheckliste: `TESTPLAN.md`.

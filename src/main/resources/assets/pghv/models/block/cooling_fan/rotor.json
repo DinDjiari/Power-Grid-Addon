@@ -1,149 +1,123 @@
 {
- "credit": "pghv cooling fan rotor v3 (box fan)",
- "render_type": "minecraft:cutout",
- "texture_size": [
-  64,
-  64
- ],
- "textures": {
-  "0": "pghv:block/cooling_fan",
-  "particle": "pghv:block/cooling_fan"
- },
- "elements": [
-  {
-   "name": "rotor_disc",
-   "from": [
-    -8,
-    -8,
-    7.75
-   ],
-   "to": [
-    24,
-    24,
-    8.25
-   ],
-   "faces": {
-    "north": {
-     "uv": [
-      0.0,
-      8.0,
-      8.0,
-      16.0
-     ],
-     "texture": "#0"
-    },
-    "south": {
-     "uv": [
-      8.0,
-      8.0,
-      0.0,
-      16.0
-     ],
-     "texture": "#0"
-    }
-   }
+  "credit": "pghv cooling fan v4 rotor (Create fan blades texture referenced)",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "blades": "create:block/fan_blades",
+    "axis": "create:block/axis",
+    "axis_top": "create:block/axis_top",
+    "particle": "create:block/fan_side"
   },
-  {
-   "name": "hub_disc",
-   "from": [
-    4.5,
-    4.5,
-    7.3
-   ],
-   "to": [
-    11.5,
-    11.5,
-    7.3
-   ],
-   "faces": {
-    "north": {
-     "uv": [
-      3.0,
-      4.0,
-      4.75,
-      5.75
-     ],
-     "texture": "#0"
+  "elements": [
+    {
+      "name": "blades",
+      "from": [
+        -6,
+        -6,
+        8
+      ],
+      "to": [
+        22,
+        22,
+        8
+      ],
+      "rotation": {
+        "angle": 22.5,
+        "axis": "z",
+        "origin": [
+          8,
+          8,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#blades"
+        },
+        "south": {
+          "uv": [
+            15,
+            1,
+            1,
+            15
+          ],
+          "texture": "#blades"
+        }
+      }
     },
-    "south": {
-     "uv": [
-      4.75,
-      4.0,
-      3.0,
-      5.75
-     ],
-     "texture": "#0"
+    {
+      "name": "hub",
+      "from": [
+        4,
+        4,
+        6.5
+      ],
+      "to": [
+        12,
+        12,
+        9.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            6,
+            6,
+            10,
+            10
+          ],
+          "texture": "#axis_top"
+        },
+        "south": {
+          "uv": [
+            6,
+            6,
+            10,
+            10
+          ],
+          "texture": "#axis_top"
+        },
+        "east": {
+          "uv": [
+            6,
+            0,
+            10,
+            1.5
+          ],
+          "texture": "#axis"
+        },
+        "west": {
+          "uv": [
+            6,
+            0,
+            10,
+            1.5
+          ],
+          "texture": "#axis"
+        },
+        "up": {
+          "uv": [
+            6,
+            0,
+            10,
+            1.5
+          ],
+          "texture": "#axis"
+        },
+        "down": {
+          "uv": [
+            6,
+            0,
+            10,
+            1.5
+          ],
+          "texture": "#axis"
+        }
+      }
     }
-   }
-  },
-  {
-   "name": "hub_body",
-   "from": [
-    5.7,
-    5.7,
-    7.35
-   ],
-   "to": [
-    10.3,
-    10.3,
-    9.0
-   ],
-   "faces": {
-    "north": {
-     "uv": [
-      14.0,
-      0.0,
-      15.15,
-      1.15
-     ],
-     "texture": "#0"
-    },
-    "east": {
-     "uv": [
-      7.0,
-      0.0,
-      7.4125,
-      1.15
-     ],
-     "texture": "#0"
-    },
-    "south": {
-     "uv": [
-      14.0,
-      0.0,
-      15.15,
-      1.15
-     ],
-     "texture": "#0"
-    },
-    "west": {
-     "uv": [
-      7.0,
-      0.0,
-      7.4125,
-      1.15
-     ],
-     "texture": "#0"
-    },
-    "up": {
-     "uv": [
-      0.0,
-      3.0,
-      1.15,
-      3.4125
-     ],
-     "texture": "#0"
-    },
-    "down": {
-     "uv": [
-      0.0,
-      3.0,
-      1.15,
-      3.4125
-     ],
-     "texture": "#0"
-    }
-   }
-  }
- ]
+  ]
 }
