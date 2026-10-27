@@ -42,7 +42,7 @@ import java.util.List;
  * Draws the plugged data cable of a data socket box: a plug in the fan socket, the cable (2 px thick, hanging
  * with sag when it has no waypoints, otherwise straight from point to point) and a plug in the box socket.
  * Textures: pghv:block/data_cable (cord, the 2 px wide column x 0..2 repeats along the cable) and
- * pghv:block/data_plug (plug body, x 0..4 / y 0..4 = front, the rest = sides).
+ * pghv:block/data_plug (4 x 4 regions: x 0..4 contact face, 4..8 sides, 8..12 back with cable entry).
  */
 public class DataSocketBoxRenderer extends SafeBlockEntityRenderer<DataSocketBoxBlockEntity> {
     private static final ResourceLocation CORD = ResourceLocation.fromNamespaceAndPath(Pghv.MOD_ID, "block/data_cable");
@@ -156,9 +156,16 @@ public class DataSocketBoxRenderer extends SafeBlockEntityRenderer<DataSocketBox
         double x0 = c.x - hx, x1 = c.x + hx, y0 = c.y - hy, y1 = c.y + hy, z0 = c.z - hz, z1 = c.z + hz;
         float fu0 = sprite.getU(0), fu1 = sprite.getU(4 / 16f), fv0 = sprite.getV(0), fv1 = sprite.getV(4 / 16f);
         float su0 = sprite.getU(4 / 16f), su1 = sprite.getU(8 / 16f);
+        float bu0 = sprite.getU(8 / 16f), bu1 = sprite.getU(12 / 16f);
         for (Direction dir : Direction.values()) {
-            boolean front = dir.getAxis() == out.getAxis();
-            float u0 = front ? fu0 : su0, u1 = front ? fu1 : su1;
+            float u0, u1;
+            if (dir == out) {            // back of the plug, where the cable leaves
+                u0 = bu0; u1 = bu1;
+            } else if (dir == out.getOpposite()) {
+                u0 = fu0; u1 = fu1;      // contact face (inside the socket)
+            } else {
+                u0 = su0; u1 = su1;
+            }
             Vec3 nn = Vec3.atLowerCornerOf(dir.getNormal());
             Vec3[] q = switch (dir) {
                 case DOWN -> new Vec3[] { new Vec3(x0, y0, z0), new Vec3(x1, y0, z0), new Vec3(x1, y0, z1), new Vec3(x0, y0, z1) };

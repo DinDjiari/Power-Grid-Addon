@@ -184,33 +184,51 @@
       }
     },
     {
-      "name": "socket_round",
+      "name": "socket_round_0",
       "from": [
         5,
-        0.5,
+        1.5,
         8.6667
       ],
       "to": [
         11,
-        6.5,
+        5.5,
         11.6667
       ],
       "faces": {
         "north": {
           "uv": [
             0,
-            0,
+            1,
             6,
-            6
+            5
           ],
           "texture": "#socket"
         },
         "south": {
           "uv": [
-            6,
             0,
-            12,
-            1
+            1,
+            6,
+            5
+          ],
+          "texture": "#socket"
+        },
+        "up": {
+          "uv": [
+            0,
+            6,
+            6,
+            9.0
+          ],
+          "texture": "#socket"
+        },
+        "down": {
+          "uv": [
+            0,
+            6,
+            6,
+            9.0
           ],
           "texture": "#socket"
         },
@@ -218,8 +236,8 @@
           "uv": [
             6,
             0,
-            12,
-            1
+            9.0,
+            4.0
           ],
           "texture": "#socket"
         },
@@ -227,26 +245,77 @@
           "uv": [
             6,
             0,
-            12,
-            1
+            9.0,
+            4.0
+          ],
+          "texture": "#socket"
+        }
+      }
+    },
+    {
+      "name": "socket_round_1",
+      "from": [
+        6,
+        0.5,
+        8.6567
+      ],
+      "to": [
+        10,
+        6.5,
+        11.6667
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            0,
+            5,
+            6
+          ],
+          "texture": "#socket"
+        },
+        "south": {
+          "uv": [
+            1,
+            0,
+            5,
+            6
           ],
           "texture": "#socket"
         },
         "up": {
           "uv": [
-            6,
             0,
-            12,
-            1
+            6,
+            4,
+            9.0
           ],
           "texture": "#socket"
         },
         "down": {
           "uv": [
+            0,
+            6,
+            4,
+            9.0
+          ],
+          "texture": "#socket"
+        },
+        "east": {
+          "uv": [
             6,
             0,
-            12,
-            1
+            9.0,
+            6.0
+          ],
+          "texture": "#socket"
+        },
+        "west": {
+          "uv": [
+            6,
+            0,
+            9.0,
+            6.0
           ],
           "texture": "#socket"
         }

@@ -29,3 +29,4 @@ javac.*.args
 .gemini_raw/
 tools/gemini-texture-mcp/.venv/
 __pycache__/
+*.pyc
