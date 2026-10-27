@@ -55,7 +55,7 @@ Bitte die Punkte der Reihe nach abhaken. Fehlerausgaben (Gradle oder `logs/lates
 - [ ] Überlast: Adern brennen NICHT durch (entfernt auf Toms Wunsch); Goggles zeigen Strom rot über Max.
 
 ## 4. Texturen und Optik
-- [ ] Lüfter: sieht aus wie Creates Encased Fan auf 2×2 vergrößert (Create-Texturen laden, kein lila-schwarz), Kupfer-Pins unten links (Polarität per Highlight), durchsichtig; Standard-Trafo behält seine Originaltextur
+- [ ] Lüfter: Create-Fan-Look 2×2 mit eigener Textur (kein lila-schwarz), 2 kleine Keramik-Connectoren unten links (Polarität per Highlight), durchsichtig; Standard-Trafo behält seine Originaltextur
 - [ ] Lüfter bläst aus allen 4 Zellen (Entity vor jeder Zelle wird weggeschoben)
 - [ ] Gauge-Skala lesbar
 - [ ] Lichtwert des Rotors passt zur Umgebung

@@ -1,186 +1,197 @@
 {
-  "credit": "pghv cooling fan v4 - Create encased fan look, Create textures referenced (not included)",
-  "render_type": "minecraft:cutout",
-  "texture_size": [
+ "credit": "pghv cooling fan v4 - Create-Stil, eigene Pixel; Pins: powergrid:block/wire_connector (Apache-2.0)",
+ "render_type": "minecraft:cutout",
+ "texture_size": [
+  64,
+  64
+ ],
+ "textures": {
+  "0": "pghv:block/cooling_fan",
+  "particle": "pghv:block/cooling_fan"
+ },
+ "elements": [
+  {
+   "name": "grille_front",
+   "from": [
+    0,
+    0,
+    0.02
+   ],
+   "to": [
     16,
-    16
-  ],
-  "textures": {
-    "grille": "create:block/fan_casing",
-    "side": "create:block/fan_side",
-    "blades": "create:block/fan_blades",
-    "axis": "create:block/axis",
-    "axis_top": "create:block/axis_top",
-    "particle": "create:block/fan_side"
-  },
-  "elements": [
-    {
-      "name": "grille_front",
-      "from": [
-        0,
-        0,
-        0.0
-      ],
-      "to": [
-        16,
-        16,
-        0.0
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            8.0,
-            0.0,
-            16.0,
-            8.0
-          ],
-          "texture": "#grille"
-        },
-        "south": {
-          "uv": [
-            0.0,
-            0.0,
-            8.0,
-            8.0
-          ],
-          "texture": "#grille"
-        }
-      }
+    16,
+    0.02
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      4.0,
+      0.0,
+      8.0,
+      4.0
+     ],
+     "texture": "#0"
     },
-    {
-      "name": "grille_back",
-      "from": [
-        0,
-        0,
-        5.3333
-      ],
-      "to": [
-        16,
-        16,
-        5.3333
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            8.0,
-            0.0,
-            16.0,
-            8.0
-          ],
-          "texture": "#grille"
-        },
-        "south": {
-          "uv": [
-            0.0,
-            0.0,
-            8.0,
-            8.0
-          ],
-          "texture": "#grille"
-        }
-      }
-    },
-    {
-      "name": "frame_right",
-      "from": [
-        0,
-        0,
-        0.0
-      ],
-      "to": [
-        4,
-        16,
-        5.3333
-      ],
-      "faces": {
-        "east": {
-          "uv": [
-            0.0,
-            0,
-            8.0,
-            2.6667
-          ],
-          "texture": "#side"
-        },
-        "west": {
-          "uv": [
-            0.0,
-            0,
-            8.0,
-            2.6667
-          ],
-          "texture": "#side"
-        },
-        "up": {
-          "uv": [
-            0.0,
-            0,
-            8.0,
-            2.6667
-          ],
-          "texture": "#side"
-        },
-        "down": {
-          "uv": [
-            0.0,
-            0,
-            8.0,
-            2.6667
-          ],
-          "texture": "#side"
-        }
-      }
-    },
-    {
-      "name": "frame_top",
-      "from": [
-        0,
-        12,
-        0.0
-      ],
-      "to": [
-        16,
-        16,
-        5.3333
-      ],
-      "faces": {
-        "east": {
-          "uv": [
-            8.0,
-            0,
-            16.0,
-            2.6667
-          ],
-          "texture": "#side"
-        },
-        "west": {
-          "uv": [
-            8.0,
-            0,
-            16.0,
-            2.6667
-          ],
-          "texture": "#side"
-        },
-        "up": {
-          "uv": [
-            8.0,
-            0,
-            16.0,
-            2.6667
-          ],
-          "texture": "#side"
-        },
-        "down": {
-          "uv": [
-            8.0,
-            0,
-            16.0,
-            2.6667
-          ],
-          "texture": "#side"
-        }
-      }
+    "south": {
+     "uv": [
+      8.0,
+      0.0,
+      4.0,
+      4.0
+     ],
+     "texture": "#0"
     }
-  ]
+   }
+  },
+  {
+   "name": "grille_back",
+   "from": [
+    0,
+    0,
+    5.3133
+   ],
+   "to": [
+    16,
+    16,
+    5.3133
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      4.0,
+      0.0,
+      8.0,
+      4.0
+     ],
+     "texture": "#0"
+    },
+    "south": {
+     "uv": [
+      8.0,
+      0.0,
+      4.0,
+      4.0
+     ],
+     "texture": "#0"
+    }
+   }
+  },
+  {
+   "name": "frame_side",
+   "from": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "to": [
+    4,
+    16,
+    5.3333
+   ],
+   "faces": {
+    "west": {
+     "uv": [
+      12.0,
+      0.0,
+      13.3333,
+      4.0
+     ],
+     "texture": "#0"
+    },
+    "up": {
+     "uv": [
+      8.0,
+      0.0,
+      9.0,
+      1.3333
+     ],
+     "texture": "#0"
+    },
+    "east": {
+     "uv": [
+      14.8333,
+      0.0,
+      13.5,
+      4.0
+     ],
+     "texture": "#0"
+    }
+   }
+  },
+  {
+   "name": "frame_edge",
+   "from": [
+    4,
+    12,
+    0.0
+   ],
+   "to": [
+    16,
+    16,
+    5.3333
+   ],
+   "faces": {
+    "up": {
+     "uv": [
+      8.0,
+      0.0,
+      11.0,
+      1.3333
+     ],
+     "texture": "#0"
+    },
+    "down": {
+     "uv": [
+      8.0,
+      2.8333,
+      11.0,
+      1.5
+     ],
+     "texture": "#0"
+    }
+   }
+  },
+  {
+   "name": "axle",
+   "from": [
+    14,
+    0.0,
+    3.6967
+   ],
+   "to": [
+    16,
+    2,
+    5.2933
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      9.5,
+      3.0,
+      10.0,
+      3.5
+     ],
+     "texture": "#0"
+    },
+    "west": {
+     "uv": [
+      9.0,
+      3.0,
+      9.3992,
+      3.5
+     ],
+     "texture": "#0"
+    },
+    "up": {
+     "uv": [
+      8.0,
+      3.0,
+      8.5,
+      3.3992
+     ],
+     "texture": "#0"
+    }
+   }
+  }
+ ]
 }
