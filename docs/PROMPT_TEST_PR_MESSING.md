@@ -20,5 +20,10 @@ Vorgehen:
 5. runClient: Wertefeld oben mittig bei beiden Lüftern – Lage, Leserichtung, beide oberen Hälften anklickbar, Board 0–100 % bzw.
    40–160 °C; Messing-Lüfter am heißen Medium-Trafo regelt hoch, am kalten steht er; Rotor dreht beim Messing-Lüfter doppelt so schnell
    (sichtbar doppelt so schnell wie Andesit, kein Stroboskop-Effekt); Texturen ok. Screenshots nach docs/screenshots/messing_*.png.
-6. Commit + Push des Branches (nicht nach main mergen). Bericht an Tom (Deutsch): Teststatus je Punkt, Bugs, Screenshots, Empfehlung mergen ja/nein.
+6. Optik Messing-Lüfter (Toms Wunsch): Lade die Mod „Create Encased“ für NeoForge 1.21.1 (Modrinth/CurseForge, MIT-Lizenz)
+   und prüfe, ob sie einen Brass Encased Fan hat. Wenn ja: dessen Gitter- und Flügeltextur (und ggf. Seiten) als Basis für
+   brass_cooling_fan verwenden (nach src/main/resources/assets/pghv/textures/block/ kopieren, MIT-Lizenzhinweis + Quelle in
+   ASSET-NOTICE.txt), Modelle models/block/brass_cooling_fan/* darauf umstellen, 2×2 vergrößert wie beim Andesit-Lüfter,
+   unsere Keramik-Pins bleiben. Wenn nein: Tom fragen. Screenshot vorher/nachher.
+7. Commit + Push des Branches (nicht nach main mergen). Bericht an Tom (Deutsch): Teststatus je Punkt, Bugs, Screenshots, Empfehlung mergen ja/nein.
 ```
