@@ -15,3 +15,6 @@ Cooling fan: the block, rotor and item models are original geometry that REFEREN
 (create:block/fan_casing, fan_side, fan_blades, axis, axis_top), scaled to 2x2. No Create texture or model file is included
 (Create assets are All Rights Reserved); Create is a required dependency. The pins reference PowerGrid's texture
 powergrid:block/wire_connector (Apache-2.0) at runtime.
+Brass transformer fan: brass_cooling_fan_grille.png and brass_cooling_fan_blades.png are original pixel art made for this
+addon (no Create pixels copied). The models reference create:block/brass_casing, axis and axis_top at runtime (not included)
+and powergrid:block/wire_connector for the pins.
