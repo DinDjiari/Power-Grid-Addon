@@ -24,3 +24,7 @@ src/generated/
 # Power-Grid-Jar nicht einchecken (Nutzer legt es lokal ab)
 libs/*.jar
 javac.*.args
+
+# Gemini-Rohbilder
+.gemini_raw/
+tools/gemini-texture-mcp/.venv/
