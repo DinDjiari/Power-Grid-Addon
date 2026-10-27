@@ -19,6 +19,6 @@ Vorgehen:
 4. runServer: Log auf pghv-Fehler (Modelle, Texturen create:block/brass_casing usw.).
 5. runClient: Wertefeld oben mittig bei beiden Lüftern – Lage, Leserichtung, beide oberen Hälften anklickbar, Board 0–100 % bzw.
    40–160 °C; Messing-Lüfter am heißen Medium-Trafo regelt hoch, am kalten steht er; Rotor dreht beim Messing-Lüfter doppelt so schnell
-   (prüfen, ob es bei Vollgas optisch rückwärts zu laufen scheint); Texturen ok. Screenshots nach docs/screenshots/messing_*.png.
+   (sichtbar doppelt so schnell wie Andesit, kein Stroboskop-Effekt); Texturen ok. Screenshots nach docs/screenshots/messing_*.png.
 6. Commit + Push des Branches (nicht nach main mergen). Bericht an Tom (Deutsch): Teststatus je Punkt, Bugs, Screenshots, Empfehlung mergen ja/nein.
 ```

@@ -122,7 +122,11 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
     // ---- animation / sync ----
     public static final int FAN_STEPS = 100;
     public static final int FAN_MAX_STEPS = 120;
-    public static final float FAN_MAX_DEG_PER_TICK = 60.0f;
+    /**
+     * Rotor speed at 100 % in degrees per tick. Kept low enough that the 4-blade rotor does not strobe (at 60 fps the
+     * brass fan's 2x = 45 deg/tick is 15 deg per frame, well below the 45 deg half period), so 2x is visibly 2x.
+     */
+    public static final float FAN_MAX_DEG_PER_TICK = 22.5f;
     private static final float AIR_SPEED_AT_FULL = 256.0f;
     private static final float OFF_THRESHOLD = 0.05f;
 
