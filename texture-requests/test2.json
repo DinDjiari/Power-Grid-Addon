@@ -1,0 +1,5 @@
+{"jobs": [
+  {"tool": "generate_texture", "args": {"prompt": "small brass gear", "out_path": "texture-requests/results/test2/a.png", "model": "gemini-3.1-flash-lite-image"}},
+  {"tool": "generate_texture", "args": {"prompt": "small brass gear", "out_path": "texture-requests/results/test2/b.png", "model": "gemini-2.5-flash-image"}},
+  {"tool": "generate_texture", "args": {"prompt": "small brass gear", "out_path": "texture-requests/results/test2/c.png", "model": "gemini-3.1-flash-image"}}
+]}
