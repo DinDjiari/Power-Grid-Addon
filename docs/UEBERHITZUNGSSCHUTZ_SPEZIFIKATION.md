@@ -48,6 +48,15 @@ Nur der Messing-Lüfter (`brass_cooling_fan`); der Andesit-Lüfter bleibt unver�
   Widerstand wie Power Grid für die jeweilige Drahtart und Länge; max. 16 Blöcke; verbraucht 1 Datenkabel (Kreativ: nicht).
   Sneak-Rechtsklick in die Luft bricht ab. Die Drähte sind normale Power-Grid-Drähte (Drahtschere entfernt sie).
 
+### Datenkabel am Boden (Wunsch Tom, 2026-10-27)
+- Wie Power-Grid-Drähte auch **am Boden/an der Wand** verlegbar: nach dem Start (Lüfter) Rechtsklick auf Blockflächen
+  ⇒ drei Power-Grid-Block-Drähte (Kupfer/Eisen/Gold) nebeneinander (3/16 Abstand) bis zur Klickstelle; weitere Klicks
+  verlängern; Klick auf den Servo schließt an Servo-Terminals 0/1/2 an. Direkter Klick auf den Servo = wie bisher hängend.
+- Pfadsuche, Darstellung, Drahtschere und Elektrik = Power Grid (`WireItem.connect`, `BlockTrace`), Pfade werden vorab
+  für alle drei Adern geprüft (entweder alle oder keine).
+- Verbrauch nach Länge wie Power Grid je Ader; verbraucht werden max(Adern) Datenkabel (1 Datenkabel = je 1 Draht) ⇒ kein Dupe.
+- Offene Enden im Item (`pghv:data_cable_route`), Schleichen + Rechtsklick in die Luft bricht ab (verlegte Drähte bleiben).
+
 ## Assets
 - Messing-Lüfter Teil 1 (alle 3 Slots): Steckdosenplatte + 3 Mini-Keramik-Connectoren (Power-Grid-Stil, Textur
   `powergrid:block/wire_connector` referenzierbar), passend zu den Klickboxen oben.
