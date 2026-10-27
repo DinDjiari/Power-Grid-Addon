@@ -4,6 +4,7 @@
     "pghv:hv_voltmeter",
     "pghv:cooling_fan",
     "pghv:brass_cooling_fan",
-    "pghv:cable_box"
+    "pghv:cable_box",
+    "pghv:data_socket_box"
   ]
 }

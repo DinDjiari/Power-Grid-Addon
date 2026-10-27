@@ -77,4 +77,10 @@ public class PghvBlockEntities {
                     .of((pos, state) -> new CableSegmentBlockEntity(PghvBlockEntities.CABLE_SEGMENT.get(), pos, state),
                             PghvBlocks.CABLE_SEGMENT.get())
                     .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.block.entity.DataSocketBoxBlockEntity>> DATA_SOCKET_BOX =
+            BLOCK_ENTITIES.register("data_socket_box", () -> BlockEntityType.Builder
+                    .of((pos, state) -> new com.tomrox.pghv.block.entity.DataSocketBoxBlockEntity(PghvBlockEntities.DATA_SOCKET_BOX.get(), pos, state),
+                            PghvBlocks.DATA_SOCKET_BOX.get())
+                    .build(null));
 }
