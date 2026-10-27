@@ -18,6 +18,14 @@ java {
     withSourcesJar()
 }
 
+// GameTests (src/gametest) laufen nur in der Entwicklungsumgebung, nicht im Release-Jar
+sourceSets {
+    gametest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
 repositories {
     mavenLocal()
     maven {
@@ -63,6 +71,12 @@ neoForge {
             programArgument '--nogui'
             systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
         }
+        // GameTests aus src/gametest (nicht im Release-Jar): ./gradlew runGameTestServer
+        gameTestServer {
+            type = "gameTestServer"
+            sourceSet = sourceSets.gametest
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+        }
         data {
             data()
             programArguments.addAll '--mod', mod_id, '--all',
@@ -78,11 +92,14 @@ neoForge {
     mods {
         "${mod_id}" {
             sourceSet sourceSets.main
+            sourceSet sourceSets.gametest
         }
     }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+neoForge.addModdingDependenciesTo(sourceSets.gametest)
 
 idea {
     module {
@@ -94,6 +111,8 @@ idea {
 configurations {
     localRuntime
     runtimeClasspath.extendsFrom localRuntime
+    gametestCompileClasspath.extendsFrom compileClasspath
+    gametestRuntimeClasspath.extendsFrom runtimeClasspath
 }
 
 dependencies {
