@@ -85,7 +85,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 idea {
     module {
-        downloadSourceJars = true
+        downloadSources = true
         downloadJavadoc = true
     }
 }
