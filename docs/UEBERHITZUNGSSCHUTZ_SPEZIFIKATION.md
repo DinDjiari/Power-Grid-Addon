@@ -48,14 +48,25 @@ Nur der Messing-Lüfter (`brass_cooling_fan`); der Andesit-Lüfter bleibt unver�
   Widerstand wie Power Grid für die jeweilige Drahtart und Länge; max. 16 Blöcke; verbraucht 1 Datenkabel (Kreativ: nicht).
   Sneak-Rechtsklick in die Luft bricht ab. Die Drähte sind normale Power-Grid-Drähte (Drahtschere entfernt sie).
 
-### Datenkabel am Boden (Wunsch Tom, 2026-10-27)
-- Wie Power-Grid-Drähte auch **am Boden/an der Wand** verlegbar: nach dem Start (Lüfter) Rechtsklick auf Blockflächen
-  ⇒ drei Power-Grid-Block-Drähte (Kupfer/Eisen/Gold) nebeneinander (3/16 Abstand) bis zur Klickstelle; weitere Klicks
-  verlängern; Klick auf den Servo schließt an Servo-Terminals 0/1/2 an. Direkter Klick auf den Servo = wie bisher hängend.
-- Pfadsuche, Darstellung, Drahtschere und Elektrik = Power Grid (`WireItem.connect`, `BlockTrace`), Pfade werden vorab
-  für alle drei Adern geprüft (entweder alle oder keine).
-- Verbrauch nach Länge wie Power Grid je Ader; verbraucht werden max(Adern) Datenkabel (1 Datenkabel = je 1 Draht) ⇒ kein Dupe.
-- Offene Enden im Item (`pghv:data_cable_route`), Schleichen + Rechtsklick in die Luft bricht ab (verlegte Drähte bleiben).
+## Neu (Skizze Tom, 2026-10-27): runde Buchse, Stecker-Kabel, Datenstecker-Box
+Ersetzt die drei Keramik-Connectoren und das direkte Verbinden mit dem Servo.
+- **Lüfter (Messing, Teil 1):** runde Datenbuchse x 5..11, y 0.5..6.5 (Pixel, north-lokal), Front bei z0 − p,
+  p = max(0,5; min(2; z0)). Kontakte innen gelb/blau/rot. Terminals 2–4 bleiben elektrisch (Klickboxen in der Buchse).
+- **Datenstecker-Box `pghv:data_socket_box`:** HORIZONTAL_FACING = Richtung der Buchse (an Wand: aus der Wand heraus,
+  sonst zum Spieler). Körper x 4..12, y 1..13, z 10..16; runde Buchse vorn (Mitte x 8, y 7, Front z 9);
+  oben drei kleine Power-Grid-Connectoren: Terminal 0 = Servo +, 1 = Servo −, 2 = Steuersignal.
+  Rezept formlos: create:brass_sheet + powergrid:wire_connector + create:andesite_alloy.
+- **Datenkabel:** ein Kabel mit rundem Stecker an beiden Enden. Rechtsklick Lüfter (Start) → optional Rechtsklicks auf
+  Blöcke (Verlegepunkte auf der Oberfläche, Kabel liegt dann gerade von Punkt zu Punkt) → Rechtsklick Box (einstecken).
+  Ohne Punkte hängt es durch. Max. 16 Blöcke, max. 16 Punkte, 1 Datenkabel. Eine Lüfter-Buchse nur einmal belegbar.
+- **Elektrik:** Box baut je Ader eine einfache Power-Grid-Verbindung Lüfter-Terminal 2+i ↔ Box-Terminal i
+  (Widerstand = Ω/Block der Power-Grid-Drahtart × Länge), wie die Kabelbox: nicht gespeichert, bei Laden neu aufgebaut.
+- **Ausstecken:** Schraubenschlüssel auf die Box (Kabel droppt), Box abbauen (droppt), Lüfter abbauen (Stecker fällt
+  raus, Kabel droppt an der Box). Kreativ verlegt: kein Drop.
+- **Servo:** mit normalen Power-Grid-Drähten an die Connectoren oben auf der Box.
+- **Darstellung:** DataSocketBoxRenderer (Stecker 4×4×3 px, Kabel 2 px) mit Texturen pghv:block/data_cable,
+  pghv:block/data_plug; Buchse pghv:block/data_socket, Gehäuse pghv:block/data_socket_box (später per Gemini neu).
+- Offen (Tom fragen): Beschriftung rechts neben „Seite Stecker Box“ in der Skizze; Pins evtl. hinten statt oben.
 
 ## Assets
 - Messing-Lüfter Teil 1 (alle 3 Slots): Steckdosenplatte + 3 Mini-Keramik-Connectoren (Power-Grid-Stil, Textur

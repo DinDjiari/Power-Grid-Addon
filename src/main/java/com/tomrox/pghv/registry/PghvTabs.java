@@ -45,6 +45,7 @@ public class PghvTabs {
                         output.accept(PghvItems.COOLING_FAN.get());
                         output.accept(PghvItems.BRASS_COOLING_FAN.get());
                         output.accept(PghvItems.DATA_CABLE.get());
+                        output.accept(PghvItems.DATA_SOCKET_BOX.get());
                         output.accept(PghvItems.CABLE_BOX.get());
                         for (CableCores cores : CREATIVE_CORES)
                             output.accept(cable(PghvItems.BARE_CABLE.get(), cores));
