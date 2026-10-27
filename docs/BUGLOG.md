@@ -22,4 +22,6 @@
 | 2026-10-27 | cooling_fan Modelle/Textur | Lüfter wirkte wie Steuerrad, Messing khaki, Gitter unruhig | Blätter aus gedrehten Quadern | Neues Design nach Toms Skizze: grauer Box-Fan, 4 Flügel als gezeichnete Rotorscheibe, kein Gitter |
 | 2026-10-27 | cooling_fan Modelle/Textur | Pins wichen vom Power-Grid-Stil ab, Lüfter nicht durchsichtig | rot/blaue Pins, dunkle Rückwand | Kupfer-Connector wie PG, Rückwand entfernt (nur Motorkreuz) |
 | 2026-10-27 | cooling_fan Modelle | Tom: Create-Fan-Look gewünscht | eigenes Design | Modelle auf Create-Encased-Fan-Look 2×2 umgestellt (Create-Texturen referenziert) |
+| 2026-10-27 | cooling_fan Modelle/Textur | Create-Texturen nur referenziert, Pins schlicht | Toms Wunsch: eigene verbesserte Textur, PG-Keramik-Pins, bulliger | eigene Create-Stil-Textur, PG wire_connector verkleinert, breite Flügel |
+| 2026-10-27 | cooling_fan Modelle | Tom: Original-Create-Textur 2×2 statt eigener | – | Create-Texturen referenziert + 2×-skaliert, Keramik-Pins beibehalten |
 | 2026-10-27 | CableBoxBlockEntity.dropWires | Compile-Fehler: overTicks unbekannt | Feld beim Entfernen des Durchbrennens gelöscht, Verweis blieb | Zeile entfernt |
