@@ -54,6 +54,20 @@ Bitte die Punkte der Reihe nach abhaken. Fehlerausgaben (Gradle oder `logs/lates
 - [ ] Segment abbauen → ganzes Kabel weg, Länge × Erdkabel droppt einmal (kein Dupe, auch bei Explosion)
 - [ ] Überlast: Adern brennen NICHT durch (entfernt auf Toms Wunsch); Goggles zeigen Strom rot über Max.
 
+## 3c. Überhitzungsschutz (Messing-Lüfter + Servo + Datenkabel)
+Spezifikation: `docs/UEBERHITZUNGSSCHUTZ_SPEZIFIKATION.md`. Automatisch: `OverheatProtectionTests` (Hysterese, Spannungen, Schraubenschlüssel, Datenkabel, Ende-zu-Ende Servo + HV-Schalter).
+- [ ] Rezept: Kupferdraht + Eisendraht + Golddraht formlos → 1 Datenkabel; Item im Creative-Tab, Icon sichtbar
+- [ ] Messing-Lüfter Teil 1 (von vorn unten rechts): Steckdose mit 3 Connectoren in allen 3 Slots und 4 Richtungen; Highlight/Name beim Anvisieren: „Servo +48 V“ (rot), „Servo −“ (blau), „Steuersignal“ (grün); Andesit-Lüfter ohne Steckdose
+- [ ] Datenkabel: Rechtsklick auf Messing-Lüfter → Meldung „Steckdose gewählt“, Item glänzt; Rechtsklick auf Servo → 3 Drähte (Kupfer/Eisen/Gold) hängen zwischen den richtigen Connectoren; 1 Datenkabel weg (Kreativ: nicht)
+- [ ] Über 16 Blöcke → Meldung „zu lang“, nichts verbraucht; Schleichen + Rechtsklick in die Luft bricht ab; Andesit-Lüfter → „nur Messing-Lüfter hat eine Steckdose“
+- [ ] Drähte mit der Drahtschere trennen: je 1 Kupfer-/Eisen-/Golddraht droppt (kein Dupe)
+- [ ] Slot des Lüfters wechseln: Drahtenden wandern mit
+- [ ] Servo an Power Grids HV-Schalter (Welle) koppeln; Trafo über 155 °C heizen → Goggles „Überhitzungsschutz: AUSGELÖST“, Klick + Rauch, Servo dreht 180°, Schalter öffnet; unter 100 °C → „bereit“, Servo dreht zurück, Schalter schließt
+- [ ] Öffnet der Schalter in die falsche Richtung: Schraubenschlüssel-Rechtsklick auf die Steckdose → Meldung „Servo-Richtung: links/rechts“, Goggles zeigen die Richtung; Schraubenschlüssel woanders auf den Lüfter wechselt weiter den Slot
+- [ ] Goggles (Messing): „Aus bei 155 °C, wieder an bei 100 °C“
+- [ ] Welt speichern/laden im ausgelösten Zustand: bleibt ausgelöst, Richtung bleibt
+- [ ] Servo-Tempo: bei 48 V erste Bewegung ca. 7 U/min (180° ≈ 4 s), danach bis 32 U/min; prüfen, dass der Schalter rechtzeitig vor 175 °C öffnet
+
 ## 4. Texturen und Optik
 - [ ] Lüfter: Creates Lüftertextur auf 2×2 vergrößert (Create-Texturen laden, kein lila-schwarz), 2 kleine Keramik-Connectoren unten links (Polarität per Highlight), durchsichtig; Standard-Trafo behält seine Originaltextur
 - [ ] Lüfter bläst aus allen 4 Zellen (Entity vor jeder Zelle wird weggeschoben)

@@ -17,6 +17,7 @@ package com.tomrox.pghv.registry;
 
 import com.tomrox.pghv.Pghv;
 import com.tomrox.pghv.item.BareCableItem;
+import com.tomrox.pghv.item.DataCableItem;
 import com.tomrox.pghv.item.UndergroundCableItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -43,4 +44,7 @@ public class PghvItems {
 
     public static final DeferredItem<UndergroundCableItem> UNDERGROUND_CABLE =
             ITEMS.register("underground_cable", () -> new UndergroundCableItem(new Item.Properties()));
+
+    public static final DeferredItem<DataCableItem> DATA_CABLE =
+            ITEMS.register("data_cable", () -> new DataCableItem(new Item.Properties()));
 }

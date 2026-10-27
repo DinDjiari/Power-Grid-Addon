@@ -18,12 +18,12 @@ Nur der Messing-Lüfter (`brass_cooling_fan`); der Andesit-Lüfter bleibt unver�
 - Sitzt auf **Teil 1** (von vorn gesehen unten **rechts**), 3 kleine Keramik-Connectoren im Power-Grid-Stil
   auf einer dunklen Steckdosenplatte. Klickboxen (Teil-1-lokal, facing=north, wie die Strom-Pins in der Tiefe
   z (z0−p)..(z0+2), p = min(3, z0)):
-  - Terminal 2 = POSITIVE „Servo +24 V“: x 2..5, y 1..4
+  - Terminal 2 = POSITIVE „Servo +48 V“: x 2..5, y 1..4
   - Terminal 3 = NEGATIVE „Servo −“:      x 6.5..9.5, y 1..4
   - Terminal 4 = CONTROL „Steuersignal“:  x 11..14, y 1..4 (Farbe grün wie beim Servo)
 - Messing-Lüfter hat damit 5 Terminals (0/1 = Strom wie bisher auf Teil 0, 2–4 = Steckdose auf Teil 1). Andesit: 2.
 - Schaltkreis (nur Messing, in buildCircuit – läuft im Super-Konstruktor, Variante über getBlockState()):
-  - 24-V-Quelle zwischen Terminal 2 (+) und 3 (−), Innenwiderstand 0,5 Ω.
+  - 48-V-Quelle zwischen Terminal 2 (+) und 3 (−), Innenwiderstand 0,5 Ω.
   - Steuerquelle zwischen Terminal 4 und 3, Spannung 0 V (bereit) bzw. ±2,5 V (ausgelöst ⇒ Servo 180°), Innenwiderstand 10 Ω.
   - Galvanisch getrennt vom 240-V-Eingang.
 
