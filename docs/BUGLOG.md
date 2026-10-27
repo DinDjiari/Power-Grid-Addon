@@ -20,3 +20,4 @@
 | 2026-10-27 | CableBoxBlockEntity | Adern brennen bei Überlast durch | Toms Entscheidung: Mechanik entfernen | Durchbrennen entfernt, Test cableOverloadNeverBurns |
 | 2026-10-27 | HvCoolingFanBlock | Pins sollen beide unten links sitzen (Toms Skizze) | Pins auf Teil 0 und 1 verteilt | beide Terminals auf Teil 0 (plus x11..14, minus x6..9), Tests angepasst |
 | 2026-10-27 | cooling_fan Modelle/Textur | Lüfter wirkte wie Steuerrad, Messing khaki, Gitter unruhig | Blätter aus gedrehten Quadern | Neues Design nach Toms Skizze: grauer Box-Fan, 4 Flügel als gezeichnete Rotorscheibe, kein Gitter |
+| 2026-10-27 | cooling_fan Modelle/Textur | Pins wichen vom Power-Grid-Stil ab, Lüfter nicht durchsichtig | rot/blaue Pins, dunkle Rückwand | Kupfer-Connector wie PG, Rückwand entfernt (nur Motorkreuz) |
