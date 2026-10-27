@@ -55,6 +55,7 @@ Bitte die Punkte der Reihe nach abhaken. Fehlerausgaben (Gradle oder `logs/lates
 - [ ] Überlast: Adern brennen NICHT durch (entfernt auf Toms Wunsch); Goggles zeigen Strom rot über Max.
 
 ## 4. Texturen und Optik
-- [ ] Lüfter-Textur: Stahlgrau mit Messingakzenten, keine Streckung oder verdrehten UVs; Standard-Trafo behält seine Originaltextur
+- [ ] Lüfter: grauer Box-Fan (Doppelrahmen, 4 Aluminium-Flügel, kein Gitter, kein Messing), Pins rot/blau beide unten links; keine Streckung oder verdrehten UVs; Standard-Trafo behält seine Originaltextur
+- [ ] Lüfter bläst aus allen 4 Zellen (Entity vor jeder Zelle wird weggeschoben)
 - [ ] Gauge-Skala lesbar
 - [ ] Lichtwert des Rotors passt zur Umgebung
