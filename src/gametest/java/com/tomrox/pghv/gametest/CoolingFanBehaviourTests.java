@@ -96,6 +96,25 @@ public class CoolingFanBehaviourTests {
     }
 
     @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 200)
+    public static void fanBlowsFromAllFourCells(GameTestHelper helper) {
+        poweredFan(helper);
+        // Cell of part 3 (one right, one up) - the original single current only covered part 0.
+        BlockPos start = HvCoolingFanBlock.cellOf(MAIN, FACING, 3).relative(FACING, 2);
+        double[] z0 = new double[1];
+        helper.runAfterDelay(60, () -> {
+            helper.setBlock(start.below(), net.minecraft.world.level.block.Blocks.STONE);
+            Pig pig = helper.spawnWithNoFreeWill(EntityType.PIG, start);
+            z0[0] = pig.getZ();
+        });
+        helper.runAfterDelay(120, () -> {
+            Pig pig = helper.findOneEntity(EntityType.PIG);
+            double moved = pig.getZ() - z0[0];
+            helper.assertTrue(moved > 1.0, "pig in front of the upper right cell should be blown south, moved " + moved);
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 200)
     public static void fanWithoutPowerNoWind(GameTestHelper helper) {
         PghvTestUtil.floor(helper);
         FakePlayer player = PghvTestUtil.player(helper, GameType.SURVIVAL, MAIN.relative(FACING, 3));
