@@ -64,8 +64,13 @@ public class HvCoolingFanRenderer extends SafeBlockEntityRenderer<HvCoolingFanBl
         ms.translate(dx, dy, dz);
         ms.mulPose(Axis.ZP.rotation(spin));
         ms.translate(-0.5, -0.5, -0.5);
-        CachedBuffers.partial(be.isBrass() ? PghvPartialModels.BRASS_COOLING_FAN_ROTOR : PghvPartialModels.COOLING_FAN_ROTOR, state)
-                .light(light)
+        var rotor = CachedBuffers.partial(be.isBrass() ? PghvPartialModels.BRASS_COOLING_FAN_ROTOR : PghvPartialModels.COOLING_FAN_ROTOR, state);
+        if (be.isBrass()) {
+            // Same Create blade texture as the andesite fan, tinted brass (block models use tintindex + PghvColors).
+            int tint = PghvColors.BRASS_TINT;
+            rotor.color((tint >> 16) & 0xFF, (tint >> 8) & 0xFF, tint & 0xFF, 255);
+        }
+        rotor.light(light)
                 .renderInto(ms, vb);
         ms.popPose();
     }

@@ -1,11 +1,11 @@
 {
-  "credit": "pghv brass transformer fan (own brass grille/blades; brass_casing/axis referenced from Create, pins from Power Grid)",
+  "credit": "pghv brass transformer fan: Create fan textures referenced (not included) and tinted brass at runtime; sides create:block/brass_casing; pins powergrid:block/wire_connector",
   "render_type": "minecraft:cutout",
   "textures": {
     "1": "powergrid:block/wire_connector",
-    "grille": "pghv:block/brass_cooling_fan_grille",
+    "grille": "create:block/fan_casing",
     "side": "create:block/brass_casing",
-    "blades": "pghv:block/brass_cooling_fan_blades",
+    "blades": "create:block/fan_blades",
     "axis": "create:block/axis",
     "axis_top": "create:block/axis_top",
     "particle": "create:block/brass_casing"
@@ -31,7 +31,8 @@
             8.0,
             16.0
           ],
-          "texture": "#grille"
+          "texture": "#grille",
+          "tintindex": 0
         },
         "south": {
           "uv": [
@@ -40,7 +41,8 @@
             16.0,
             16.0
           ],
-          "texture": "#grille"
+          "texture": "#grille",
+          "tintindex": 0
         }
       }
     },
@@ -64,7 +66,8 @@
             8.0,
             16.0
           ],
-          "texture": "#grille"
+          "texture": "#grille",
+          "tintindex": 0
         },
         "south": {
           "uv": [
@@ -73,7 +76,8 @@
             16.0,
             16.0
           ],
-          "texture": "#grille"
+          "texture": "#grille",
+          "tintindex": 0
         }
       }
     },

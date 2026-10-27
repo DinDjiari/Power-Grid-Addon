@@ -79,3 +79,7 @@ wahrscheinlichsten Compile-/Laufzeitfehler:
 - `UseOnContext.getClickLocation()` für die Trefferprüfung des Schraubenschlüssels; Create-`WrenchItem.useOn` ruft `onWrenched` mit dem Original-Kontext.
 - `ServerLevel.tryAddFreshEntityWithPassengers`, `ServerLevel.sendParticles`, `SoundEvents.LEVER_CLICK` (SoundEvent, kein Holder).
 - GameTest Ende-zu-Ende: `HvSwitchBlockEntity` startet mit Stange 0 = offen (`isClosed()` = Stange > 0,9); Test ist deshalb richtungsneutral. `HorizontalKineticBlock.HORIZONTAL_FACING`, `HvSwitchBlock.PART`, `ServoBlock.FACING`, `ModdedBlocks.SERVO/HV_SWITCH` aus den Quellen.
+
+## Nachtrag Messing-Tint
+- Messing-Lüfter: Create-Texturen fan_casing/fan_blades per `tintindex` 0 + BlockColor/ItemColor (PghvColors.BRASS_TINT) eingefärbt;
+  Rotor im BER per `SuperByteBuffer.color(r, g, b, a)` (wie Power Grids LightFixtureRenderer). Farbton im Spiel prüfen.
