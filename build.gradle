@@ -90,6 +90,11 @@ idea {
     }
 }
 
+configurations {
+    localRuntime
+    runtimeClasspath.extendsFrom localRuntime
+}
+
 dependencies {
     // Create (slim, ohne transitive Abhaengigkeiten)
     implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
