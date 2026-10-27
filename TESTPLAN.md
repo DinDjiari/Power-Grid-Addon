@@ -32,7 +32,7 @@ Bitte die Punkte der Reihe nach abhaken. Fehlerausgaben (Gradle oder `logs/lates
 - [ ] Abbauen eines Teils entfernt die anderen drei, genau ein Item droppt (Kreativmodus: keins)
 - [ ] Zwei Pins unten (rot +, blau -) mit Draht verbindbar; 240 V Netz anschließen
 - [ ] Rotor dreht sich mit Spannung, steht ohne Spannung; Drehzahl ändert sich ohne Ruckeln
-- [ ] Wertebox/Menü: Drehzahl 0..100 % in 5-%-Schritten; weniger Prozent = weniger Leistung (R = 192 Ω / s²)
+- [ ] Wertebox/Menü wie Creates Rotation Speed Controller, aber in %: 0..100 % in 1-%-Schritten (Board mit 10er-Marken), Standard 100 %; weniger Prozent = weniger Leistung (R = 192 Ω / s²)
 - [ ] Goggles: Drehzahl, Spannung/Leistung, "Kühlt: Trafo, NN °C" bzw. "Kein Trafo"
 - [ ] Am Standard-Medium-Trafo (original Textur) vor/hinter die große Fläche setzen: Temperatur sinkt bei Last schneller als ohne Lüfter; zwei Lüfter (vorne+hinten) kühlen additiv
 - [ ] Luftstrom: Spieler/Mobs/Items vor dem Lüfter werden in Blickrichtung weggeblasen, Stärke folgt der Drehzahl; ohne Strom kein Wind
