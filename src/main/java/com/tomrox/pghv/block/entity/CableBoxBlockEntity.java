@@ -27,14 +27,10 @@ import com.tomrox.pghv.registry.PghvItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -57,7 +53,7 @@ import java.util.Set;
  * Cable box with three terminals (terminal i = cable core i).
  *
  * A cable always has an owner box A (the box where laying started) and a partner box B.
- * A stores partner, path points, cores, length and burnt cores; B stores the owner position,
+ * A stores partner, path points, cores and length; B stores the owner position,
  * cores and length (for colours and goggles). A segment block entity stores the owner position.
  *
  * Electrics: per intact core one plain Power Grid wire (GlobalElectricNetworks.makeSimpleConnection)
@@ -66,7 +62,6 @@ import java.util.Set;
  * unloads or is removed (same pattern as Power Grid's StringLightCordEntity parallel wires).
  */
 public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGoggleInformation {
-    private static final int BURN_TICKS = 40;
     private static final double MIN_RESISTANCE = 1e-6;
     private static final float CURRENT_SYNC_THRESHOLD = 0.5f;
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -80,7 +75,6 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
     private BlockPos owner;
     private List<BlockPos> points = List.of();
     private int length;
-    private byte burnt;
     /** Laid in creative mode (no items used): cutting it never drops items. */
     private boolean creativeLaid;
 
@@ -90,7 +84,6 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
 
     // Server runtime state
     private final ElectricWire[] wires = new ElectricWire[CableCores.COUNT];
-    private final int[] overTicks = new int[CableCores.COUNT];
     private boolean wiresBuilt;
     private int timer;
 
@@ -99,7 +92,6 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
     private final float[] currents = new float[CableCores.COUNT];
     // Last synced status, to send updates only on change
     private boolean sentLinked;
-    private byte sentBurnt;
     private final float[] sentCurrents = new float[CableCores.COUNT];
 
     public CableBoxBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -132,10 +124,6 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
         return c == null ? CableCores.COLOR_COPPER : c.color(index);
     }
 
-    private boolean isBurnt(int index) {
-        return (burnt & (1 << index)) != 0;
-    }
-
     // ---- connection setup / teardown ----
 
     /** Called on box A after the segments have been placed. */
@@ -147,7 +135,6 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
         owner = null;
         points = List.copyOf(pathPoints);
         length = cableLength;
-        burnt = 0;
         creativeLaid = creative;
         resetStatus();
         timer = 0;
@@ -162,7 +149,6 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
         partner = null;
         points = List.of();
         length = cableLength;
-        burnt = 0;
         resetStatus();
         notifyUpdate();
     }
@@ -174,7 +160,6 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
         owner = null;
         points = List.of();
         length = 0;
-        burnt = 0;
         creativeLaid = false;
         resetStatus();
         notifyUpdate();
@@ -184,7 +169,6 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
         linked = false;
         for (int i = 0; i < CableCores.COUNT; ++i) {
             currents[i] = 0;
-            overTicks[i] = 0;
         }
     }
 
@@ -338,8 +322,6 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
         boolean complete = true;
         try {
             for (int i = 0; i < CableCores.COUNT; ++i) {
-                if (isBurnt(i))
-                    continue;
                 wires[i] = GlobalElectricNetworks.makeSimpleConnection(level,
                         new BlockWireEndpoint(worldPosition, i), new BlockWireEndpoint(partner, i),
                         (float) totalResistance(level.registryAccess(), i));
@@ -379,53 +361,15 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
         return Math.max(MIN_RESISTANCE, CableCores.ohmPerBlock(registries, cores.core(index)) * Math.max(1, length));
     }
 
+    /** Reads the core currents for goggles (no overload handling: cores never burn through). */
     private void checkCurrents() {
         if (level == null || cores == null)
             return;
         for (int i = 0; i < CableCores.COUNT; ++i) {
             ElectricWire wire = wires[i];
-            if (wire == null) {
-                currents[i] = 0;
-                continue;
-            }
-            double current = Math.abs(wire.current());
-            if (!Double.isFinite(current))
-                current = 0;
-            currents[i] = (float) current;
-            if (current > CableCores.maxCurrent(level.registryAccess(), cores.core(i))) {
-                if (++overTicks[i] > BURN_TICKS)
-                    burnCore(i);
-            } else {
-                overTicks[i] = 0;
-            }
+            double current = wire == null ? 0 : Math.abs(wire.current());
+            currents[i] = Double.isFinite(current) ? (float) current : 0;
         }
-    }
-
-    /** Overload for more than 2 s: the core burns through and stays open until the cable is relaid. */
-    private void burnCore(int index) {
-        if (wires[index] != null) {
-            wires[index].remove();
-            wires[index] = null;
-        }
-        burnt |= (byte) (1 << index);
-        currents[index] = 0;
-        overTicks[index] = 0;
-        if (level instanceof ServerLevel server) {
-            smoke(server, worldPosition);
-            if (partner != null)
-                smoke(server, partner);
-            List<BlockPos> cells = CablePath.cells(points);
-            for (int i = 1; i < cells.size() - 1; i += 3)
-                smoke(server, cells.get(i));
-            server.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 0.8f);
-        }
-        notifyUpdate();
-        pushStatus();
-    }
-
-    private static void smoke(ServerLevel level, BlockPos pos) {
-        level.sendParticles(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + 0.4, pos.getZ() + 0.5,
-                6, 0.2, 0.15, 0.2, 0.01);
     }
 
     /** Syncs status to clients and mirrors it onto box B, only when something changed. */
@@ -433,20 +377,18 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
         if (level == null || partner == null || !statusChanged())
             return;
         sentLinked = linked;
-        sentBurnt = burnt;
         System.arraycopy(currents, 0, sentCurrents, 0, CableCores.COUNT);
         sendData();
         if (level.isLoaded(partner) && level.getBlockEntity(partner) instanceof CableBoxBlockEntity other
                 && worldPosition.equals(other.owner)) {
             other.linked = linked;
-            other.burnt = burnt;
             System.arraycopy(currents, 0, other.currents, 0, CableCores.COUNT);
             other.sendData();
         }
     }
 
     private boolean statusChanged() {
-        if (linked != sentLinked || burnt != sentBurnt)
+        if (linked != sentLinked)
             return true;
         for (int i = 0; i < CableCores.COUNT; ++i) {
             if (Math.abs(currents[i] - sentCurrents[i]) > CURRENT_SYNC_THRESHOLD)
@@ -496,7 +438,6 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
         if (cores != null) {
             tag.put("Cores", cores.toTag());
             tag.putInt("Length", length);
-            tag.putByte("Burnt", burnt);
             if (creativeLaid)
                 tag.putBoolean("CreativeLaid", true);
             if (partner != null) {
@@ -519,7 +460,6 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
         CableCores oldCores = cores;
         cores = tag.contains("Cores", Tag.TAG_LIST) ? CableCores.fromTag(tag.getList("Cores", CableCores.TAG_TYPE)) : null;
         length = tag.getInt("Length");
-        burnt = tag.getByte("Burnt");
         creativeLaid = tag.getBoolean("CreativeLaid");
         partner = tag.contains("Partner") ? BlockPos.of(tag.getLong("Partner")) : null;
         points = tag.contains("Points") ? CablePath.unpack(tag.getLongArray("Points")) : List.of();
@@ -557,10 +497,6 @@ public class CableBoxBlockEntity extends ElectricBlockEntity implements IHaveGog
         for (int i = 0; i < CableCores.COUNT; ++i) {
             line(tooltip, Component.translatable("pghv.cable.goggles.core", i + 1, CableCores.name(c.core(i)))
                     .withStyle(ChatFormatting.GRAY), 1);
-            if (isBurnt(i)) {
-                line(tooltip, Component.translatable("pghv.cable.goggles.burnt").withStyle(ChatFormatting.RED), 2);
-                continue;
-            }
             line(tooltip, Component.translatable("pghv.cable.goggles.resistance",
                     CableCores.formatOhm(totalResistance(registries, i))).withStyle(ChatFormatting.DARK_AQUA), 2);
             double max = CableCores.maxCurrent(registries, c.core(i));

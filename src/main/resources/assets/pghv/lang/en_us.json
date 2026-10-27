@@ -6,7 +6,6 @@
   "item.pghv.bare_cable": "Bare Multi-Core Cable",
   "item.pghv.underground_cable": "Underground Cable (insulated)",
   "itemGroup.pghv.main": "Power Grid: High Voltage",
-  "pghv.cable.goggles.burnt": "Burnt through",
   "pghv.cable.goggles.core": "Core %1$s: %2$s",
   "pghv.cable.goggles.current": "Current: %1$s A (max %2$s A)",
   "pghv.cable.goggles.length": "Length: %s blocks",

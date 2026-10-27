@@ -16,3 +16,5 @@
 | 2026-10-27 | build.gradle | localRuntime() unbekannt | Konfiguration localRuntime nicht angelegt (MDK-Konvention) | configurations.localRuntime + runtimeClasspath.extendsFrom |
 | 2026-10-27 | build.gradle | Registrate MC1.21-1.3.0+67 nicht gefunden | liegt nur im Snapshot-Repo von devos | Repo mvn.devos.one/snapshots ergänzt |
 | 2026-10-27 | HvCoolingFanBlockEntity.SpeedBox | Compile-Fehler: rotate() fehlt | ValueBoxTransform.rotate ist in Create 6 abstrakt | rotate wie Sided (yRot = facing + 180°) |
+| 2026-10-27 | HvCoolingFanBlockEntity | Lüfter bläst nur aus 1 von 4 Zellen | nur ein AirCurrent (Hauptzelle) | je Zelle ein AirCurrent (PartAirSource), Test fanBlowsFromAllFourCells |
+| 2026-10-27 | CableBoxBlockEntity | Adern brennen bei Überlast durch | Toms Entscheidung: Mechanik entfernen | Durchbrennen entfernt, Test cableOverloadNeverBurns |
