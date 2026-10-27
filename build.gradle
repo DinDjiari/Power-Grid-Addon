@@ -33,6 +33,7 @@ repositories {
     maven { url = 'https://maven.parchmentmc.org' }
     maven { url = 'https://modmaven.dev/' } // Flywheel (Alternative)
     maven { url = 'https://mvn.devos.one/releases' }
+    maven { url = 'https://mvn.devos.one/snapshots' } // Registrate MC1.21
     maven {
         url = 'https://api.modrinth.com/maven'
         content { includeGroup('maven.modrinth') }

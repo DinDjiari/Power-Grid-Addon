@@ -14,3 +14,4 @@
 | 2026-10-27 | cooling_fan part*_slot2.json | Platte ragte 2 px in den Trafo | Generator-Offset | auf Slot-Grenzen korrigiert |
 | 2026-10-27 | build.gradle | Gradle bricht beim Konfigurieren ab | idea-Property downloadSourceJars existiert in Gradle 8.12 nicht | downloadSources |
 | 2026-10-27 | build.gradle | localRuntime() unbekannt | Konfiguration localRuntime nicht angelegt (MDK-Konvention) | configurations.localRuntime + runtimeClasspath.extendsFrom |
+| 2026-10-27 | build.gradle | Registrate MC1.21-1.3.0+67 nicht gefunden | liegt nur im Snapshot-Repo von devos | Repo mvn.devos.one/snapshots ergänzt |
