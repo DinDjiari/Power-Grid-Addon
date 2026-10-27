@@ -1,10 +1,6 @@
 {
-  "credit": "pghv cooling fan v4 - Create encased fan look, Create textures referenced (not included)",
+  "credit": "pghv cooling fan - Create encased fan textures referenced and scaled to 2x2 (not included); pins use powergrid:block/wire_connector",
   "render_type": "minecraft:cutout",
-  "texture_size": [
-    16,
-    16
-  ],
   "textures": {
     "grille": "create:block/fan_casing",
     "side": "create:block/fan_side",
@@ -19,12 +15,12 @@
       "from": [
         0,
         0,
-        10.6667
+        10.6867
       ],
       "to": [
         16,
         16,
-        10.6667
+        10.6867
       ],
       "faces": {
         "north": {
@@ -52,12 +48,12 @@
       "from": [
         0,
         0,
-        16.0
+        15.98
       ],
       "to": [
         16,
         16,
-        16.0
+        15.98
       ],
       "faces": {
         "north": {
