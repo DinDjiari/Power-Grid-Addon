@@ -109,6 +109,14 @@ public abstract class WallDeviceBlockEntity extends ElectricBlockEntity implemen
         return best;
     }
 
+    /**
+     * Port an in-wall cable uses when the device is clicked at localHit (block-local 0..1, null = no click,
+     * e.g. auto route). Default: least used port.
+     */
+    public int portFor(@Nullable Vec3 localHit) {
+        return freePort();
+    }
+
     /** Terminals {L, N} of a port of the device at pos (own wall device or any Power Grid block: 0/1). */
     public static int[] terminals(Level level, BlockPos pos, int port) {
         if (level.getBlockState(pos).getBlock() instanceof WallDeviceBlock<?> block)

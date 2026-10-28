@@ -1,0 +1,82 @@
+{
+  "credit": "pghv - Tomrox GmbH",
+  "parent": "block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "door": "pghv:block/board_door",
+    "frame": "pghv:block/board_frame",
+    "rail": "pghv:block/board_rail",
+    "particle": "pghv:block/board_door"
+  },
+  "elements": [
+    {
+      "name": "f",
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        1,
+        16,
+        7
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3,
+            0,
+            4,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "south": {
+          "uv": [
+            3,
+            0,
+            4,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            7,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            7,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            1,
+            7
+          ],
+          "texture": "#frame"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            1,
+            7
+          ],
+          "texture": "#frame"
+        }
+      }
+    }
+  ]
+}

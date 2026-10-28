@@ -1,0 +1,151 @@
+{
+  "credit": "pghv - Tomrox GmbH",
+  "parent": "block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "m": "pghv:block/board_modules",
+    "particle": "pghv:block/board_modules"
+  },
+  "elements": [
+    {
+      "name": "body",
+      "from": [
+        12.25,
+        3,
+        1.5
+      ],
+      "to": [
+        15.75,
+        13,
+        6
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            4,
+            10
+          ],
+          "texture": "#m"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            4,
+            10
+          ],
+          "texture": "#m"
+        },
+        "east": {
+          "uv": [
+            8,
+            0,
+            10,
+            10
+          ],
+          "texture": "#m",
+          "rotation": 90
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            10,
+            10
+          ],
+          "texture": "#m",
+          "rotation": 90
+        },
+        "up": {
+          "uv": [
+            8,
+            0,
+            10,
+            2
+          ],
+          "texture": "#m"
+        },
+        "down": {
+          "uv": [
+            8,
+            0,
+            10,
+            2
+          ],
+          "texture": "#m"
+        }
+      }
+    },
+    {
+      "name": "lever",
+      "from": [
+        13.25,
+        4.5,
+        0.75
+      ],
+      "to": [
+        14.75,
+        7,
+        1.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10,
+            0,
+            12,
+            2
+          ],
+          "texture": "#m"
+        },
+        "south": {
+          "uv": [
+            10,
+            0,
+            12,
+            2
+          ],
+          "texture": "#m"
+        },
+        "east": {
+          "uv": [
+            10,
+            0,
+            12,
+            2
+          ],
+          "texture": "#m"
+        },
+        "west": {
+          "uv": [
+            10,
+            0,
+            12,
+            2
+          ],
+          "texture": "#m"
+        },
+        "up": {
+          "uv": [
+            10,
+            0,
+            12,
+            2
+          ],
+          "texture": "#m"
+        },
+        "down": {
+          "uv": [
+            10,
+            0,
+            12,
+            2
+          ],
+          "texture": "#m"
+        }
+      }
+    }
+  ]
+}

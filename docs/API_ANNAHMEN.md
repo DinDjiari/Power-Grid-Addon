@@ -115,3 +115,12 @@ wahrscheinlichsten Compile-/Laufzeitfehler:
   eigener `RenderType` über `RenderType.create(name, POSITION_COLOR_NORMAL, LINES, size, CompositeState)` in einer
   RenderType-Unterklasse (Zugriff auf `RENDERTYPE_LINES_SHADER`, `NO_DEPTH_TEST`, `VIEW_OFFSET_Z_LAYERING`, …).
 - `SmartBlockEntity.initialize()` läuft auch clientseitig (Registrierung für die Röntgenansicht).
+
+## Hausinstallation (feature/hausinstallation)
+- `ElectricBehaviour.getTerminal(int).getVoltage()`, `SwitchedWire.getState/setState/current()`, `CircuitBuilder.connectSwitch`.
+- Power Grid: `ModdedBlocks.FUSE_HOLDER / ENERGY_METER.getDefaultState()`, `FuseHolderBlock.STATE`, `FuseState`,
+  `DirectionalElectricBlock.FACING`, `SurfaceElectricBlock.ALONG_FIRST_AXIS`, `HorizontalElectricBlock.HORIZONTAL_FACING`,
+  `ModdedTags.Item.FUSE_RESETTING.tag`. Ausrichtung der eingebauten Sicherung (FACING SOUTH, ALONG_FIRST_AXIS false)
+  und des verkleinerten Zählers im Spiel prüfen.
+- BER: `BlockRenderDispatcher.renderSingleBlock(state, ms, buffer, light, overlay)`, `Font.drawInBatch(..., DisplayMode.POLYGON_OFFSET, ...)`.
+- `Block.onPlace` wird auch bei `setBlock` in GameTests aufgerufen (Kastenstruktur).

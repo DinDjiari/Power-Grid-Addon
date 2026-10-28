@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "minecraft:quartz"
+    },
+    {
+      "item": "minecraft:lever"
+    },
+    {
+      "item": "minecraft:red_dye"
+    },
+    {
+      "item": "minecraft:copper_ingot"
+    }
+  ],
+  "result": {
+    "id": "pghv:main_switch",
+    "count": 1
+  }
+}

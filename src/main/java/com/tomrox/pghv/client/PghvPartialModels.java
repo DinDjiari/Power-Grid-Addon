@@ -58,6 +58,12 @@ public class PghvPartialModels {
         EU_BULB_DYED = dyed;
     }
 
+    /** Own distribution board modules (models/block/board/*), modelled at rail place 0 (x 12..16). */
+    public static final PartialModel RCD_ON = PartialModel.of(ResourceLocation.fromNamespaceAndPath("pghv", "block/board/rcd_on"));
+    public static final PartialModel RCD_OFF = PartialModel.of(ResourceLocation.fromNamespaceAndPath("pghv", "block/board/rcd_off"));
+    public static final PartialModel MAIN_SWITCH_ON = PartialModel.of(ResourceLocation.fromNamespaceAndPath("pghv", "block/board/main_switch_on"));
+    public static final PartialModel MAIN_SWITCH_OFF = PartialModel.of(ResourceLocation.fromNamespaceAndPath("pghv", "block/board/main_switch_off"));
+
     public static void init() {
     }
 }

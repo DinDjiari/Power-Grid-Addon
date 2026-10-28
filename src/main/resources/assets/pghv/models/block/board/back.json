@@ -1,0 +1,151 @@
+{
+  "credit": "pghv - Tomrox GmbH",
+  "parent": "block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "door": "pghv:block/board_door",
+    "frame": "pghv:block/board_frame",
+    "rail": "pghv:block/board_rail",
+    "particle": "pghv:block/board_door"
+  },
+  "elements": [
+    {
+      "name": "back",
+      "from": [
+        0,
+        0,
+        7
+      ],
+      "to": [
+        16,
+        16,
+        8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            4,
+            16,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "south": {
+          "uv": [
+            0,
+            4,
+            16,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "east": {
+          "uv": [
+            0,
+            4,
+            1,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "west": {
+          "uv": [
+            0,
+            4,
+            1,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "up": {
+          "uv": [
+            0,
+            4,
+            16,
+            5
+          ],
+          "texture": "#frame"
+        },
+        "down": {
+          "uv": [
+            0,
+            4,
+            16,
+            5
+          ],
+          "texture": "#frame"
+        }
+      }
+    },
+    {
+      "name": "housing",
+      "from": [
+        0,
+        0,
+        8
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            4,
+            16,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "south": {
+          "uv": [
+            0,
+            4,
+            16,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "east": {
+          "uv": [
+            0,
+            4,
+            8,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "west": {
+          "uv": [
+            0,
+            4,
+            8,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "up": {
+          "uv": [
+            0,
+            4,
+            16,
+            12
+          ],
+          "texture": "#frame"
+        },
+        "down": {
+          "uv": [
+            0,
+            4,
+            16,
+            12
+          ],
+          "texture": "#frame"
+        }
+      }
+    }
+  ]
+}

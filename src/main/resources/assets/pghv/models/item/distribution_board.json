@@ -1,0 +1,219 @@
+{
+  "credit": "pghv - Tomrox GmbH",
+  "parent": "block/block",
+  "textures": {
+    "door": "pghv:block/board_door",
+    "frame": "pghv:block/board_frame",
+    "rail": "pghv:block/board_rail",
+    "particle": "pghv:block/board_door"
+  },
+  "elements": [
+    {
+      "name": "housing",
+      "from": [
+        0,
+        0,
+        0.75
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            4,
+            16,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "south": {
+          "uv": [
+            0,
+            4,
+            16,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "east": {
+          "uv": [
+            0,
+            4,
+            16,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "west": {
+          "uv": [
+            0,
+            4,
+            16,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "up": {
+          "uv": [
+            0,
+            4,
+            16,
+            16
+          ],
+          "texture": "#frame"
+        },
+        "down": {
+          "uv": [
+            0,
+            4,
+            16,
+            16
+          ],
+          "texture": "#frame"
+        }
+      }
+    },
+    {
+      "name": "door",
+      "from": [
+        0,
+        0,
+        0.25
+      ],
+      "to": [
+        16,
+        16,
+        0.75
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#door"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#door"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#door"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#door"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#door"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#door"
+        }
+      }
+    },
+    {
+      "name": "h",
+      "from": [
+        1,
+        6,
+        -0.5
+      ],
+      "to": [
+        2,
+        10,
+        0.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            4,
+            1,
+            8
+          ],
+          "texture": "#rail"
+        },
+        "south": {
+          "uv": [
+            0,
+            4,
+            1,
+            8
+          ],
+          "texture": "#rail"
+        },
+        "east": {
+          "uv": [
+            0,
+            4,
+            1,
+            8
+          ],
+          "texture": "#rail"
+        },
+        "west": {
+          "uv": [
+            0,
+            4,
+            1,
+            8
+          ],
+          "texture": "#rail"
+        },
+        "up": {
+          "uv": [
+            0,
+            4,
+            1,
+            8
+          ],
+          "texture": "#rail"
+        },
+        "down": {
+          "uv": [
+            0,
+            4,
+            1,
+            8
+          ],
+          "texture": "#rail"
+        }
+      }
+    }
+  ]
+}

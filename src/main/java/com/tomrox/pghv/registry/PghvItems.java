@@ -54,6 +54,15 @@ public class PghvItems {
     public static final DeferredItem<com.tomrox.pghv.item.EuLightBulb> EU_LIGHT_BULB =
             ITEMS.register("eu_light_bulb", () -> new com.tomrox.pghv.item.EuLightBulb(new Item.Properties()));
 
+    public static final DeferredItem<BlockItem> DISTRIBUTION_BOARD =
+            ITEMS.registerSimpleBlockItem("distribution_board", PghvBlocks.DISTRIBUTION_BOARD, new Item.Properties());
+    public static final DeferredItem<BlockItem> HOUSE_CONNECTION_BOX =
+            ITEMS.registerSimpleBlockItem("house_connection_box", PghvBlocks.HOUSE_CONNECTION_BOX, new Item.Properties());
+    public static final DeferredItem<com.tomrox.pghv.item.BoardModuleItem> RCD =
+            ITEMS.register("rcd", () -> new com.tomrox.pghv.item.BoardModuleItem(new Item.Properties(), "pghv.module.tooltip.rcd"));
+    public static final DeferredItem<com.tomrox.pghv.item.BoardModuleItem> MAIN_SWITCH =
+            ITEMS.register("main_switch", () -> new com.tomrox.pghv.item.BoardModuleItem(new Item.Properties(), "pghv.module.tooltip.main_switch"));
+
     public static final DeferredItem<BlockItem> CABLE_BOX =
             ITEMS.registerSimpleBlockItem("cable_box", PghvBlocks.CABLE_BOX, new Item.Properties());
 
