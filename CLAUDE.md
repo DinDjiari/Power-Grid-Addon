@@ -5,12 +5,19 @@ Umgebung: Windows (PowerShell). Gradle über `.\gradlew.bat`. Java 21 nötig.
 
 ## Was das ist
 NeoForge-1.21.1-Addon (Mod-ID `pghv`) für **Create: Power Grid 0.6.2** (Mod-ID `powergrid`) mit Create 6.0.10.
-Inhalt:
+Inhalt (Details in den Spezifikationen unter `docs/`):
 1. **HV-Voltmeter** (`hv_voltmeter`): Power-Grid-Voltmeter, nur Andesit→Messing umgefärbt; Messbereiche 20 kV / 200 kV / 2 MV.
-2. **Trafo-Kühllüfter** (`cooling_fan`): Creates Encased-Fan-Texturen auf 2×2 vergrößert (Modelle referenzieren create:block/fan_casing, fan_side, fan_blades, axis, axis_top – nichts kopiert; Gitter vorn und hinten, durchsichtig; 2 kleine Power-Grid-Keramik-Connectoren als Pins unten links, Textur powergrid:block/wire_connector referenziert), 2×2 Blöcke, ⅓ Block dick, 3 Tiefenpositionen (slot 0/1/2), rastet beim Draufklicken auf die große Seite des Power-Grid-Medium-Trafos ein, 240 V / 300 W, Drehzahlmenü (Create-Wertepanel), kühlt den Trafo, bläst Entities weg (Create-Luftstrom aus allen 4 Zellen).
-3. **Mehrleiter-Erdkabel**: 3 beliebige Power-Grid-Drähte → `bare_cable`; + 8 getrockneter Seetang → `underground_cable`; Verlegen zwischen zwei `cable_box` mit Ankerpunkten; jede Ader ein eigener Leiter. Spezifikation: `docs/ERDKABEL_SPEZIFIKATION.md`.
+2. **Trafo-Kühllüfter** Andesit (`cooling_fan`, feste Drehzahl 0–100 %) und Messing (`brass_cooling_fan`, regelt nach
+   Trafo-Temperatur, Überhitzungsschutz über Datenkabel → Datenstecker-Box → Servo): `docs/MESSING_LUEFTER_SPEZIFIKATION.md`,
+   `docs/UEBERHITZUNGSSCHUTZ_SPEZIFIKATION.md`.
+3. **Mehrleiter-Erdkabel** mit Kabelboxen: `docs/ERDKABEL_SPEZIFIKATION.md`.
+4. **Unterputz-Installation**: Dose, EU-Schalter/Taster, Steckdosen EU/US, Leitungen in der Wand (Röntgen, Autoroute R),
+   EU-Glühbirne 230 V für Power-Grid-Fassungen: `docs/UNTERPUTZ_SPEZIFIKATION.md`.
+5. **Hausinstallation**: Hausanschlusskasten mit Hauptschalter, Zähler-/Sicherungskasten (bis 8×8, in der Wand) mit
+   Power-Grid-Sicherungen, Power-Grid-Energiezähler, FI, Hauptschalter: `docs/HAUSINSTALLATION_SPEZIFIKATION.md`.
+6. **Ponder-Szenen** (EN/DE) für Lüfter und Kabelbox.
 
-Der Code wurde **ohne Build** geschrieben (kein Maven-Zugang). Liste der ungeprüften Annahmen: `docs/API_ANNAHMEN.md`. Testcheckliste: `TESTPLAN.md`.
+Neue Teile werden ohne Build geschrieben (kein Maven-Zugang). Ungeprüfte Annahmen: `docs/API_ANNAHMEN.md`. Testcheckliste: `TESTPLAN.md`.
 
 ## Regeln
 - Designs, Texturen, Modell-Geometrie, IDs, Blockstate-Properties und Spielmechanik laut Spezifikation **nicht eigenmächtig ändern**. Nur Fehler beheben. Designfragen an Tom.

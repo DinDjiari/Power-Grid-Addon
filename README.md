@@ -3,9 +3,14 @@
 Addon fuer **Create: Power Grid 0.6.2** (NeoForge 1.21.1). Fuegt hinzu:
 
 - `hv_voltmeter` – Messing-Voltmeter mit Messbereichen bis 2 MV
-- `cooling_fan` – Trafo-Kuehllueffter: flache 2x2-Platte, 1/3 Block dick, vorne/mittig/hinten platzierbar, 240 V / 300 W, Drehzahlmenue, Luftstrom (schiebt Entities weg). Mit dem Luefter auf den Standard-Medium-Trafo klicken, er rastet auf die grosse 2x2-Seite ein (vorne und hinten moeglich) und kuehlt ihn (Original-Textur bleibt)
+- `cooling_fan` / `brass_cooling_fan` – Trafo-Kühllüfter (2×2, ⅓ Block dick, rastet am Medium-Trafo ein); Andesit mit
+  fester Drehzahl, Messing mit Temperaturregelung und Überhitzungsschutz (`data_cable`, `data_socket_box`, Servo)
+- `underground_cable` / `bare_cable` / `cable_box` – Mehrleiter-Erdkabel zwischen Kabelboxen
+- Unterputz: `wall_box`, `wall_switch`, `wall_button`, `outlet_eu`, `outlet_us`, Leitungen mit isoliertem Kupferdraht,
+  `eu_light_bulb` (230 V) für Power-Grid-Fassungen
+- Hausinstallation: `house_connection_box`, `distribution_board` (bis 8×8, in der Wand) mit Power-Grid-Sicherungen,
+  Power-Grid-Energiezähler, `rcd`, `main_switch`
 
-- `underground_cable` / `bare_cable` / `cable_box` – Mehrleiter-Erdkabel: 3 beliebige Power-Grid-Draehte → blankes Kabel, mit 8 getrocknetem Seetang isoliert → Erdkabel (1 Item = 1 Block). Von Kabelbox zu Kabelbox verlegen wie Schienen (Rechtsklick Box = Start, Rechtsklick Boden = Ankerpunkt, Rechtsklick zweite Box = verbinden). Jede Ader ist ein eigener Leiter zwischen den 3 Anschluessen der Boxen.
 Autor: Tomrox GmbH · Lizenz: Apache-2.0 (siehe `LICENSE`, `NOTICE`)
 
 ## Voraussetzungen

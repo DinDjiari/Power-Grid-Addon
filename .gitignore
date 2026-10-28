@@ -25,8 +25,5 @@ src/generated/
 libs/*.jar
 javac.*.args
 
-# Gemini-Rohbilder
-.gemini_raw/
-tools/gemini-texture-mcp/.venv/
 __pycache__/
 *.pyc

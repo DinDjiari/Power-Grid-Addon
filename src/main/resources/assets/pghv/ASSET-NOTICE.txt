@@ -4,12 +4,6 @@ Source: patryk3211/PowerGrid (https://github.com/patryk3211/PowerGrid), licensed
 hv_voltmeter.png (assets/pghv/textures/block/) is a modified derivative of PowerGrid's conductive_gauge.png:
 only the andesite casing areas are recoloured to brass; dial, metal back plate, copper strip and terminals are unchanged.
 The voltmeter models use PowerGrid's original gauge models (powergrid: namespace) as parents.
-cooling_fan.png (assets/pghv/textures/block/) is an original 64x64 pixel-art texture created for this addon (generated with PIL);
-its steel-grey tones were chosen to match the look of PowerGrid's transformer/medium.png and electric_fan.png,
-its brass tones match hv_voltmeter.png. No pixels are copied from PowerGrid.
-Fan models under assets/pghv/models/ are original; the transformer that the fan is mounted on is PowerGrid's own block (not included).
-No Create textures are included.
-cable_box.png, cable_segment.png (textures/block/) and bare_cable*.png, underground_cable*.png (textures/item/) are original pixel-art textures created for this addon (generated with PIL); copper/iron tones only chosen to match Create/PowerGrid, no pixels copied. Cable models are original.
 
 Cooling fan: the block, rotor and item models are original geometry that REFERENCE Create's textures at runtime
 (create:block/fan_casing, fan_side, fan_blades, axis, axis_top), scaled to 2x2. No Create texture or model file is included
@@ -26,3 +20,7 @@ Power Grid's wire_connector model (Apache-2.0) and reference powergrid:block/wir
 Item eu_light_bulb and its look in light fixtures reuse Power Grid's light bulb models (powergrid:block/lamps/*,
 Apache-2.0) by reference; nothing is copied.
 In-wall devices (wall_box, wall_switch, outlet_eu, outlet_us) are original pixel art made for this addon.
+House installation (house_connection_box, distribution_board, rcd, main_switch: textures house_connection_box.png,
+board_door.png, board_frame.png, board_rail.png, board_modules.png) is original pixel art made for this addon. Inside the
+distribution board, Power Grid's fuse holder and energy meter (incl. its needle) are drawn with Power Grid's own models
+(Apache-2.0) by reference.

@@ -65,10 +65,6 @@ public class WallSwitchBlock extends WallDeviceBlock<WallSwitchBlockEntity> {
         setTerminalCollection(horizontalNorthTerminals(this, TERMINALS, SHAPE));
     }
 
-    public boolean isButton() {
-        return button;
-    }
-
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);

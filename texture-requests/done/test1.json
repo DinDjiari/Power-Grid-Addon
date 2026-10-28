@@ -1,6 +1,0 @@
-{"jobs": [
-  {"tool": "generate_texture", "args": {
-    "prompt": "Square industrial fan grille made of brass: a thick brass frame on the outer 1-pixel border and four evenly spaced horizontal brass bars, gaps between bars are see-through. Warm golden brass with darker brown-orange shading on the lower edges and a light yellow highlight on the upper edges, like the brass casing of the Create mod.",
-    "out_path": "texture-requests/results/test1/brass_grill_16.png",
-    "width": 16, "height": 16, "colors": 8, "transparent": true}}
-]}
