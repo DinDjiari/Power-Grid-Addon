@@ -167,8 +167,8 @@ public class HouseInstallationTests {
             DistributionBoardBlockEntity b = board(helper, BOARD);
             helper.assertValueEqual(b.state(0), 2, "fuse blown");
             helper.assertTrue(loadVoltage(helper) < 1, "blown fuse: no voltage");
-            for (int i = 0; i < 7; ++i)
-                b.cycleRating(0, null); // 16 -> ... -> 63 A
+            for (int i = 0; i < 4; ++i)
+                b.cycleRating(0, null); // 16 -> 20 -> 25 -> 32 -> 63 A
             helper.assertValueEqual(b.rating(0), 63, "rating 63 A");
             FakePlayer p = PghvTestUtil.player(helper, GameType.SURVIVAL, new BlockPos(5, 1, 2));
             ItemStack iron = new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("powergrid", "iron_wire")), 2);
