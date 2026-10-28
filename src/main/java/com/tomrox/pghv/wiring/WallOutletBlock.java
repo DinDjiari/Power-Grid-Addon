@@ -50,10 +50,6 @@ public class WallOutletBlock extends WallDeviceBlock<WallOutletBlockEntity> impl
         setTerminalCollection(horizontalNorthTerminals(this, TERMINALS, us ? SHAPE_US : SHAPE_EU));
     }
 
-    public boolean isUs() {
-        return us;
-    }
-
     /** Nominal voltage: 230 V EU, 120 V US. */
     public double nominalVoltage() {
         return us ? 120.0 : 230.0;

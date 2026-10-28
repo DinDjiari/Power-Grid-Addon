@@ -124,11 +124,6 @@ public class DistributionBoardBlockEntity extends WallDeviceBlockEntity {
         return isController;
     }
 
-    @Nullable
-    public BlockPos getController() {
-        return controller;
-    }
-
     public double energyWh() {
         return energyWh;
     }

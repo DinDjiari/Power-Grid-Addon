@@ -4,18 +4,7 @@ Grundlage: erster Build, Serverstart, Clientstart bis in eine Testwelt, 34 GameT
 des Quellcodes. **Nichts davon ist umgesetzt.** Punkte, die Design oder Spielmechanik betreffen, brauchen Toms
 Entscheidung. Die Dringlichkeit ist in Klammern angegeben.
 
-Screenshots vom ersten Start liegen in `docs/screenshots/`:
-
-| Datei | Inhalt |
-|---|---|
-| `01_hauptmenue.png` | Client erreicht das Hauptmenü (Erststart-Dialog) |
-| `02_testwelt_uebersicht.png` | Testwelt: Lüfter frei und am Trafo, Voltmeter, Kabelbox mit Erdkabel |
-| `03_voltmeter_vergleich_kabelboxen.png` | Original-Power-Grid-Voltmeter neben dem HV-Voltmeter, Kabelboxen, Steigleitung |
-| `04_nahaufnahme_luefter_kabel.png` | Nahaufnahme Lüfterrotor mit Pins, Kabel mit Steigleitung im Hintergrund |
-
-Hinweis: Die Bilder sind mit Software-OpenGL (Mesa llvmpipe) ohne Grafikkarte entstanden. Farben und Licht
-können auf echter Hardware anders aussehen. Die regenbogenfarbige Voltmeter-Skala erscheint auch beim
-Original-Power-Grid-Voltmeter und ist daher vermutlich ein Effekt dieser Software-Grafik.
+(Die Screenshots vom ersten Start mit den alten Lüfter-Designs wurden beim Aufräumen am 2026-10-28 entfernt.)
 
 ## Build und Projekt
 
