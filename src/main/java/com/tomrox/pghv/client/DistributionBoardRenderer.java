@@ -80,7 +80,8 @@ public class DistributionBoardRenderer extends SafeBlockEntityRenderer<Distribut
                             .setValue(SurfaceElectricBlock.ALONG_FIRST_AXIS, false)
                             .setValue(FuseHolderBlock.STATE, fs);
                     ms.pushPose();
-                    ms.translate((16 - 4 * s - 2) / 16.0 - 0.5, 0, 0);
+                    // fuse model stands on its surface at z 12..16; move it onto the back plate (z 7)
+                    ms.translate((16 - 4 * s - 2) / 16.0 - 0.5, 0, -9 / 16.0);
                     blocks.renderSingleBlock(fuse, ms, buffer, light, overlay);
                     ms.popPose();
                 }
@@ -90,7 +91,7 @@ public class DistributionBoardRenderer extends SafeBlockEntityRenderer<Distribut
                     BlockState meter = ModdedBlocks.ENERGY_METER.getDefaultState()
                             .setValue(HorizontalElectricBlock.HORIZONTAL_FACING, Direction.SOUTH);
                     ms.pushPose();
-                    ms.translate(0.5, 0.42, 1.0);
+                    ms.translate(0.5, 0.42, 7 / 16.0);
                     ms.scale(0.6f, 0.6f, 0.6f);
                     ms.translate(-0.5, -0.5, -1.0);
                     blocks.renderSingleBlock(meter, ms, buffer, light, overlay);
@@ -114,11 +115,11 @@ public class DistributionBoardRenderer extends SafeBlockEntityRenderer<Distribut
         ms.popPose();
     }
 
-    /** Reading on the meter display (north-local, display about z 0.77). */
+    /** Reading on the meter display (north-local, display about z 0.21: back plate 7/16 minus 0.6 x 6/16). */
     private static void text(PoseStack ms, MultiBufferSource buffer, int light, String s) {
         Font font = Minecraft.getInstance().font;
         ms.pushPose();
-        ms.translate(0.5, 0.56, 0.765);
+        ms.translate(0.5, 0.56, 0.205);
         ms.mulPose(Axis.YP.rotationDegrees(180));
         float scale = 1 / 160f;
         ms.scale(scale, -scale, scale);

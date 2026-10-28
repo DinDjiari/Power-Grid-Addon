@@ -45,8 +45,9 @@ import java.util.List;
 
 /*
  * Distribution board / meter cabinet block (pghv:distribution_board). Blocks join into one board up to 8 x 8
- * (BoardStructure). North-local: cabinet x 0..16, y 0..16, z 12..16 (surface mounted), DIN rail with 4 places
- * (place s at x 16-4(s+1) .. 16-4s, y 3..13). Door: click opens the whole board, sneak + empty hand closes it.
+ * (BoardStructure). Flush mounted: the block sits IN the wall (full block), door flush with the wall surface at
+ * north-local z 0, recess 7 px deep (back plate z 7..8, housing z 8..16). DIN rail at z 6..7 with 4 places
+ * (place s at x 16-4(s+1) .. 16-4s, y 3..13); modules stand in the recess (z about 1..6). Door: click opens the whole board, sneak + empty hand closes it.
  * Open: module item on a free place inserts it (Power Grid fuse holder: 1 place, Power Grid energy meter: 4 places,
  * RCD / main switch: 1 place); empty hand toggles a lever or takes out a blown fuse; iron wire resets a fuse;
  * wrench cycles the fuse rating; sneak + wrench takes a module out.
@@ -71,7 +72,7 @@ public class DistributionBoardBlock extends WallDeviceBlock<DistributionBoardBlo
             hidden(Component.translatable("pghv.terminal.circuit", 3), 5, 14, 7, 15),
             hidden(Component.translatable("pghv.terminal.circuit", 4), 1, 14, 3, 15)
     };
-    private static final VoxelShape SHAPE = box(0, 0, 12, 16, 16, 16);
+    private static final VoxelShape SHAPE = box(0, 0, 0, 16, 16, 16);
 
     public DistributionBoardBlock(Properties settings) {
         super(settings);
