@@ -175,5 +175,19 @@
   "pghv.wall.msg.same_device": "That is the start – pick another target",
   "pghv.wall.msg.start": "In-wall: start set – click wall blocks (waypoints) or the target; key R = auto route",
   "pghv.wall.msg.too_long": "Cable too long (max. %s blocks)",
-  "pghv.wall.msg.too_many_points": "Too many waypoints (max. %s)"
+  "pghv.wall.msg.too_many_points": "Too many waypoints (max. %s)",
+  "pghv.subtitle.wall_switch.on": "Light switch clicks on",
+  "pghv.subtitle.wall_switch.off": "Light switch clicks off",
+  "pghv.subtitle.wall_button.press": "Push button pressed",
+  "pghv.subtitle.wall_button.release": "Push button released",
+  "pghv.subtitle.breaker.on": "Breaker switched on",
+  "pghv.subtitle.breaker.off": "Breaker switched off",
+  "pghv.subtitle.breaker.trip": "RCD trips",
+  "pghv.subtitle.module_insert": "Module snaps onto rail",
+  "pghv.subtitle.fuse_insert": "Fuse inserted",
+  "pghv.subtitle.fuse_blow": "Fuse blows",
+  "pghv.subtitle.main_switch.on": "Main switch on",
+  "pghv.subtitle.main_switch.off": "Main switch off",
+  "pghv.subtitle.cooling_fan.run": "Cooling fan whirs",
+  "pghv.subtitle.cooling_fan.trip": "Overheat protection trips"
 }

@@ -15,6 +15,7 @@
  */
 package com.tomrox.pghv.wiring;
 
+import com.tomrox.pghv.registry.PghvSounds;
 import com.tomrox.pghv.registry.PghvBlockEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -88,7 +89,8 @@ public class HouseConnectionBoxBlock extends WallDeviceBlock<HouseConnectionBoxB
                     level.setBlock(pos, state.setValue(POWERED, on), Block.UPDATE_ALL);
                     if (level.getBlockEntity(pos) instanceof HouseConnectionBoxBlockEntity be)
                         be.setOn(on);
-                    level.playSound(null, pos, SoundEvents.PISTON_CONTRACT, SoundSource.BLOCKS, 0.5f, on ? 1.4f : 1.0f);
+                    level.playSound(null, pos, on ? PghvSounds.MAIN_SWITCH_ON.get() : PghvSounds.MAIN_SWITCH_OFF.get(),
+                            SoundSource.BLOCKS, 0.9f, 1.0f);
                 } else {
                     level.setBlock(pos, state.setValue(OPEN, false), Block.UPDATE_ALL);
                     level.playSound(null, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.BLOCKS, 0.6f, 1.1f);

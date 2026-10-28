@@ -124,3 +124,6 @@ wahrscheinlichsten Compile-/Laufzeitfehler:
   und des verkleinerten Zählers im Spiel prüfen.
 - BER: `BlockRenderDispatcher.renderSingleBlock(state, ms, buffer, light, overlay)`, `Font.drawInBatch(..., DisplayMode.POLYGON_OFFSET, ...)`.
 - `Block.onPlace` wird auch bei `setBlock` in GameTests aufgerufen (Kastenstruktur).
+- Sounds: `DeferredRegister.create(Registries.SOUND_EVENT, …)`, `SoundEvent.createVariableRangeEvent`,
+  `AbstractTickableSoundInstance(SoundEvent, SoundSource, RandomSource)` mit `looping`/`delay`/`volume`/`pitch`/`x,y,z`,
+  `SoundManager.play/isActive`. Lüfter-Sound wird aus dem Client-Tick des Lüfters gestartet (nicht in Ponder: `isVirtual()`).
