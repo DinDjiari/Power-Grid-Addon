@@ -50,6 +50,10 @@ public class PghvItems {
     public static final DeferredItem<BlockItem> OUTLET_US =
             ITEMS.registerSimpleBlockItem("outlet_us", PghvBlocks.OUTLET_US, new Item.Properties());
 
+    /** EU light bulb 230 V / 60 W for Power Grid's light fixtures. */
+    public static final DeferredItem<com.tomrox.pghv.item.EuLightBulb> EU_LIGHT_BULB =
+            ITEMS.register("eu_light_bulb", () -> new com.tomrox.pghv.item.EuLightBulb(new Item.Properties()));
+
     public static final DeferredItem<BlockItem> CABLE_BOX =
             ITEMS.registerSimpleBlockItem("cable_box", PghvBlocks.CABLE_BOX, new Item.Properties());
 

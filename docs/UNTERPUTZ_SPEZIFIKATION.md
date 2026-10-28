@@ -36,3 +36,11 @@ Goggles Schalter: „Ein/Aus“. Dose/Schalter/Steckdose: Anzahl Leitungen.
 - Abbau eines Endes ⇒ Leitung weg, Drähte droppen dort; fremdes Ziel verschwindet ⇒ Besitzer merkt es (alle 20 Ticks).
 - Darstellung: unsichtbar; nur solange der Spieler isolierten Kupferdraht hält, werden alle Leitungen in der Nähe
   durch die Wände gezeichnet (Linien ohne Tiefentest), dazu die Vorschau der gerade verlegten Leitung.
+
+## 230-V-Glühbirne (Entscheidung Tom, 2026-10-28)
+Power-Grid-Glühbirnen sind 120 V / 30 W und brennen an 230 V durch. Statt eigener Lampenblöcke (wieder entfernt):
+- Item `eu_light_bulb` „Glühbirne 230 V (EU)“ für **Power Grids eigene Fassungen** (Lampenfassung usw.), gleiches Aussehen
+  wie die Power-Grid-Birne (Modelle referenziert, Apache-2.0). Werte wie Power Grids `setProperties(60 W, 230 V, …)`:
+  R_max = 230²/60 ≈ 882 Ω, R_min = R_max/4, Betriebstemperatur 1450, Überhitzung 1850; färbbar wie die Power-Grid-Birne.
+- Rezept wie die Power-Grid-Birne, aber Kupferdraht statt Eisendraht und Kupferblech statt Eisenblech.
+- Fassungen sind Ziel für Unterputz-Leitungen (Terminals 0/1).

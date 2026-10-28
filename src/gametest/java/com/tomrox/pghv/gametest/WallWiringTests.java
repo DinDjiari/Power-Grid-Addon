@@ -237,4 +237,37 @@ public class WallWiringTests {
             helper.succeed();
         });
     }
+
+    /** EU 230 V bulb in a Power Grid light fixture, switched over in-wall cables: full power, not burned. */
+    @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 300)
+    public static void euBulbInPowerGridFixture(GameTestHelper helper) {
+        wall(helper);
+        feed(helper);
+        BlockPos fixture = new BlockPos(10, 2, 4);
+        device(helper, BOX, PghvBlocks.WALL_BOX.get());
+        device(helper, SWITCH, PghvBlocks.WALL_SWITCH.get());
+        helper.setBlock(fixture, org.patryk3211.powergrid.collections.ModdedBlocks.LIGHT_FIXTURE.getDefaultState());
+        helper.runAfterDelay(3, () -> {
+            feedWires(helper);
+            FakePlayer p = layer(helper, GameType.CREATIVE, 1);
+            var fx = (org.patryk3211.powergrid.electricity.light.fixture.AbstractLightFixtureBlockEntity) helper.getBlockEntity(fixture);
+            helper.assertTrue(fx.replaceBulb(p, InteractionHand.MAIN_HAND,
+                    new ItemStack(com.tomrox.pghv.registry.PghvItems.EU_LIGHT_BULB.get())), "bulb inserted");
+            PghvTestUtil.use(helper, p, BOX, OUT);
+            PghvTestUtil.use(helper, p, SWITCH, OUT);
+            PghvTestUtil.use(helper, p, SWITCH, OUT);
+            PghvTestUtil.use(helper, p, fixture, OUT);
+            WallSwitchBlockEntity sw = helper.getBlockEntity(SWITCH);
+            helper.assertValueEqual(sw.getOwned().size(), 1, "switch feeds the fixture");
+            FakePlayer hand = PghvTestUtil.player(helper, GameType.SURVIVAL, new BlockPos(6, 1, 2));
+            PghvTestUtil.use(helper, hand, SWITCH, OUT);
+        });
+        helper.runAfterDelay(200, () -> {
+            var fx = (org.patryk3211.powergrid.electricity.light.fixture.AbstractLightFixtureBlockEntity) helper.getBlockEntity(fixture);
+            helper.assertTrue(fx.getBulbState() != null && !fx.getBulbState().isBurned(), "230 V bulb survives 230 V");
+            helper.assertValueEqual(helper.getBlockState(fixture).getValue(
+                    org.patryk3211.powergrid.electricity.light.fixture.LightFixtureBlock.POWER), 2, "full power");
+            helper.succeed();
+        });
+    }
 }

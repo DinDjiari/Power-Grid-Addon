@@ -12,6 +12,7 @@
   "block.pghv.wall_switch": "Light Switch (EU)",
   "item.pghv.bare_cable": "Bare Multi-Core Cable",
   "item.pghv.data_cable": "Data Cable",
+  "item.pghv.eu_light_bulb": "Light Bulb 230 V (EU)",
   "item.pghv.underground_cable": "Underground Cable (insulated)",
   "itemGroup.pghv.main": "Power Grid: High Voltage",
   "key.categories.pghv": "Power Grid: High Voltage",

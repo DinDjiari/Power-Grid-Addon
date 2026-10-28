@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " G ",
+    "GWG",
+    " I "
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "W": {
+      "item": "powergrid:wire"
+    },
+    "I": {
+      "item": "create:copper_sheet"
+    }
+  },
+  "result": {
+    "id": "pghv:eu_light_bulb",
+    "count": 1
+  }
+}
