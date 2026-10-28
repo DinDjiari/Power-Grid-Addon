@@ -1,0 +1,312 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "pghv:block/board/back"
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "pghv:block/board/rail"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "up": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_up"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "down": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_down"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "left": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_left"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "right": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_right"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "open": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/door"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "open": "false",
+        "right": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/handle"
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "pghv:block/board/back",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "pghv:block/board/rail",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "up": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_up",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "down": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_down",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "left": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_left",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "right": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_right",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "open": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/door",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "open": "false",
+        "right": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/handle",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "pghv:block/board/back",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "pghv:block/board/rail",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "up": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_up",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "down": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_down",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "left": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_left",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "right": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_right",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "open": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/door",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "open": "false",
+        "right": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/handle",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "pghv:block/board/back",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "pghv:block/board/rail",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "up": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_up",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "down": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_down",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "left": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_left",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "right": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/frame_right",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "open": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/door",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "open": "false",
+        "right": "false"
+      },
+      "apply": {
+        "model": "pghv:block/board/handle",
+        "y": 270
+      }
+    }
+  ]
+}

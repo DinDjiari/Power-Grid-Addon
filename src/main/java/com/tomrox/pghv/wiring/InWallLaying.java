@@ -109,8 +109,9 @@ public final class InWallLaying {
         event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide));
         if (level.isClientSide)
             return;
+        Vec3 local = event.getHitVec().getLocation().subtract(Vec3.atLowerCornerOf(pos));
         if (laying == null) {
-            begin((ServerLevel) level, player, stack, pos);
+            begin((ServerLevel) level, player, stack, pos, local);
             return;
         }
         if (!laying.getString("D").equals(level.dimension().location().toString())) {
@@ -123,7 +124,7 @@ public final class InWallLaying {
             return;
         }
         if (isTarget(level, pos)) {
-            finish((ServerLevel) level, player, stack, pos, List.of());
+            finish((ServerLevel) level, player, stack, pos, List.of(), local);
             return;
         }
         addPoint(level, player, stack, Vec3.atCenterOf(pos));
@@ -145,12 +146,16 @@ public final class InWallLaying {
     // ---- steps (server) ----
 
     public static void begin(ServerLevel level, @Nullable Player player, ItemStack stack, BlockPos device) {
+        begin(level, player, stack, device, null);
+    }
+
+    public static void begin(ServerLevel level, @Nullable Player player, ItemStack stack, BlockPos device, @Nullable Vec3 localHit) {
         WallDeviceBlockEntity be = WallDeviceBlockEntity.at(level, device);
         if (be == null)
             return;
         CompoundTag t = new CompoundTag();
         t.putLong("S", device.asLong());
-        t.putInt("SP", be.freePort());
+        t.putInt("SP", be.portFor(localHit));
         t.putString("D", level.dimension().location().toString());
         t.put("P", InWallCable.pointsTag(List.of()));
         stack.set(PghvDataComponents.INWALL_LAYING.get(), t);
@@ -190,6 +195,11 @@ public final class InWallLaying {
 
     /** Finishes the cable at target, with extra waypoints appended (auto route). Returns true on success. */
     public static boolean finish(ServerLevel level, @Nullable Player player, ItemStack stack, BlockPos target, List<Vec3> extra) {
+        return finish(level, player, stack, target, extra, null);
+    }
+
+    public static boolean finish(ServerLevel level, @Nullable Player player, ItemStack stack, BlockPos target, List<Vec3> extra,
+                                 @Nullable Vec3 targetHit) {
         CompoundTag t = stack.get(PghvDataComponents.INWALL_LAYING.get());
         if (t == null)
             return false;
@@ -212,7 +222,7 @@ public final class InWallLaying {
         }
         int portA = t.getInt("SP");
         WallDeviceBlockEntity targetBe = WallDeviceBlockEntity.at(level, target);
-        int portB = targetBe != null ? targetBe.freePort() : 0;
+        int portB = targetBe != null ? targetBe.portFor(targetHit) : 0;
         boolean creative = player != null && player.isCreative();
         InWallCable probe = new InWallCable(startPos, portA, target, portB, pts, 0, creative);
         double length = probe.length();

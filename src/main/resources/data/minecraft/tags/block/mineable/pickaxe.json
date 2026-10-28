@@ -10,6 +10,8 @@
     "pghv:wall_switch",
     "pghv:wall_button",
     "pghv:outlet_eu",
-    "pghv:outlet_us"
+    "pghv:outlet_us",
+    "pghv:distribution_board",
+    "pghv:house_connection_box"
   ]
 }

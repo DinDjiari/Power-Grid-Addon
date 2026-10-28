@@ -113,4 +113,16 @@ public class PghvBlockEntities {
                     .of((pos, state) -> new com.tomrox.pghv.wiring.WallOutletBlockEntity(PghvBlockEntities.OUTLET_US.get(), pos, state),
                             PghvBlocks.OUTLET_US.get())
                     .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.DistributionBoardBlockEntity>> DISTRIBUTION_BOARD =
+            BLOCK_ENTITIES.register("distribution_board", () -> BlockEntityType.Builder
+                    .of((pos, state) -> new com.tomrox.pghv.wiring.DistributionBoardBlockEntity(PghvBlockEntities.DISTRIBUTION_BOARD.get(), pos, state),
+                            PghvBlocks.DISTRIBUTION_BOARD.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.HouseConnectionBoxBlockEntity>> HOUSE_CONNECTION_BOX =
+            BLOCK_ENTITIES.register("house_connection_box", () -> BlockEntityType.Builder
+                    .of((pos, state) -> new com.tomrox.pghv.wiring.HouseConnectionBoxBlockEntity(PghvBlockEntities.HOUSE_CONNECTION_BOX.get(), pos, state),
+                            PghvBlocks.HOUSE_CONNECTION_BOX.get())
+                    .build(null));
 }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "create:iron_sheet"
+    },
+    {
+      "item": "create:iron_sheet"
+    },
+    {
+      "item": "minecraft:iron_trapdoor"
+    }
+  ],
+  "result": {
+    "id": "pghv:distribution_board",
+    "count": 1
+  }
+}

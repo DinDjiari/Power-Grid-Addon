@@ -85,6 +85,13 @@ public class PghvBlocks {
     public static final DeferredBlock<com.tomrox.pghv.wiring.WallOutletBlock> OUTLET_US = BLOCKS.register("outlet_us",
             () -> new com.tomrox.pghv.wiring.WallOutletBlock(wallDevice(), true));
 
+    public static final DeferredBlock<com.tomrox.pghv.wiring.DistributionBoardBlock> DISTRIBUTION_BOARD = BLOCKS.register("distribution_board",
+            () -> new com.tomrox.pghv.wiring.DistributionBoardBlock(BlockBehaviour.Properties.of().mapColor(MapColor.SNOW)
+                    .strength(1.5f, 6.0f).sound(SoundType.METAL).noOcclusion()));
+    public static final DeferredBlock<com.tomrox.pghv.wiring.HouseConnectionBoxBlock> HOUSE_CONNECTION_BOX = BLOCKS.register("house_connection_box",
+            () -> new com.tomrox.pghv.wiring.HouseConnectionBoxBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY)
+                    .strength(1.5f, 6.0f).sound(SoundType.METAL).noOcclusion()));
+
     /** Cable piece placed by the laying code; no item, drops handled in code. */
     public static final DeferredBlock<CableSegmentBlock> CABLE_SEGMENT = BLOCKS.register("cable_segment",
             () -> new CableSegmentBlock(BlockBehaviour.Properties.of()
