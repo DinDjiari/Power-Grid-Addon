@@ -16,6 +16,7 @@
 package com.tomrox.pghv.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -120,7 +121,10 @@ public final class InWallClient {
                     line.add(Vec3.atCenterOf(hit.getBlockPos()));
                 polyline(vc, pose, line, 0xFFFFE34D);
             }
+            // NO_DEPTH_TEST (always) does not switch the depth test off itself; it is on at this stage.
+            RenderSystem.disableDepthTest();
             buffers.endBatch(XRay.LINES);
+            RenderSystem.enableDepthTest();
             ms.popPose();
         }
     }
