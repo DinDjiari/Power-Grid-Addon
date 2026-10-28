@@ -30,6 +30,34 @@ public class PghvPartialModels {
     public static final PartialModel BRASS_COOLING_FAN_ROTOR =
             PartialModel.of(ResourceLocation.fromNamespaceAndPath("pghv", "block/brass_cooling_fan/rotor"));
 
+    private static PartialModel pgLamp(String path) {
+        return PartialModel.of(ResourceLocation.fromNamespaceAndPath("powergrid", "block/lamps/" + path));
+    }
+
+    /** Power Grid's light bulb models, used by the EU 230 V bulb (same look). */
+    public static final java.util.Map<org.patryk3211.powergrid.electricity.light.bulb.LightBulb.State, PartialModel> EU_BULB;
+    public static final java.util.Map<org.patryk3211.powergrid.electricity.light.bulb.LightBulb.DyedState, PartialModel> EU_BULB_DYED;
+
+    static {
+        var plain = new java.util.EnumMap<org.patryk3211.powergrid.electricity.light.bulb.LightBulb.State, PartialModel>(
+                org.patryk3211.powergrid.electricity.light.bulb.LightBulb.State.class);
+        plain.put(org.patryk3211.powergrid.electricity.light.bulb.LightBulb.State.OFF, pgLamp("light_bulb"));
+        plain.put(org.patryk3211.powergrid.electricity.light.bulb.LightBulb.State.LOW_POWER, pgLamp("light_bulb_on"));
+        plain.put(org.patryk3211.powergrid.electricity.light.bulb.LightBulb.State.ON, pgLamp("light_bulb_on"));
+        plain.put(org.patryk3211.powergrid.electricity.light.bulb.LightBulb.State.BROKEN, pgLamp("light_bulb_broken"));
+        plain.put(org.patryk3211.powergrid.electricity.light.bulb.LightBulb.State.LIGHT, pgLamp("light_bulb_light"));
+        EU_BULB = plain;
+        var dyed = new java.util.EnumMap<org.patryk3211.powergrid.electricity.light.bulb.LightBulb.DyedState, PartialModel>(
+                org.patryk3211.powergrid.electricity.light.bulb.LightBulb.DyedState.class);
+        dyed.put(org.patryk3211.powergrid.electricity.light.bulb.LightBulb.DyedState.OFF, pgLamp("dyed_light_bulb"));
+        dyed.put(org.patryk3211.powergrid.electricity.light.bulb.LightBulb.DyedState.LOW_POWER, pgLamp("dyed_light_bulb_on"));
+        dyed.put(org.patryk3211.powergrid.electricity.light.bulb.LightBulb.DyedState.ON, pgLamp("dyed_light_bulb_on"));
+        dyed.put(org.patryk3211.powergrid.electricity.light.bulb.LightBulb.DyedState.BROKEN, pgLamp("dyed_light_bulb_broken"));
+        dyed.put(org.patryk3211.powergrid.electricity.light.bulb.LightBulb.DyedState.LIGHT, pgLamp("dyed_light_bulb_light"));
+        dyed.put(org.patryk3211.powergrid.electricity.light.bulb.LightBulb.DyedState.BULB, pgLamp("dyed_light_bulb_bulb"));
+        EU_BULB_DYED = dyed;
+    }
+
     public static void init() {
     }
 }

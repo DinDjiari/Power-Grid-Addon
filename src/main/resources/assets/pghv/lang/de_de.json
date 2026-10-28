@@ -12,6 +12,7 @@
   "block.pghv.wall_switch": "Lichtschalter (EU)",
   "item.pghv.bare_cable": "Blankes Mehrleiterkabel",
   "item.pghv.data_cable": "Datenkabel",
+  "item.pghv.eu_light_bulb": "Glühbirne 230 V (EU)",
   "item.pghv.underground_cable": "Erdkabel (isoliert)",
   "itemGroup.pghv.main": "Power Grid: High Voltage",
   "key.categories.pghv": "Power Grid: High Voltage",

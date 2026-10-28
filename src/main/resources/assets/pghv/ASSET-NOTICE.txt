@@ -22,3 +22,7 @@ item/data_cable.png: 16x16 pixel art redrawn by hand after a Google Gemini desig
 (owner's prompt). block/data_socket.png, block/data_socket_box.png, block/data_plug.png and block/data_cable.png
 are original pixel art made for this addon. The three small connectors on the data socket box use the geometry of
 Power Grid's wire_connector model (Apache-2.0) and reference powergrid:block/wire_connector at runtime.
+
+Item eu_light_bulb and its look in light fixtures reuse Power Grid's light bulb models (powergrid:block/lamps/*,
+Apache-2.0) by reference; nothing is copied.
+In-wall devices (wall_box, wall_switch, outlet_eu, outlet_us) are original pixel art made for this addon.

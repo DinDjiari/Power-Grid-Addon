@@ -44,6 +44,8 @@ public class PghvClient {
     public static void onClientSetup(FMLClientSetupEvent event) {
         // Partial-Modelle (Create/Flywheel) beim Client-Setup anmelden
         PghvPartialModels.init();
+        event.enqueueWork(() -> com.tomrox.pghv.registry.PghvItems.EU_LIGHT_BULB.get()
+                .setupClient(PghvPartialModels.EU_BULB, PghvPartialModels.EU_BULB_DYED));
         // Ponder scenes (W in the inventory); Ponder registers all plugins at FMLLoadCompleteEvent.
         event.enqueueWork(() -> PonderIndex.addPlugin(new PghvPonderPlugin()));
     }
