@@ -51,6 +51,8 @@ public class PghvTabs {
                         output.accept(PghvItems.WALL_BUTTON.get());
                         output.accept(PghvItems.OUTLET_EU.get());
                         output.accept(PghvItems.OUTLET_US.get());
+                        output.accept(PghvItems.CEILING_LAMP.get());
+                        output.accept(PghvItems.WALL_LIGHT.get());
                         output.accept(PghvItems.CABLE_BOX.get());
                         for (CableCores cores : CREATIVE_CORES)
                             output.accept(cable(PghvItems.BARE_CABLE.get(), cores));

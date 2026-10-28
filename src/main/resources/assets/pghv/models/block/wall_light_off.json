@@ -1,0 +1,155 @@
+{
+  "credit": "pghv - Tomrox GmbH",
+  "parent": "block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "c": "pghv:block/ceiling_lamp",
+    "off": "pghv:block/lamp_glass_off",
+    "on": "pghv:block/lamp_glass_on",
+    "particle": "pghv:block/ceiling_lamp"
+  },
+  "elements": [
+    {
+      "name": "base",
+      "from": [
+        4,
+        4,
+        14
+      ],
+      "to": [
+        12,
+        12,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            1,
+            9,
+            9
+          ],
+          "texture": "#c"
+        },
+        "south": {
+          "uv": [
+            1,
+            1,
+            9,
+            9
+          ],
+          "texture": "#c"
+        },
+        "up": {
+          "uv": [
+            0,
+            10,
+            8,
+            12
+          ],
+          "texture": "#c"
+        },
+        "down": {
+          "uv": [
+            0,
+            10,
+            8,
+            12
+          ],
+          "texture": "#c"
+        },
+        "east": {
+          "uv": [
+            0,
+            10,
+            8,
+            12
+          ],
+          "texture": "#c",
+          "rotation": 90
+        },
+        "west": {
+          "uv": [
+            0,
+            10,
+            8,
+            12
+          ],
+          "texture": "#c",
+          "rotation": 90
+        }
+      }
+    },
+    {
+      "name": "shade",
+      "from": [
+        5,
+        5,
+        11
+      ],
+      "to": [
+        11,
+        11,
+        14
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ],
+          "texture": "#off"
+        },
+        "south": {
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ],
+          "texture": "#off"
+        },
+        "up": {
+          "uv": [
+            0,
+            8,
+            6,
+            11
+          ],
+          "texture": "#off"
+        },
+        "down": {
+          "uv": [
+            0,
+            8,
+            6,
+            11
+          ],
+          "texture": "#off"
+        },
+        "east": {
+          "uv": [
+            0,
+            8,
+            6,
+            11
+          ],
+          "texture": "#off",
+          "rotation": 90
+        },
+        "west": {
+          "uv": [
+            0,
+            8,
+            6,
+            11
+          ],
+          "texture": "#off",
+          "rotation": 90
+        }
+      }
+    }
+  ]
+}

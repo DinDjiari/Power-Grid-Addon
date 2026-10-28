@@ -113,4 +113,16 @@ public class PghvBlockEntities {
                     .of((pos, state) -> new com.tomrox.pghv.wiring.WallOutletBlockEntity(PghvBlockEntities.OUTLET_US.get(), pos, state),
                             PghvBlocks.OUTLET_US.get())
                     .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.LampBlockEntity>> CEILING_LAMP =
+            BLOCK_ENTITIES.register("ceiling_lamp", () -> BlockEntityType.Builder
+                    .of((pos, state) -> new com.tomrox.pghv.wiring.LampBlockEntity(PghvBlockEntities.CEILING_LAMP.get(), pos, state),
+                            PghvBlocks.CEILING_LAMP.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.LampBlockEntity>> WALL_LIGHT =
+            BLOCK_ENTITIES.register("wall_light", () -> BlockEntityType.Builder
+                    .of((pos, state) -> new com.tomrox.pghv.wiring.LampBlockEntity(PghvBlockEntities.WALL_LIGHT.get(), pos, state),
+                            PghvBlocks.WALL_LIGHT.get())
+                    .build(null));
 }

@@ -85,6 +85,18 @@ public class PghvBlocks {
     public static final DeferredBlock<com.tomrox.pghv.wiring.WallOutletBlock> OUTLET_US = BLOCKS.register("outlet_us",
             () -> new com.tomrox.pghv.wiring.WallOutletBlock(wallDevice(), true));
 
+    private static BlockBehaviour.Properties lamp() {
+        return BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(0.6f, 3.0f).sound(SoundType.GLASS)
+                .noOcclusion().noCollission()
+                .lightLevel(state -> state.hasProperty(com.tomrox.pghv.wiring.LampBlockEntity.LIGHT)
+                        ? state.getValue(com.tomrox.pghv.wiring.LampBlockEntity.LIGHT) : 0);
+    }
+
+    public static final DeferredBlock<com.tomrox.pghv.wiring.CeilingLampBlock> CEILING_LAMP = BLOCKS.register("ceiling_lamp",
+            () -> new com.tomrox.pghv.wiring.CeilingLampBlock(lamp()));
+    public static final DeferredBlock<com.tomrox.pghv.wiring.WallLightBlock> WALL_LIGHT = BLOCKS.register("wall_light",
+            () -> new com.tomrox.pghv.wiring.WallLightBlock(lamp()));
+
     /** Cable piece placed by the laying code; no item, drops handled in code. */
     public static final DeferredBlock<CableSegmentBlock> CABLE_SEGMENT = BLOCKS.register("cable_segment",
             () -> new CableSegmentBlock(BlockBehaviour.Properties.of()

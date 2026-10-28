@@ -36,3 +36,11 @@ Goggles Schalter: „Ein/Aus“. Dose/Schalter/Steckdose: Anzahl Leitungen.
 - Abbau eines Endes ⇒ Leitung weg, Drähte droppen dort; fremdes Ziel verschwindet ⇒ Besitzer merkt es (alle 20 Ticks).
 - Darstellung: unsichtbar; nur solange der Spieler isolierten Kupferdraht hält, werden alle Leitungen in der Nähe
   durch die Wände gezeichnet (Linien ohne Tiefentest), dazu die Vorschau der gerade verlegten Leitung.
+
+## 230-V-Lampen (Entscheidung Tom, 2026-10-28)
+Power-Grid-Glühbirnen sind 120 V / 30 W und brennen an 230 V durch. Daher eigene Lampen:
+- `ceiling_lamp` Deckenleuchte (hängt unter der Decke, Terminals verdeckt oben) und `wall_light` Wandleuchte (Wandgerät).
+- Glühfaden als fester Widerstand R = 230² / 60 W ≈ 882 Ω zwischen L (0) und N (1); Licht 0..15 nach Leistung
+  (15 ab Nennleistung, darunter anteilig; 120 V ≈ Stufe 4). Kein Durchbrennen; Goggles: Spannung, Status, Leistung.
+- Ziel für Unterputz-Leitungen; Wandleuchte kann auch Start sein (z. B. weiter zur Deckenleuchte).
+- Rezepte formlos: Deckenleuchte Quarz + Glasscheibe + Glowstonestaub + Kupferbarren; Wandleuchte ohne Kupferbarren.
