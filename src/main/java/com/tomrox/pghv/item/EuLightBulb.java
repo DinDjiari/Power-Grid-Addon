@@ -16,6 +16,7 @@
 package com.tomrox.pghv.item;
 
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.minecraft.world.item.Item;
 import org.patryk3211.powergrid.electricity.base.ThermalBehaviour;
 import org.patryk3211.powergrid.electricity.light.bulb.ILightBulb;
 import org.patryk3211.powergrid.electricity.light.bulb.LightBulb;
@@ -32,7 +33,7 @@ public class EuLightBulb extends LightBulb {
     public static final float RATED_POWER = 60f;
     public static final float RATED_VOLTAGE = 230f;
 
-    public EuLightBulb(Properties settings) {
+    public EuLightBulb(Item.Properties settings) {
         super(settings);
         float rMax = RATED_VOLTAGE * RATED_VOLTAGE / RATED_POWER;
         float operating = 1450f;
