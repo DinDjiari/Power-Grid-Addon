@@ -1,0 +1,94 @@
+{
+  "block.wall_switch.on": {
+    "subtitle": "pghv.subtitle.wall_switch.on",
+    "sounds": [
+      "pghv:wall_switch_on1",
+      "pghv:wall_switch_on2"
+    ]
+  },
+  "block.wall_switch.off": {
+    "subtitle": "pghv.subtitle.wall_switch.off",
+    "sounds": [
+      "pghv:wall_switch_off1",
+      "pghv:wall_switch_off2"
+    ]
+  },
+  "block.wall_button.press": {
+    "subtitle": "pghv.subtitle.wall_button.press",
+    "sounds": [
+      "pghv:wall_button_press"
+    ]
+  },
+  "block.wall_button.release": {
+    "subtitle": "pghv.subtitle.wall_button.release",
+    "sounds": [
+      "pghv:wall_button_release"
+    ]
+  },
+  "block.breaker.on": {
+    "subtitle": "pghv.subtitle.breaker.on",
+    "sounds": [
+      "pghv:breaker_on1",
+      "pghv:breaker_on2"
+    ]
+  },
+  "block.breaker.off": {
+    "subtitle": "pghv.subtitle.breaker.off",
+    "sounds": [
+      "pghv:breaker_off1",
+      "pghv:breaker_off2"
+    ]
+  },
+  "block.breaker.trip": {
+    "subtitle": "pghv.subtitle.breaker.trip",
+    "sounds": [
+      "pghv:breaker_trip"
+    ]
+  },
+  "block.distribution_board.module_insert": {
+    "subtitle": "pghv.subtitle.module_insert",
+    "sounds": [
+      "pghv:module_insert"
+    ]
+  },
+  "block.distribution_board.fuse_insert": {
+    "subtitle": "pghv.subtitle.fuse_insert",
+    "sounds": [
+      "pghv:fuse_insert"
+    ]
+  },
+  "block.distribution_board.fuse_blow": {
+    "subtitle": "pghv.subtitle.fuse_blow",
+    "sounds": [
+      "pghv:fuse_blow1",
+      "pghv:fuse_blow2"
+    ]
+  },
+  "block.house_connection_box.on": {
+    "subtitle": "pghv.subtitle.main_switch.on",
+    "sounds": [
+      "pghv:main_switch_on"
+    ]
+  },
+  "block.house_connection_box.off": {
+    "subtitle": "pghv.subtitle.main_switch.off",
+    "sounds": [
+      "pghv:main_switch_off"
+    ]
+  },
+  "block.cooling_fan.run": {
+    "subtitle": "pghv.subtitle.cooling_fan.run",
+    "sounds": [
+      {
+        "name": "pghv:cooling_fan_loop",
+        "stream": false
+      }
+    ]
+  },
+  "block.cooling_fan.trip": {
+    "subtitle": "pghv.subtitle.cooling_fan.trip",
+    "sounds": [
+      "pghv:breaker_trip"
+    ]
+  }
+}

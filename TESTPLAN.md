@@ -92,3 +92,13 @@ Spezifikation: `docs/UEBERHITZUNGSSCHUTZ_SPEZIFIKATION.md`. Automatisch: `Overhe
 - [ ] US-Steckdose an 230 V: Goggles „Überspannung“. Power-Grid-Stecker (Lampe mit Kabel) in Steckdose stecken.
 - [ ] Taster schaltet ~1 s. Abbau einer Seite: Draht droppt. Welt neu laden: Leitungen funktionieren weiter.
 - [ ] Taste R in Steuerung umbelegbar („Unterputz: Autoroute“).
+
+## Sounds (Branch feature/sounds, docs/SOUNDS.md)
+- [ ] Log: keine Warnung „Unable to play unknown soundEvent“ / „missing sound“ zu `pghv`
+- [ ] Lichtschalter ein/aus: zwei verschiedene Klicks (Wippe), Taster drücken und nach 1 s Loslassen-Klick
+- [ ] Zählerkasten: Modul einrasten, Hebel Hauptschalter/FI ein/aus, FI-Auslösung (Fehlerstrom) laut und hart
+- [ ] Sicherung: Durchbrennen = Knall mit Funken, Eisendraht einsetzen = Klick
+- [ ] Hausanschlusskasten: roter Hauptschalter schwer und dumpf
+- [ ] Lüfter Andesit 0 → 100 %: Laufgeräusch wird lauter und höher, bei 0 % blendet es aus; Messing bei voller Kühlung höher
+- [ ] Lüfter abbauen oder Welt verlassen: Geräusch hört sofort auf, kein Dauerton
+- [ ] Untertitel (Einstellungen → Musik & Geräusche → Untertitel) deutsch und englisch vorhanden

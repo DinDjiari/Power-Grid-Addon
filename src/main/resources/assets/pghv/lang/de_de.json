@@ -175,5 +175,19 @@
   "pghv.wall.msg.same_device": "Das ist der Start – anderes Ziel wählen",
   "pghv.wall.msg.start": "Unterputz: Start gesetzt – Wandblöcke anklicken (Wegpunkte) oder Ziel anklicken; Taste R = Autoroute",
   "pghv.wall.msg.too_long": "Leitung zu lang (max. %s Blöcke)",
-  "pghv.wall.msg.too_many_points": "Zu viele Wegpunkte (max. %s)"
+  "pghv.wall.msg.too_many_points": "Zu viele Wegpunkte (max. %s)",
+  "pghv.subtitle.wall_switch.on": "Lichtschalter klickt ein",
+  "pghv.subtitle.wall_switch.off": "Lichtschalter klickt aus",
+  "pghv.subtitle.wall_button.press": "Taster gedrückt",
+  "pghv.subtitle.wall_button.release": "Taster losgelassen",
+  "pghv.subtitle.breaker.on": "Schutzschalter ein",
+  "pghv.subtitle.breaker.off": "Schutzschalter aus",
+  "pghv.subtitle.breaker.trip": "FI löst aus",
+  "pghv.subtitle.module_insert": "Modul rastet auf Hutschiene",
+  "pghv.subtitle.fuse_insert": "Sicherung eingesetzt",
+  "pghv.subtitle.fuse_blow": "Sicherung brennt durch",
+  "pghv.subtitle.main_switch.on": "Hauptschalter ein",
+  "pghv.subtitle.main_switch.off": "Hauptschalter aus",
+  "pghv.subtitle.cooling_fan.run": "Kühllüfter surrt",
+  "pghv.subtitle.cooling_fan.trip": "Überhitzungsschutz löst aus"
 }

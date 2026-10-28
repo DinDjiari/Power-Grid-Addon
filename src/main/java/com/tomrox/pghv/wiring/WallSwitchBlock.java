@@ -15,12 +15,12 @@
  */
 package com.tomrox.pghv.wiring;
 
+import com.tomrox.pghv.registry.PghvSounds;
 import com.tomrox.pghv.registry.PghvBlockEntities;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -83,8 +83,9 @@ public class WallSwitchBlock extends WallDeviceBlock<WallSwitchBlockEntity> {
             if (button)
                 level.scheduleTick(pos, this, BUTTON_TICKS);
         }
-        level.playSound(player, pos, button ? SoundEvents.STONE_BUTTON_CLICK_ON : SoundEvents.LEVER_CLICK,
-                SoundSource.BLOCKS, 0.4f, on ? 1.4f : 1.1f);
+        level.playSound(player, pos, button ? PghvSounds.WALL_BUTTON_PRESS.get()
+                : on ? PghvSounds.WALL_SWITCH_ON.get() : PghvSounds.WALL_SWITCH_OFF.get(),
+                SoundSource.BLOCKS, 0.6f, 0.95f + level.random.nextFloat() * 0.1f);
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
@@ -98,7 +99,7 @@ public class WallSwitchBlock extends WallDeviceBlock<WallSwitchBlockEntity> {
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (button && state.getValue(POWERED)) {
             setOn(level, pos, state, false);
-            level.playSound(null, pos, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundSource.BLOCKS, 0.4f, 1.1f);
+            level.playSound(null, pos, PghvSounds.WALL_BUTTON_RELEASE.get(), SoundSource.BLOCKS, 0.5f, 1.0f);
         }
     }
 

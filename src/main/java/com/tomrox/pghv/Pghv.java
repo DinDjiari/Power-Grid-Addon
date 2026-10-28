@@ -15,6 +15,7 @@
  */
 package com.tomrox.pghv;
 
+import com.tomrox.pghv.registry.PghvSounds;
 import com.tomrox.pghv.registry.PghvBlockEntities;
 import com.tomrox.pghv.registry.PghvBlocks;
 import com.tomrox.pghv.registry.PghvDataComponents;
@@ -36,6 +37,7 @@ public class Pghv {
         PghvTabs.TABS.register(modBus);
         PghvDataComponents.DATA_COMPONENTS.register(modBus);
         PghvRecipes.RECIPE_SERIALIZERS.register(modBus);
+        PghvSounds.SOUNDS.register(modBus);
         modBus.addListener(com.tomrox.pghv.wiring.AutoRoutePayload::register);
     }
 }

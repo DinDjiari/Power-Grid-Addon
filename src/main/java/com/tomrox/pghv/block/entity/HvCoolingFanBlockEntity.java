@@ -18,6 +18,7 @@
  */
 package com.tomrox.pghv.block.entity;
 
+import com.tomrox.pghv.registry.PghvSounds;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
@@ -41,7 +42,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -382,7 +382,7 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
             BlockState state = getBlockState();
             BlockPos socket = HvCoolingFanBlock.cellOf(worldPosition, state.getValue(HvCoolingFanBlock.FACING), 1);
             Vec3 c = Vec3.atCenterOf(socket);
-            server.playSound(null, socket, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.6f, 0.6f);
+            server.playSound(null, socket, PghvSounds.COOLING_FAN_TRIP.get(), SoundSource.BLOCKS, 1.0f, 0.9f);
             server.sendParticles(ParticleTypes.SMOKE, c.x, c.y, c.z, 8, 0.3, 0.3, 0.3, 0.01);
         }
     }
@@ -484,6 +484,8 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
     }
 
     private void tickFanAnimation() {
+        if (!isVirtual())
+            com.tomrox.pghv.client.CoolingFanSound.tick(this);
         float target = getRotorTargetSpeed();
         fanRotSpeed += (target - fanRotSpeed) * 0.08f;
         if (target == 0 && fanRotSpeed < 0.05f)
@@ -494,6 +496,11 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
             fanAngle -= 360.0f;
             fanAnglePrev -= 360.0f;
         }
+    }
+
+    /** Client: current rotor speed relative to the andesite fan at 100 % (brass up to 2); drives the running sound. */
+    public float getRotorRelativeSpeed() {
+        return fanRotSpeed / FAN_MAX_DEG_PER_TICK;
     }
 
     /** Fan rotation in degrees (client), interpolated between ticks. */

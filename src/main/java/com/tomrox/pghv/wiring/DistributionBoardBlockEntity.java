@@ -15,13 +15,13 @@
  */
 package com.tomrox.pghv.wiring;
 
+import com.tomrox.pghv.registry.PghvSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Player;
@@ -215,7 +215,7 @@ public class DistributionBoardBlockEntity extends WallDeviceBlockEntity {
             if (!player.isCreative())
                 held.shrink(1);
             changed(true);
-            level.playSound(null, worldPosition, SoundEvents.COPPER_PLACE, SoundSource.BLOCKS, 0.5f, 1.4f);
+            level.playSound(null, worldPosition, PghvSounds.FUSE_INSERT.get(), SoundSource.BLOCKS, 0.7f, 1.0f);
             return true;
         }
         if (held.isEmpty() && here == BoardModule.FUSE && states[slot] == 2) {
@@ -251,7 +251,7 @@ public class DistributionBoardBlockEntity extends WallDeviceBlockEntity {
         if (player == null || !player.isCreative())
             held.shrink(1);
         placeWires[slot].setState(placeClosed(slot));
-        level.playSound(null, worldPosition, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.BLOCKS, 0.4f, 1.8f);
+        level.playSound(null, worldPosition, PghvSounds.MODULE_INSERT.get(), SoundSource.BLOCKS, 0.7f, 1.0f);
         changed(true);
         return true;
     }
@@ -281,7 +281,8 @@ public class DistributionBoardBlockEntity extends WallDeviceBlockEntity {
         if (m == null || !m.hasLever())
             return;
         states[slot] = states[slot] == 1 ? 0 : 1; // also resets a tripped RCD (3 -> 1)
-        level.playSound(null, worldPosition, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.5f, states[slot] == 1 ? 1.2f : 0.9f);
+        level.playSound(null, worldPosition, states[slot] == 1 ? PghvSounds.BREAKER_ON.get() : PghvSounds.BREAKER_OFF.get(),
+                SoundSource.BLOCKS, 0.7f, 0.95f + level.random.nextFloat() * 0.1f);
         changed(true);
     }
 
@@ -334,7 +335,7 @@ public class DistributionBoardBlockEntity extends WallDeviceBlockEntity {
             if (placeClosed(s) && placeCurrent(s) > ratings[s]) {
                 states[s] = 2;
                 placeWires[s].setState(false);
-                level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.6f, 1.8f);
+                level.playSound(null, worldPosition, PghvSounds.FUSE_BLOW.get(), SoundSource.BLOCKS, 1.0f, 0.9f + level.random.nextFloat() * 0.2f);
                 changed(false);
             }
         }
@@ -349,7 +350,7 @@ public class DistributionBoardBlockEntity extends WallDeviceBlockEntity {
                                 be.states[s] = 3;
                                 be.changed(false);
                             }
-                level.playSound(null, worldPosition, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.8f, 0.6f);
+                level.playSound(null, worldPosition, PghvSounds.BREAKER_TRIP.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
                 updateLink();
             }
             // energy
