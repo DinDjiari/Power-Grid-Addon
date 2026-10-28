@@ -46,6 +46,11 @@ public class PghvTabs {
                         output.accept(PghvItems.BRASS_COOLING_FAN.get());
                         output.accept(PghvItems.DATA_CABLE.get());
                         output.accept(PghvItems.DATA_SOCKET_BOX.get());
+                        output.accept(PghvItems.WALL_BOX.get());
+                        output.accept(PghvItems.WALL_SWITCH.get());
+                        output.accept(PghvItems.WALL_BUTTON.get());
+                        output.accept(PghvItems.OUTLET_EU.get());
+                        output.accept(PghvItems.OUTLET_US.get());
                         output.accept(PghvItems.CABLE_BOX.get());
                         for (CableCores cores : CREATIVE_CORES)
                             output.accept(cable(PghvItems.BARE_CABLE.get(), cores));

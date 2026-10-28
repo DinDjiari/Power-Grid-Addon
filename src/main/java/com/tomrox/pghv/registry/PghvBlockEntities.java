@@ -83,4 +83,34 @@ public class PghvBlockEntities {
                     .of((pos, state) -> new com.tomrox.pghv.block.entity.DataSocketBoxBlockEntity(PghvBlockEntities.DATA_SOCKET_BOX.get(), pos, state),
                             PghvBlocks.DATA_SOCKET_BOX.get())
                     .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.WallBoxBlockEntity>> WALL_BOX =
+            BLOCK_ENTITIES.register("wall_box", () -> BlockEntityType.Builder
+                    .of((pos, state) -> new com.tomrox.pghv.wiring.WallBoxBlockEntity(PghvBlockEntities.WALL_BOX.get(), pos, state),
+                            PghvBlocks.WALL_BOX.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.WallSwitchBlockEntity>> WALL_SWITCH =
+            BLOCK_ENTITIES.register("wall_switch", () -> BlockEntityType.Builder
+                    .of((pos, state) -> new com.tomrox.pghv.wiring.WallSwitchBlockEntity(PghvBlockEntities.WALL_SWITCH.get(), pos, state),
+                            PghvBlocks.WALL_SWITCH.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.WallSwitchBlockEntity>> WALL_BUTTON =
+            BLOCK_ENTITIES.register("wall_button", () -> BlockEntityType.Builder
+                    .of((pos, state) -> new com.tomrox.pghv.wiring.WallSwitchBlockEntity(PghvBlockEntities.WALL_BUTTON.get(), pos, state),
+                            PghvBlocks.WALL_BUTTON.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.WallOutletBlockEntity>> OUTLET_EU =
+            BLOCK_ENTITIES.register("outlet_eu", () -> BlockEntityType.Builder
+                    .of((pos, state) -> new com.tomrox.pghv.wiring.WallOutletBlockEntity(PghvBlockEntities.OUTLET_EU.get(), pos, state),
+                            PghvBlocks.OUTLET_EU.get())
+                    .build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.WallOutletBlockEntity>> OUTLET_US =
+            BLOCK_ENTITIES.register("outlet_us", () -> BlockEntityType.Builder
+                    .of((pos, state) -> new com.tomrox.pghv.wiring.WallOutletBlockEntity(PghvBlockEntities.OUTLET_US.get(), pos, state),
+                            PghvBlocks.OUTLET_US.get())
+                    .build(null));
 }

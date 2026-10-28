@@ -5,6 +5,11 @@
     "pghv:cooling_fan",
     "pghv:brass_cooling_fan",
     "pghv:cable_box",
-    "pghv:data_socket_box"
+    "pghv:data_socket_box",
+    "pghv:wall_box",
+    "pghv:wall_switch",
+    "pghv:wall_button",
+    "pghv:outlet_eu",
+    "pghv:outlet_us"
   ]
 }

@@ -83,3 +83,12 @@ Spezifikation: `docs/UEBERHITZUNGSSCHUTZ_SPEZIFIKATION.md`. Automatisch: `Overhe
 - [ ] Lüfter bläst aus allen 4 Zellen (Entity vor jeder Zelle wird weggeschoben)
 - [ ] Gauge-Skala lesbar
 - [ ] Lichtwert des Rotors passt zur Umgebung
+
+## Unterputz-Installation (Branch feature/unterputz)
+- [ ] Unterputzdose, Lichtschalter, Taster, Schuko- und US-Steckdose an Wände in alle 4 Richtungen setzen (Aussehen, kein lila/schwarz).
+- [ ] Dose mit normalen Power-Grid-Drähten an eine Quelle; isolierten Kupferdraht: Dose anklicken → Röntgenlinien sichtbar.
+- [ ] Wegpunkte auf Wandblöcke, Ziel Schalter; zweite Leitung Schalter → Power-Grid-Lampe. Schalter schaltet die Lampe.
+- [ ] Taste R beim Anschauen einer Steckdose: Leitung läuft automatisch durch die Wand; Goggles an der Steckdose: 230 V / OK.
+- [ ] US-Steckdose an 230 V: Goggles „Überspannung“. Power-Grid-Stecker (Lampe mit Kabel) in Steckdose stecken.
+- [ ] Taster schaltet ~1 s. Abbau einer Seite: Draht droppt. Welt neu laden: Leitungen funktionieren weiter.
+- [ ] Taste R in Steuerung umbelegbar („Unterputz: Autoroute“).

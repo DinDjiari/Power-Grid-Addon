@@ -1,0 +1,162 @@
+{
+  "credit": "pghv - Tomrox GmbH",
+  "parent": "block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "t": "pghv:block/wall_switch",
+    "particle": "pghv:block/wall_switch"
+  },
+  "elements": [
+    {
+      "name": "plate",
+      "from": [
+        3,
+        3,
+        14
+      ],
+      "to": [
+        13,
+        13,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            10,
+            10
+          ],
+          "texture": "#t"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            10,
+            10
+          ],
+          "texture": "#t"
+        },
+        "up": {
+          "uv": [
+            0,
+            10,
+            10,
+            12
+          ],
+          "texture": "#t"
+        },
+        "down": {
+          "uv": [
+            0,
+            10,
+            10,
+            12
+          ],
+          "texture": "#t"
+        },
+        "east": {
+          "uv": [
+            0,
+            10,
+            10,
+            12
+          ],
+          "texture": "#t",
+          "rotation": 90
+        },
+        "west": {
+          "uv": [
+            0,
+            10,
+            10,
+            12
+          ],
+          "texture": "#t",
+          "rotation": 90
+        }
+      }
+    },
+    {
+      "name": "rocker",
+      "from": [
+        5,
+        5,
+        13
+      ],
+      "to": [
+        11,
+        11,
+        14
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ],
+          "texture": "#t"
+        },
+        "south": {
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ],
+          "texture": "#t"
+        },
+        "up": {
+          "uv": [
+            0,
+            12,
+            6,
+            13
+          ],
+          "texture": "#t"
+        },
+        "down": {
+          "uv": [
+            0,
+            12,
+            6,
+            13
+          ],
+          "texture": "#t"
+        },
+        "east": {
+          "uv": [
+            0,
+            12,
+            6,
+            13
+          ],
+          "texture": "#t",
+          "rotation": 90
+        },
+        "west": {
+          "uv": [
+            0,
+            12,
+            6,
+            13
+          ],
+          "texture": "#t",
+          "rotation": 90
+        }
+      },
+      "rotation": {
+        "angle": -22.5,
+        "axis": "x",
+        "origin": [
+          8,
+          8,
+          14
+        ]
+      }
+    }
+  ]
+}

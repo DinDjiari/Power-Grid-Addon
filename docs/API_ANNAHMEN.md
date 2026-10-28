@@ -102,3 +102,16 @@ wahrscheinlichsten Compile-/Laufzeitfehler:
   `AABB.minmax`, `BlockEntityRenderer.getViewDistance/shouldRenderOffScreen`.
 - Texturen unter textures/block landen automatisch im Block-Atlas (Atlas-Quelle „directory block“).
 - Ponder: `scene.world().setBlock(pos, state, false)` + `modifyBlockEntityNBT` für die Box.
+
+## Unterputz-Installation (feature/unterputz)
+- `ElectricBlock.use(BlockState, Level, BlockPos, Player, InteractionHand, BlockHitResult)` (Power Grid) für Schalter/Taster;
+  `IElectric.terminalAt(BlockState, Vec3)`; `ISocketElectric.socket(BlockState)` (Power-Grid-Stecker in Steckdosen).
+- `CircuitBuilder.connect(float, node, node)` und `connectSwitch(float, node, node, boolean)` → `SwitchedWire.setState`.
+- `PlayerInteractEvent.RightClickBlock/RightClickItem` mit `EventPriority.HIGHEST`, `setCanceled` + `setCancellationResult`
+  (vor Power Grids eigener Draht-Behandlung über Architectury).
+- Netzwerk: `RegisterPayloadHandlersEvent.registrar("1").playToServer(TYPE, BlockPos.STREAM_CODEC.map(...), handler)`,
+  `IPayloadContext.enqueueWork/player`, `PacketDistributor.sendToServer`.
+- Client: `RegisterKeyMappingsEvent`, `ClientTickEvent.Post`, `RenderLevelStageEvent` (Stage AFTER_TRANSLUCENT_BLOCKS),
+  eigener `RenderType` über `RenderType.create(name, POSITION_COLOR_NORMAL, LINES, size, CompositeState)` in einer
+  RenderType-Unterklasse (Zugriff auf `RENDERTYPE_LINES_SHADER`, `NO_DEPTH_TEST`, `VIEW_OFFSET_Z_LAYERING`, …).
+- `SmartBlockEntity.initialize()` läuft auch clientseitig (Registrierung für die Röntgenansicht).

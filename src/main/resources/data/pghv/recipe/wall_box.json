@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "create:iron_sheet"
+    },
+    {
+      "item": "powergrid:wire_connector"
+    },
+    {
+      "item": "powergrid:wire_connector"
+    }
+  ],
+  "result": {
+    "id": "pghv:wall_box",
+    "count": 1
+  }
+}
