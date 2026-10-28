@@ -10,8 +10,6 @@
     "pghv:wall_switch",
     "pghv:wall_button",
     "pghv:outlet_eu",
-    "pghv:outlet_us",
-    "pghv:ceiling_lamp",
-    "pghv:wall_light"
+    "pghv:outlet_us"
   ]
 }

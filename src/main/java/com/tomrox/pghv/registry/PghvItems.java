@@ -50,11 +50,6 @@ public class PghvItems {
     public static final DeferredItem<BlockItem> OUTLET_US =
             ITEMS.registerSimpleBlockItem("outlet_us", PghvBlocks.OUTLET_US, new Item.Properties());
 
-    public static final DeferredItem<BlockItem> CEILING_LAMP =
-            ITEMS.registerSimpleBlockItem("ceiling_lamp", PghvBlocks.CEILING_LAMP, new Item.Properties());
-    public static final DeferredItem<BlockItem> WALL_LIGHT =
-            ITEMS.registerSimpleBlockItem("wall_light", PghvBlocks.WALL_LIGHT, new Item.Properties());
-
     public static final DeferredItem<BlockItem> CABLE_BOX =
             ITEMS.registerSimpleBlockItem("cable_box", PghvBlocks.CABLE_BOX, new Item.Properties());
 

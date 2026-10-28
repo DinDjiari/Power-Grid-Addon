@@ -21,7 +21,6 @@ import com.tomrox.pghv.registry.PghvDataComponents;
 import com.tomrox.pghv.wiring.InWallCable;
 import com.tomrox.pghv.wiring.InWallLaying;
 import com.tomrox.pghv.wiring.InWallRouting;
-import com.tomrox.pghv.wiring.LampBlockEntity;
 import com.tomrox.pghv.wiring.WallBoxBlockEntity;
 import com.tomrox.pghv.wiring.WallDeviceBlock;
 import com.tomrox.pghv.wiring.WallDeviceBlockEntity;
@@ -235,46 +234,6 @@ public class WallWiringTests {
         });
         helper.runAfterDelay(3 + WallSwitchBlock.BUTTON_TICKS + 5, () -> {
             helper.assertFalse(helper.getBlockState(button).getValue(WallSwitchBlock.POWERED), "button released");
-            helper.succeed();
-        });
-    }
-
-    /** 230 V lamps: switch -> wall light and ceiling lamp light up at 230 V (light 15), dark when off; 120 V is dim. */
-    @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 200)
-    public static void lamps230VoltSwitched(GameTestHelper helper) {
-        wall(helper);
-        feed(helper);
-        BlockPos light = new BlockPos(10, 2, 4);
-        BlockPos ceiling = new BlockPos(9, 3, 3);
-        for (int x = 7; x <= 11; ++x)
-            for (int z = 1; z <= 5; ++z)
-                helper.setBlock(new BlockPos(x, 4, z), Blocks.STONE); // ceiling, joined to the wall top
-        device(helper, BOX, PghvBlocks.WALL_BOX.get());
-        device(helper, SWITCH, PghvBlocks.WALL_SWITCH.get());
-        device(helper, light, PghvBlocks.WALL_LIGHT.get());
-        helper.setBlock(ceiling, PghvBlocks.CEILING_LAMP.get().defaultBlockState());
-        helper.runAfterDelay(3, () -> {
-            feedWires(helper);
-            FakePlayer p = layer(helper, GameType.CREATIVE, 1);
-            PghvTestUtil.use(helper, p, BOX, OUT);
-            PghvTestUtil.use(helper, p, SWITCH, OUT);
-            PghvTestUtil.use(helper, p, SWITCH, OUT);
-            PghvTestUtil.use(helper, p, light, OUT);
-            PghvTestUtil.use(helper, p, light, OUT);
-            InWallLaying.autoRoute(p, helper.absolutePos(ceiling));
-            LampBlockEntity wl = helper.getBlockEntity(light);
-            helper.assertValueEqual(wl.getOwned().size(), 1, "wall light feeds the ceiling lamp");
-        });
-        helper.runAfterDelay(40, () -> {
-            helper.assertValueEqual(helper.getBlockState(light).getValue(LampBlockEntity.LIGHT), 0, "switch off: wall light dark");
-            FakePlayer hand = PghvTestUtil.player(helper, GameType.SURVIVAL, new BlockPos(6, 1, 2));
-            PghvTestUtil.use(helper, hand, SWITCH, OUT);
-        });
-        helper.runAfterDelay(80, () -> {
-            helper.assertValueEqual(helper.getBlockState(light).getValue(LampBlockEntity.LIGHT), 15, "switch on: wall light full");
-            helper.assertValueEqual(helper.getBlockState(ceiling).getValue(LampBlockEntity.LIGHT), 15, "ceiling lamp full");
-            helper.assertValueEqual(helper.getLevel().getLightEmission(helper.absolutePos(light)), 15, "block light emitted");
-            helper.assertTrue(LampBlockEntity.lightFor(120) > 0 && LampBlockEntity.lightFor(120) < 8, "120 V is dim");
             helper.succeed();
         });
     }
