@@ -429,6 +429,11 @@ public class FanScenes {
                 .pointAt(util.vector().topOf(BOX))
                 .placeNearTarget();
         scene.idle(90);
+        scene.overlay().showText(80)
+                .text("After each wire, Power Grid starts the next one at the clicked terminal: sneak + right-click into the air before starting the next wire")
+                .pointAt(util.vector().topOf(SERVO))
+                .placeNearTarget();
+        scene.idle(90);
 
         scene.overlay().showOutline(PonderPalette.WHITE, "switch", util.select().fromTo(SWITCH, SWITCH_2), 80);
         scene.overlay().showText(80)

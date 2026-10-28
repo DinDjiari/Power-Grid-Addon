@@ -68,6 +68,23 @@ public class PghvBlocks {
                     .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
+    // ---- in-wall installation ----
+    private static BlockBehaviour.Properties wallDevice() {
+        return BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(0.8f, 3.0f).sound(SoundType.STONE)
+                .noOcclusion().noCollission();
+    }
+
+    public static final DeferredBlock<com.tomrox.pghv.wiring.WallBoxBlock> WALL_BOX = BLOCKS.register("wall_box",
+            () -> new com.tomrox.pghv.wiring.WallBoxBlock(wallDevice()));
+    public static final DeferredBlock<com.tomrox.pghv.wiring.WallSwitchBlock> WALL_SWITCH = BLOCKS.register("wall_switch",
+            () -> new com.tomrox.pghv.wiring.WallSwitchBlock(wallDevice(), false));
+    public static final DeferredBlock<com.tomrox.pghv.wiring.WallSwitchBlock> WALL_BUTTON = BLOCKS.register("wall_button",
+            () -> new com.tomrox.pghv.wiring.WallSwitchBlock(wallDevice(), true));
+    public static final DeferredBlock<com.tomrox.pghv.wiring.WallOutletBlock> OUTLET_EU = BLOCKS.register("outlet_eu",
+            () -> new com.tomrox.pghv.wiring.WallOutletBlock(wallDevice(), false));
+    public static final DeferredBlock<com.tomrox.pghv.wiring.WallOutletBlock> OUTLET_US = BLOCKS.register("outlet_us",
+            () -> new com.tomrox.pghv.wiring.WallOutletBlock(wallDevice(), true));
+
     /** Cable piece placed by the laying code; no item, drops handled in code. */
     public static final DeferredBlock<CableSegmentBlock> CABLE_SEGMENT = BLOCKS.register("cable_segment",
             () -> new CableSegmentBlock(BlockBehaviour.Properties.of()

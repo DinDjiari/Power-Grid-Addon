@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "pghv:block/outlet_us"
+    },
+    "facing=east": {
+      "model": "pghv:block/outlet_us",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "pghv:block/outlet_us",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "pghv:block/outlet_us",
+      "y": 270
+    }
+  }
+}

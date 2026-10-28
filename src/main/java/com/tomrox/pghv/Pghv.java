@@ -36,5 +36,6 @@ public class Pghv {
         PghvTabs.TABS.register(modBus);
         PghvDataComponents.DATA_COMPONENTS.register(modBus);
         PghvRecipes.RECIPE_SERIALIZERS.register(modBus);
+        modBus.addListener(com.tomrox.pghv.wiring.AutoRoutePayload::register);
     }
 }

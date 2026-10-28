@@ -55,4 +55,14 @@ public class PghvDataComponents {
                     .persistent(net.minecraft.nbt.CompoundTag.CODEC)
                     .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.COMPOUND_TAG)
                     .build());
+
+    /**
+     * In-wall cable being laid with Power Grid's insulated copper wire: start device ("S", long), its port ("SP"),
+     * dimension ("D") and waypoints ("P", list of X/Y/Z).
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<net.minecraft.nbt.CompoundTag>> INWALL_LAYING =
+            DATA_COMPONENTS.register("inwall_laying", () -> DataComponentType.<net.minecraft.nbt.CompoundTag>builder()
+                    .persistent(net.minecraft.nbt.CompoundTag.CODEC)
+                    .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.COMPOUND_TAG)
+                    .build());
 }

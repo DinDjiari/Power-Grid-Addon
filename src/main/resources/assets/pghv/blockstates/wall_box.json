@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "pghv:block/wall_box"
+    },
+    "facing=east": {
+      "model": "pghv:block/wall_box",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "pghv:block/wall_box",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "pghv:block/wall_box",
+      "y": 270
+    }
+  }
+}

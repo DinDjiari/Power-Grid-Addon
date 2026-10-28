@@ -39,6 +39,17 @@ public class PghvItems {
     public static final DeferredItem<BlockItem> DATA_SOCKET_BOX =
             ITEMS.registerSimpleBlockItem("data_socket_box", PghvBlocks.DATA_SOCKET_BOX, new Item.Properties());
 
+    public static final DeferredItem<BlockItem> WALL_BOX =
+            ITEMS.registerSimpleBlockItem("wall_box", PghvBlocks.WALL_BOX, new Item.Properties());
+    public static final DeferredItem<BlockItem> WALL_SWITCH =
+            ITEMS.registerSimpleBlockItem("wall_switch", PghvBlocks.WALL_SWITCH, new Item.Properties());
+    public static final DeferredItem<BlockItem> WALL_BUTTON =
+            ITEMS.registerSimpleBlockItem("wall_button", PghvBlocks.WALL_BUTTON, new Item.Properties());
+    public static final DeferredItem<BlockItem> OUTLET_EU =
+            ITEMS.registerSimpleBlockItem("outlet_eu", PghvBlocks.OUTLET_EU, new Item.Properties());
+    public static final DeferredItem<BlockItem> OUTLET_US =
+            ITEMS.registerSimpleBlockItem("outlet_us", PghvBlocks.OUTLET_US, new Item.Properties());
+
     public static final DeferredItem<BlockItem> CABLE_BOX =
             ITEMS.registerSimpleBlockItem("cable_box", PghvBlocks.CABLE_BOX, new Item.Properties());
 
