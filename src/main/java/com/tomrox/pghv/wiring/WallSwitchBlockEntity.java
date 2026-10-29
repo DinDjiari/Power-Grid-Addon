@@ -35,7 +35,8 @@ public class WallSwitchBlockEntity extends WallDeviceBlockEntity {
 
     @Override
     public void buildCircuit(CircuitBuilder builder) {
-        builder.setTerminalCount(4);
+        builder.setTerminalCount(4 + 1); // + wall connector
+        buildWallConnector(builder);
         boolean on = getBlockState().hasProperty(WallSwitchBlock.POWERED) && getBlockState().getValue(WallSwitchBlock.POWERED);
         builder.connect(CONTACT_RESISTANCE, builder.terminalNode(1), builder.terminalNode(3));
         lineSwitch = builder.connectSwitch(CONTACT_RESISTANCE, builder.terminalNode(0), builder.terminalNode(2), on);

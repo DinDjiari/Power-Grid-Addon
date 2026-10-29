@@ -62,7 +62,7 @@ public class WallSwitchBlock extends WallDeviceBlock<WallSwitchBlockEntity> {
         super(settings);
         this.button = button;
         registerDefaultState(defaultBlockState().setValue(POWERED, false));
-        setTerminalCollection(horizontalNorthTerminals(this, TERMINALS, SHAPE));
+        setTerminalCollection(wallTerminals(TERMINALS, SHAPE));
     }
 
     @Override

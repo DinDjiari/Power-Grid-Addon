@@ -44,3 +44,12 @@ Power-Grid-Glühbirnen sind 120 V / 30 W und brennen an 230 V durch. Statt eigen
   R_max = 230²/60 ≈ 882 Ω, R_min = R_max/4, Betriebstemperatur 1450, Überhitzung 1850; färbbar wie die Power-Grid-Birne.
 - Rezept wie die Power-Grid-Birne, aber Kupferdraht statt Eisendraht und Kupferblech statt Eisenblech.
 - Fassungen sind Ziel für Unterputz-Leitungen (Terminals 0/1).
+
+## Wandanschluss (Wunsch Tom, 2026-10-29)
+- Alle Wandgeräte (Unterputzdose, Schalter, Taster, Steckdosen EU/US, Hausanschlusskasten) haben einen zusätzlichen
+  Power-Grid-Anschluss in der Wand (2×2 px an der Wandfläche, north-lokal x 7..9, y 0..2, z 14..16; Hausanschlusskasten
+  x 13..15 neben den Netz-Pins). Kein Modell: sichtbar nur als Terminal-Rahmen beim Drüberfahren mit einem Draht.
+- Blockstate `wall_neutral` (Standard false): rot = verbunden mit L, blau = verbunden mit N von Port 0
+  (Hausanschlusskasten: Hausseite hinter dem Hauptschalter). Rechtsklick mit leerer Hand auf den Anschluss wechselt L/N.
+- Elektrik: zwei geschaltete Verbindungen (1 mΩ) von L bzw. N zum Anschluss, genau eine geschlossen.
+- Zähler-/Sicherungskasten: kein Wandanschluss (sitzt als ganzer Block in der Wand).

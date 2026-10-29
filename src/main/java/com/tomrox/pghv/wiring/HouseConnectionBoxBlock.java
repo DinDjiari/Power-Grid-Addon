@@ -64,7 +64,7 @@ public class HouseConnectionBoxBlock extends WallDeviceBlock<HouseConnectionBoxB
     public HouseConnectionBoxBlock(Properties settings) {
         super(settings);
         registerDefaultState(defaultBlockState().setValue(OPEN, false).setValue(POWERED, true));
-        setTerminalCollection(horizontalNorthTerminals(this, TERMINALS, SHAPE));
+        setTerminalCollection(wallTerminals(TERMINALS, SHAPE, 13, 0)); // wall connector right of the mains pins
     }
 
     @Override

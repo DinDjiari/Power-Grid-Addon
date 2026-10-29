@@ -47,7 +47,7 @@ public class WallOutletBlock extends WallDeviceBlock<WallOutletBlockEntity> impl
     public WallOutletBlock(Properties settings, boolean us) {
         super(settings);
         this.us = us;
-        setTerminalCollection(horizontalNorthTerminals(this, TERMINALS, us ? SHAPE_US : SHAPE_EU));
+        setTerminalCollection(wallTerminals(TERMINALS, us ? SHAPE_US : SHAPE_EU));
     }
 
     /** Nominal voltage: 230 V EU, 120 V US. */

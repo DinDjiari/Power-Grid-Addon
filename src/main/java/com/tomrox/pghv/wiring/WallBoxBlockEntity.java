@@ -32,7 +32,8 @@ public class WallBoxBlockEntity extends WallDeviceBlockEntity {
 
     @Override
     public void buildCircuit(CircuitBuilder builder) {
-        builder.setTerminalCount(2);
+        builder.setTerminalCount(2 + 1); // + wall connector
+        buildWallConnector(builder);
     }
 
     @Override

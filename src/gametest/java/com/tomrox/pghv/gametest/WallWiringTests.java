@@ -39,6 +39,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -267,6 +268,42 @@ public class WallWiringTests {
             helper.assertTrue(fx.getBulbState() != null && !fx.getBulbState().isBurned(), "230 V bulb survives 230 V");
             helper.assertValueEqual(helper.getBlockState(fixture).getValue(
                     org.patryk3211.powergrid.electricity.light.fixture.LightFixtureBlock.POWER), 2, "full power");
+            helper.succeed();
+        });
+    }
+
+    /**
+     * Wall connector (Tom 2026-10-29): extra terminal in the wall below the device; right-click with an empty hand
+     * switches it between L and N. Box connector (L) + box N terminal -> load box: 230 V; connector on N: 0 V.
+     */
+    @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 200)
+    public static void wallConnectorSwitchesLineNeutral(GameTestHelper helper) {
+        wall(helper);
+        device(helper, BOX, PghvBlocks.WALL_BOX.get());
+        device(helper, LOAD_BOX, PghvBlocks.WALL_BOX.get());
+        WallDeviceBlock<?> block = (WallDeviceBlock<?>) PghvBlocks.WALL_BOX.get();
+        int connector = block.wallConnector();
+        helper.runAfterDelay(2, () -> {
+            helper.assertValueEqual(connector, 2, "wall box: connector is terminal 2");
+            feed(helper);
+            feedWires(helper);
+            PghvTestUtil.wire(helper, BOX, connector, LOAD_BOX, 0, 0.01f);
+            PghvTestUtil.wire(helper, BOX, 1, LOAD_BOX, 1, 0.01f);
+        });
+        helper.runAfterDelay(40, () -> {
+            WallBoxBlockEntity load = helper.getBlockEntity(LOAD_BOX);
+            helper.assertTrue(Math.abs(load.portVoltage(0)) > 200.0, "connector on L: 230 V at the load, is " + load.portVoltage(0));
+            // right-click with an empty hand on the connector (north-local x 7..9, y 0..2, z 14..16; facing north)
+            FakePlayer p = PghvTestUtil.player(helper, GameType.SURVIVAL, BOX.relative(OUT, 2));
+            BlockPos abs = helper.absolutePos(BOX);
+            Vec3 hit = Vec3.atLowerCornerOf(abs).add(0.5, 1 / 16.0, 14 / 16.0);
+            p.gameMode.useItemOn(p, helper.getLevel(), ItemStack.EMPTY, InteractionHand.MAIN_HAND,
+                    new BlockHitResult(hit, OUT, abs, false));
+            helper.assertTrue(helper.getBlockState(BOX).getValue(WallDeviceBlock.WALL_NEUTRAL), "connector switched to N");
+        });
+        helper.runAfterDelay(80, () -> {
+            WallBoxBlockEntity load = helper.getBlockEntity(LOAD_BOX);
+            helper.assertTrue(Math.abs(load.portVoltage(0)) < 1.0, "connector on N: no voltage at the load, is " + load.portVoltage(0));
             helper.succeed();
         });
     }

@@ -39,6 +39,7 @@ import org.jetbrains.annotations.Nullable;
 import org.patryk3211.powergrid.electricity.GlobalElectricNetworks;
 import org.patryk3211.powergrid.electricity.base.ElectricBlockEntity;
 import org.patryk3211.powergrid.electricity.sim.ElectricWire;
+import org.patryk3211.powergrid.electricity.sim.SwitchedWire;
 import org.patryk3211.powergrid.electricity.wire.BlockWireEndpoint;
 import org.slf4j.Logger;
 
@@ -59,6 +60,10 @@ public abstract class WallDeviceBlockEntity extends ElectricBlockEntity implemen
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final ResourceLocation WIRE_ID = ResourceLocation.fromNamespaceAndPath("powergrid", "insulated_copper_wire");
     private static final double MIN_RESISTANCE = 1e-4;
+    private static final float WALL_CONTACT = 1e-3f;
+    // Wall connector switches, set in buildWallConnector only (buildCircuit runs in the super constructor).
+    private SwitchedWire wallLine;
+    private SwitchedWire wallNeutral;
 
     /** Client side: loaded devices, for the x-ray renderer. */
     public static final Set<WallDeviceBlockEntity> CLIENT_LOADED = ConcurrentHashMap.newKeySet();
@@ -74,6 +79,27 @@ public abstract class WallDeviceBlockEntity extends ElectricBlockEntity implemen
 
     protected WallDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+    }
+
+    // ---- wall connector ----
+
+    /** Wall connector: two switched wires from L / N of port 0 to the connector terminal (one closed). */
+    protected void buildWallConnector(CircuitBuilder builder) {
+        BlockState state = getBlockState();
+        if (!(state.getBlock() instanceof WallDeviceBlock<?> block) || block.wallConnector() < 0)
+            return;
+        int[] t = block.portTerminals(0);
+        boolean neutral = state.hasProperty(WallDeviceBlock.WALL_NEUTRAL) && state.getValue(WallDeviceBlock.WALL_NEUTRAL);
+        wallLine = builder.connectSwitch(WALL_CONTACT, builder.terminalNode(t[0]), builder.terminalNode(block.wallConnector()), !neutral);
+        wallNeutral = builder.connectSwitch(WALL_CONTACT, builder.terminalNode(t[1]), builder.terminalNode(block.wallConnector()), neutral);
+    }
+
+    public void setWallNeutral(boolean neutral) {
+        if (wallLine != null)
+            wallLine.setState(!neutral);
+        if (wallNeutral != null)
+            wallNeutral.setState(neutral);
+        notifyUpdate();
     }
 
     // ---- queries ----

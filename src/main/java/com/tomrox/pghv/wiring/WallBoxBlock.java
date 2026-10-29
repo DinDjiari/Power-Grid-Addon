@@ -41,7 +41,7 @@ public class WallBoxBlock extends WallDeviceBlock<WallBoxBlockEntity> {
 
     public WallBoxBlock(Properties settings) {
         super(settings);
-        setTerminalCollection(horizontalNorthTerminals(this, TERMINALS, SHAPE));
+        setTerminalCollection(wallTerminals(TERMINALS, SHAPE));
     }
 
     @Override

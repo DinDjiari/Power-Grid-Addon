@@ -31,7 +31,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -128,6 +132,30 @@ public final class InWallLaying {
             return;
         }
         addPoint(level, player, stack, Vec3.atCenterOf(pos));
+    }
+
+    /** Right-click with an empty hand on the wall connector of a wall device switches it between L and N. */
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onRightClickWallConnector(PlayerInteractEvent.RightClickBlock event) {
+        if (!event.getItemStack().isEmpty() || event.getEntity().isShiftKeyDown())
+            return;
+        Level level = event.getLevel();
+        BlockPos pos = event.getPos();
+        BlockState state = level.getBlockState(pos);
+        if (!(state.getBlock() instanceof WallDeviceBlock<?> block)
+                || !block.isOnWallConnector(state, event.getHitVec().getLocation().subtract(Vec3.atLowerCornerOf(pos))))
+            return;
+        event.setCanceled(true);
+        event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide));
+        if (level.isClientSide)
+            return;
+        boolean neutral = !state.getValue(WallDeviceBlock.WALL_NEUTRAL);
+        level.setBlock(pos, state.setValue(WallDeviceBlock.WALL_NEUTRAL, neutral), Block.UPDATE_ALL);
+        if (level.getBlockEntity(pos) instanceof WallDeviceBlockEntity be)
+            be.setWallNeutral(neutral);
+        level.playSound(null, pos, SoundEvents.COPPER_BULB_TURN_ON, SoundSource.BLOCKS, 0.5f, neutral ? 0.9f : 1.2f);
+        msg(event.getEntity(), "pghv.wall.msg.connector", neutral ? ChatFormatting.BLUE : ChatFormatting.RED,
+                Component.translatable(neutral ? "pghv.terminal.wall_neutral" : "pghv.terminal.wall_line"));
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
