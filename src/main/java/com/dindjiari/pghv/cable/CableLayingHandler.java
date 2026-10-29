@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.cable;
+package com.dindjiari.pghv.cable;
 
-import com.tomrox.pghv.block.CableBoxBlock;
-import com.tomrox.pghv.block.CableSegmentBlock;
-import com.tomrox.pghv.block.entity.CableBoxBlockEntity;
-import com.tomrox.pghv.block.entity.CableSegmentBlockEntity;
-import com.tomrox.pghv.registry.PghvBlocks;
-import com.tomrox.pghv.registry.PghvDataComponents;
-import com.tomrox.pghv.registry.PghvItems;
+import com.dindjiari.pghv.block.CableBoxBlock;
+import com.dindjiari.pghv.block.CableSegmentBlock;
+import com.dindjiari.pghv.block.entity.CableBoxBlockEntity;
+import com.dindjiari.pghv.block.entity.CableSegmentBlockEntity;
+import com.dindjiari.pghv.registry.PghvBlocks;
+import com.dindjiari.pghv.registry.PghvDataComponents;
+import com.dindjiari.pghv.registry.PghvItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

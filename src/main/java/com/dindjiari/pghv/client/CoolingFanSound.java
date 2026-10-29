@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.client;
+package com.dindjiari.pghv.client;
 
-import com.tomrox.pghv.block.HvCoolingFanBlock;
-import com.tomrox.pghv.block.entity.HvCoolingFanBlockEntity;
-import com.tomrox.pghv.registry.PghvSounds;
+import com.dindjiari.pghv.block.HvCoolingFanBlock;
+import com.dindjiari.pghv.block.entity.HvCoolingFanBlockEntity;
+import com.dindjiari.pghv.registry.PghvSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.core.BlockPos;

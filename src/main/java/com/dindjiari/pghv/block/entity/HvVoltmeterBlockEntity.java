@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  *
  * Modified from Create: Power Grid by patryk3211, Apache-2.0.
  */
-package com.tomrox.pghv.block.entity;
+package com.dindjiari.pghv.block.entity;
 
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.ChatFormatting;

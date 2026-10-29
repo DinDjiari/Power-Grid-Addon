@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.item;
+package com.dindjiari.pghv.item;
 
-import com.tomrox.pghv.cable.CableLaying;
-import com.tomrox.pghv.cable.CableLayingHandler;
-import com.tomrox.pghv.registry.PghvDataComponents;
+import com.dindjiari.pghv.cable.CableLaying;
+import com.dindjiari.pghv.cable.CableLayingHandler;
+import com.dindjiari.pghv.registry.PghvDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;

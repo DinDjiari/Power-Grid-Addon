@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.cable;
+package com.dindjiari.pghv.cable;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import com.tomrox.pghv.registry.PghvDataComponents;
+import com.dindjiari.pghv.registry.PghvDataComponents;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;

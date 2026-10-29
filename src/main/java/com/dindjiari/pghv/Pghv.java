@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv;
+package com.dindjiari.pghv;
 
-import com.tomrox.pghv.registry.PghvSounds;
-import com.tomrox.pghv.registry.PghvBlockEntities;
-import com.tomrox.pghv.registry.PghvBlocks;
-import com.tomrox.pghv.registry.PghvDataComponents;
-import com.tomrox.pghv.registry.PghvItems;
-import com.tomrox.pghv.registry.PghvRecipes;
-import com.tomrox.pghv.registry.PghvTabs;
+import com.dindjiari.pghv.registry.PghvSounds;
+import com.dindjiari.pghv.registry.PghvBlockEntities;
+import com.dindjiari.pghv.registry.PghvBlocks;
+import com.dindjiari.pghv.registry.PghvDataComponents;
+import com.dindjiari.pghv.registry.PghvItems;
+import com.dindjiari.pghv.registry.PghvRecipes;
+import com.dindjiari.pghv.registry.PghvTabs;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -38,6 +38,6 @@ public class Pghv {
         PghvDataComponents.DATA_COMPONENTS.register(modBus);
         PghvRecipes.RECIPE_SERIALIZERS.register(modBus);
         PghvSounds.SOUNDS.register(modBus);
-        modBus.addListener(com.tomrox.pghv.wiring.AutoRoutePayload::register);
+        modBus.addListener(com.dindjiari.pghv.wiring.AutoRoutePayload::register);
     }
 }

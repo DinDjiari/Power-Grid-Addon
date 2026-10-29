@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.gametest;
+package com.dindjiari.pghv.gametest;
 
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
-import com.tomrox.pghv.Pghv;
-import com.tomrox.pghv.block.HvCoolingFanBlock;
-import com.tomrox.pghv.block.entity.HvCoolingFanBlockEntity;
-import com.tomrox.pghv.registry.PghvItems;
+import com.dindjiari.pghv.Pghv;
+import com.dindjiari.pghv.block.HvCoolingFanBlock;
+import com.dindjiari.pghv.block.entity.HvCoolingFanBlockEntity;
+import com.dindjiari.pghv.registry.PghvItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -120,8 +120,8 @@ public class CoolingFanBehaviourTests {
         helper.runAfterDelay(20, () -> {
             BlockPos top2 = HvCoolingFanBlock.cellOf(MAIN, FACING, 2);
             BlockPos top3 = HvCoolingFanBlock.cellOf(MAIN, FACING, 3);
-            com.tomrox.pghv.block.entity.CoolingFanTopBlockEntity box = helper.getBlockEntity(top2);
-            helper.assertTrue(helper.getBlockEntity(top3) instanceof com.tomrox.pghv.block.entity.CoolingFanTopBlockEntity,
+            com.dindjiari.pghv.block.entity.CoolingFanTopBlockEntity box = helper.getBlockEntity(top2);
+            helper.assertTrue(helper.getBlockEntity(top3) instanceof com.dindjiari.pghv.block.entity.CoolingFanTopBlockEntity,
                     "upper right cell carries a value box too");
             box.getBehaviour(ScrollValueBehaviour.TYPE).setValue(40);
         });

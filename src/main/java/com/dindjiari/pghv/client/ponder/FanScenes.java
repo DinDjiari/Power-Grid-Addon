@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,15 @@
  *
  * Scene style and helpers follow Create: Power Grid's ponder scenes by patryk3211, Apache-2.0.
  */
-package com.tomrox.pghv.client.ponder;
+package com.dindjiari.pghv.client.ponder;
 
 import com.simibubi.create.AllItems;
-import com.tomrox.pghv.block.HvCoolingFanBlock;
-import com.tomrox.pghv.block.entity.HvCoolingFanBlockEntity;
-import com.tomrox.pghv.registry.PghvItems;
-import com.tomrox.pghv.registry.PghvBlocks;
-import com.tomrox.pghv.block.entity.DataSocketBoxBlockEntity;
-import com.tomrox.pghv.block.DataSocketBoxBlock;
+import com.dindjiari.pghv.block.HvCoolingFanBlock;
+import com.dindjiari.pghv.block.entity.HvCoolingFanBlockEntity;
+import com.dindjiari.pghv.registry.PghvItems;
+import com.dindjiari.pghv.registry.PghvBlocks;
+import com.dindjiari.pghv.block.entity.DataSocketBoxBlockEntity;
+import com.dindjiari.pghv.block.DataSocketBoxBlock;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.element.ElementLink;

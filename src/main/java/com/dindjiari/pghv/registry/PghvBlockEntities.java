@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.registry;
+package com.dindjiari.pghv.registry;
 
-import com.tomrox.pghv.Pghv;
-import com.tomrox.pghv.block.entity.CableBoxBlockEntity;
-import com.tomrox.pghv.block.entity.CableSegmentBlockEntity;
-import com.tomrox.pghv.block.entity.CoolingFanTopBlockEntity;
-import com.tomrox.pghv.block.entity.HvCoolingFanBlockEntity;
-import com.tomrox.pghv.block.entity.HvVoltmeterBlockEntity;
+import com.dindjiari.pghv.Pghv;
+import com.dindjiari.pghv.block.entity.CableBoxBlockEntity;
+import com.dindjiari.pghv.block.entity.CableSegmentBlockEntity;
+import com.dindjiari.pghv.block.entity.CoolingFanTopBlockEntity;
+import com.dindjiari.pghv.block.entity.HvCoolingFanBlockEntity;
+import com.dindjiari.pghv.block.entity.HvVoltmeterBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -78,51 +78,51 @@ public class PghvBlockEntities {
                             PghvBlocks.CABLE_SEGMENT.get())
                     .build(null));
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.block.entity.DataSocketBoxBlockEntity>> DATA_SOCKET_BOX =
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.dindjiari.pghv.block.entity.DataSocketBoxBlockEntity>> DATA_SOCKET_BOX =
             BLOCK_ENTITIES.register("data_socket_box", () -> BlockEntityType.Builder
-                    .of((pos, state) -> new com.tomrox.pghv.block.entity.DataSocketBoxBlockEntity(PghvBlockEntities.DATA_SOCKET_BOX.get(), pos, state),
+                    .of((pos, state) -> new com.dindjiari.pghv.block.entity.DataSocketBoxBlockEntity(PghvBlockEntities.DATA_SOCKET_BOX.get(), pos, state),
                             PghvBlocks.DATA_SOCKET_BOX.get())
                     .build(null));
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.WallBoxBlockEntity>> WALL_BOX =
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.dindjiari.pghv.wiring.WallBoxBlockEntity>> WALL_BOX =
             BLOCK_ENTITIES.register("wall_box", () -> BlockEntityType.Builder
-                    .of((pos, state) -> new com.tomrox.pghv.wiring.WallBoxBlockEntity(PghvBlockEntities.WALL_BOX.get(), pos, state),
+                    .of((pos, state) -> new com.dindjiari.pghv.wiring.WallBoxBlockEntity(PghvBlockEntities.WALL_BOX.get(), pos, state),
                             PghvBlocks.WALL_BOX.get())
                     .build(null));
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.WallSwitchBlockEntity>> WALL_SWITCH =
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.dindjiari.pghv.wiring.WallSwitchBlockEntity>> WALL_SWITCH =
             BLOCK_ENTITIES.register("wall_switch", () -> BlockEntityType.Builder
-                    .of((pos, state) -> new com.tomrox.pghv.wiring.WallSwitchBlockEntity(PghvBlockEntities.WALL_SWITCH.get(), pos, state),
+                    .of((pos, state) -> new com.dindjiari.pghv.wiring.WallSwitchBlockEntity(PghvBlockEntities.WALL_SWITCH.get(), pos, state),
                             PghvBlocks.WALL_SWITCH.get())
                     .build(null));
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.WallSwitchBlockEntity>> WALL_BUTTON =
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.dindjiari.pghv.wiring.WallSwitchBlockEntity>> WALL_BUTTON =
             BLOCK_ENTITIES.register("wall_button", () -> BlockEntityType.Builder
-                    .of((pos, state) -> new com.tomrox.pghv.wiring.WallSwitchBlockEntity(PghvBlockEntities.WALL_BUTTON.get(), pos, state),
+                    .of((pos, state) -> new com.dindjiari.pghv.wiring.WallSwitchBlockEntity(PghvBlockEntities.WALL_BUTTON.get(), pos, state),
                             PghvBlocks.WALL_BUTTON.get())
                     .build(null));
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.WallOutletBlockEntity>> OUTLET_EU =
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.dindjiari.pghv.wiring.WallOutletBlockEntity>> OUTLET_EU =
             BLOCK_ENTITIES.register("outlet_eu", () -> BlockEntityType.Builder
-                    .of((pos, state) -> new com.tomrox.pghv.wiring.WallOutletBlockEntity(PghvBlockEntities.OUTLET_EU.get(), pos, state),
+                    .of((pos, state) -> new com.dindjiari.pghv.wiring.WallOutletBlockEntity(PghvBlockEntities.OUTLET_EU.get(), pos, state),
                             PghvBlocks.OUTLET_EU.get())
                     .build(null));
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.WallOutletBlockEntity>> OUTLET_US =
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.dindjiari.pghv.wiring.WallOutletBlockEntity>> OUTLET_US =
             BLOCK_ENTITIES.register("outlet_us", () -> BlockEntityType.Builder
-                    .of((pos, state) -> new com.tomrox.pghv.wiring.WallOutletBlockEntity(PghvBlockEntities.OUTLET_US.get(), pos, state),
+                    .of((pos, state) -> new com.dindjiari.pghv.wiring.WallOutletBlockEntity(PghvBlockEntities.OUTLET_US.get(), pos, state),
                             PghvBlocks.OUTLET_US.get())
                     .build(null));
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.DistributionBoardBlockEntity>> DISTRIBUTION_BOARD =
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.dindjiari.pghv.wiring.DistributionBoardBlockEntity>> DISTRIBUTION_BOARD =
             BLOCK_ENTITIES.register("distribution_board", () -> BlockEntityType.Builder
-                    .of((pos, state) -> new com.tomrox.pghv.wiring.DistributionBoardBlockEntity(PghvBlockEntities.DISTRIBUTION_BOARD.get(), pos, state),
+                    .of((pos, state) -> new com.dindjiari.pghv.wiring.DistributionBoardBlockEntity(PghvBlockEntities.DISTRIBUTION_BOARD.get(), pos, state),
                             PghvBlocks.DISTRIBUTION_BOARD.get())
                     .build(null));
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.tomrox.pghv.wiring.HouseConnectionBoxBlockEntity>> HOUSE_CONNECTION_BOX =
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.dindjiari.pghv.wiring.HouseConnectionBoxBlockEntity>> HOUSE_CONNECTION_BOX =
             BLOCK_ENTITIES.register("house_connection_box", () -> BlockEntityType.Builder
-                    .of((pos, state) -> new com.tomrox.pghv.wiring.HouseConnectionBoxBlockEntity(PghvBlockEntities.HOUSE_CONNECTION_BOX.get(), pos, state),
+                    .of((pos, state) -> new com.dindjiari.pghv.wiring.HouseConnectionBoxBlockEntity(PghvBlockEntities.HOUSE_CONNECTION_BOX.get(), pos, state),
                             PghvBlocks.HOUSE_CONNECTION_BOX.get())
                     .build(null));
 }

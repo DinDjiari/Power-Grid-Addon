@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.gametest;
+package com.dindjiari.pghv.gametest;
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
-import com.tomrox.pghv.Pghv;
-import com.tomrox.pghv.block.HvCoolingFanBlock;
-import com.tomrox.pghv.block.entity.HvCoolingFanBlockEntity;
-import com.tomrox.pghv.cable.CableCores;
-import com.tomrox.pghv.item.DataCableItem;
-import com.tomrox.pghv.block.DataSocketBoxBlock;
-import com.tomrox.pghv.block.entity.DataSocketBoxBlockEntity;
-import com.tomrox.pghv.registry.PghvBlocks;
+import com.dindjiari.pghv.Pghv;
+import com.dindjiari.pghv.block.HvCoolingFanBlock;
+import com.dindjiari.pghv.block.entity.HvCoolingFanBlockEntity;
+import com.dindjiari.pghv.cable.CableCores;
+import com.dindjiari.pghv.item.DataCableItem;
+import com.dindjiari.pghv.block.DataSocketBoxBlock;
+import com.dindjiari.pghv.block.entity.DataSocketBoxBlockEntity;
+import com.dindjiari.pghv.registry.PghvBlocks;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
-import com.tomrox.pghv.registry.PghvDataComponents;
-import com.tomrox.pghv.registry.PghvItems;
+import com.dindjiari.pghv.registry.PghvDataComponents;
+import com.dindjiari.pghv.registry.PghvItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;

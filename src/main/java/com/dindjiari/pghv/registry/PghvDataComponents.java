@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.registry;
+package com.dindjiari.pghv.registry;
 
-import com.tomrox.pghv.Pghv;
-import com.tomrox.pghv.cable.CableCores;
-import com.tomrox.pghv.cable.CableLaying;
+import com.dindjiari.pghv.Pghv;
+import com.dindjiari.pghv.cable.CableCores;
+import com.dindjiari.pghv.cable.CableLaying;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  *
  * Structure follows Create: Power Grid's PowerGridPonderPlugin by patryk3211, Apache-2.0.
  */
-package com.tomrox.pghv.client.ponder;
+package com.dindjiari.pghv.client.ponder;
 
-import com.tomrox.pghv.Pghv;
+import com.dindjiari.pghv.Pghv;
 import net.createmod.ponder.api.registration.PonderPlugin;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;

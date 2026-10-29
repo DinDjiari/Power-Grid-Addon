@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,14 @@
  *
  * Modified from Create: Power Grid by patryk3211, Apache-2.0 (based on ElectricFanRenderer).
  */
-package com.tomrox.pghv.client;
+package com.dindjiari.pghv.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
-import com.tomrox.pghv.block.HvCoolingFanBlock;
-import com.tomrox.pghv.block.entity.HvCoolingFanBlockEntity;
+import com.dindjiari.pghv.block.HvCoolingFanBlock;
+import com.dindjiari.pghv.block.entity.HvCoolingFanBlockEntity;
 import net.createmod.catnip.render.CachedBuffers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

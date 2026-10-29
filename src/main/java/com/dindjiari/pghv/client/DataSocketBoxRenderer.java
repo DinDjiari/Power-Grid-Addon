@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.client;
+package com.dindjiari.pghv.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
-import com.tomrox.pghv.Pghv;
-import com.tomrox.pghv.block.entity.DataSocketBoxBlockEntity;
-import com.tomrox.pghv.cable.DataPlug;
+import com.dindjiari.pghv.Pghv;
+import com.dindjiari.pghv.block.entity.DataSocketBoxBlockEntity;
+import com.dindjiari.pghv.cable.DataPlug;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;

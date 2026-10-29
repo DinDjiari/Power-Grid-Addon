@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.client.ponder;
+package com.dindjiari.pghv.client.ponder;
 
 import com.simibubi.create.AllItems;
-import com.tomrox.pghv.block.entity.CableBoxBlockEntity;
-import com.tomrox.pghv.cable.CableCores;
-import com.tomrox.pghv.registry.PghvDataComponents;
-import com.tomrox.pghv.registry.PghvItems;
+import com.dindjiari.pghv.block.entity.CableBoxBlockEntity;
+import com.dindjiari.pghv.cable.CableCores;
+import com.dindjiari.pghv.registry.PghvDataComponents;
+import com.dindjiari.pghv.registry.PghvItems;
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;

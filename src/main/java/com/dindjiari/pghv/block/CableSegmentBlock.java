@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.block;
+package com.dindjiari.pghv.block;
 
-import com.tomrox.pghv.block.entity.CableBoxBlockEntity;
-import com.tomrox.pghv.block.entity.CableSegmentBlockEntity;
-import com.tomrox.pghv.registry.PghvBlockEntities;
+import com.dindjiari.pghv.block.entity.CableBoxBlockEntity;
+import com.dindjiari.pghv.block.entity.CableSegmentBlockEntity;
+import com.dindjiari.pghv.registry.PghvBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;

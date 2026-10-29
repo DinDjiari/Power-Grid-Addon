@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.gametest;
+package com.dindjiari.pghv.gametest;
 
-import com.tomrox.pghv.Pghv;
-import com.tomrox.pghv.registry.PghvBlocks;
-import com.tomrox.pghv.registry.PghvDataComponents;
-import com.tomrox.pghv.wiring.InWallCable;
-import com.tomrox.pghv.wiring.InWallLaying;
-import com.tomrox.pghv.wiring.InWallRouting;
-import com.tomrox.pghv.wiring.WallBoxBlockEntity;
-import com.tomrox.pghv.wiring.WallDeviceBlock;
-import com.tomrox.pghv.wiring.WallDeviceBlockEntity;
-import com.tomrox.pghv.wiring.WallOutletBlock;
-import com.tomrox.pghv.wiring.WallOutletBlockEntity;
-import com.tomrox.pghv.wiring.WallSwitchBlock;
-import com.tomrox.pghv.wiring.WallSwitchBlockEntity;
+import com.dindjiari.pghv.Pghv;
+import com.dindjiari.pghv.registry.PghvBlocks;
+import com.dindjiari.pghv.registry.PghvDataComponents;
+import com.dindjiari.pghv.wiring.InWallCable;
+import com.dindjiari.pghv.wiring.InWallLaying;
+import com.dindjiari.pghv.wiring.InWallRouting;
+import com.dindjiari.pghv.wiring.WallBoxBlockEntity;
+import com.dindjiari.pghv.wiring.WallDeviceBlock;
+import com.dindjiari.pghv.wiring.WallDeviceBlockEntity;
+import com.dindjiari.pghv.wiring.WallOutletBlock;
+import com.dindjiari.pghv.wiring.WallOutletBlockEntity;
+import com.dindjiari.pghv.wiring.WallSwitchBlock;
+import com.dindjiari.pghv.wiring.WallSwitchBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -253,7 +253,7 @@ public class WallWiringTests {
             FakePlayer p = layer(helper, GameType.CREATIVE, 1);
             var fx = (org.patryk3211.powergrid.electricity.light.fixture.AbstractLightFixtureBlockEntity) helper.getBlockEntity(fixture);
             helper.assertTrue(fx.replaceBulb(p, InteractionHand.MAIN_HAND,
-                    new ItemStack(com.tomrox.pghv.registry.PghvItems.EU_LIGHT_BULB.get())), "bulb inserted");
+                    new ItemStack(com.dindjiari.pghv.registry.PghvItems.EU_LIGHT_BULB.get())), "bulb inserted");
             PghvTestUtil.use(helper, p, BOX, OUT);
             PghvTestUtil.use(helper, p, SWITCH, OUT);
             PghvTestUtil.use(helper, p, SWITCH, OUT);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.cable;
+package com.dindjiari.pghv.cable;
 
-import com.tomrox.pghv.block.DataSocketBoxBlock;
-import com.tomrox.pghv.block.HvCoolingFanBlock;
+import com.dindjiari.pghv.block.DataSocketBoxBlock;
+import com.dindjiari.pghv.block.HvCoolingFanBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;

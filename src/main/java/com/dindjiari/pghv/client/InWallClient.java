@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.client;
+package com.dindjiari.pghv.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -21,11 +21,11 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.tomrox.pghv.Pghv;
-import com.tomrox.pghv.wiring.AutoRoutePayload;
-import com.tomrox.pghv.wiring.InWallCable;
-import com.tomrox.pghv.wiring.InWallLaying;
-import com.tomrox.pghv.wiring.WallDeviceBlockEntity;
+import com.dindjiari.pghv.Pghv;
+import com.dindjiari.pghv.wiring.AutoRoutePayload;
+import com.dindjiari.pghv.wiring.InWallCable;
+import com.dindjiari.pghv.wiring.InWallLaying;
+import com.dindjiari.pghv.wiring.WallDeviceBlockEntity;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;

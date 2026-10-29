@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.gametest;
+package com.dindjiari.pghv.gametest;
 
-import com.tomrox.pghv.Pghv;
-import com.tomrox.pghv.registry.PghvBlocks;
-import com.tomrox.pghv.wiring.BoardModule;
-import com.tomrox.pghv.wiring.BoardStructure;
-import com.tomrox.pghv.wiring.DistributionBoardBlock;
-import com.tomrox.pghv.wiring.DistributionBoardBlockEntity;
-import com.tomrox.pghv.wiring.HouseConnectionBoxBlock;
-import com.tomrox.pghv.wiring.InWallLaying;
-import com.tomrox.pghv.wiring.WallBoxBlockEntity;
-import com.tomrox.pghv.wiring.WallDeviceBlock;
-import com.tomrox.pghv.wiring.WallDeviceBlockEntity;
+import com.dindjiari.pghv.Pghv;
+import com.dindjiari.pghv.registry.PghvBlocks;
+import com.dindjiari.pghv.wiring.BoardModule;
+import com.dindjiari.pghv.wiring.BoardStructure;
+import com.dindjiari.pghv.wiring.DistributionBoardBlock;
+import com.dindjiari.pghv.wiring.DistributionBoardBlockEntity;
+import com.dindjiari.pghv.wiring.HouseConnectionBoxBlock;
+import com.dindjiari.pghv.wiring.InWallLaying;
+import com.dindjiari.pghv.wiring.WallBoxBlockEntity;
+import com.dindjiari.pghv.wiring.WallDeviceBlock;
+import com.dindjiari.pghv.wiring.WallDeviceBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;

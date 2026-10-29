@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,15 @@
  * Modified from Create: Power Grid by patryk3211, Apache-2.0
  * (multiblock handling follows the removed HvTransformerBlock / HvSwitchBlock).
  */
-package com.tomrox.pghv.block;
+package com.dindjiari.pghv.block;
 
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
-import com.tomrox.pghv.block.entity.HvCoolingFanBlockEntity;
+import com.dindjiari.pghv.block.entity.HvCoolingFanBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
-import com.tomrox.pghv.block.entity.CoolingFanTopBlockEntity;
-import com.tomrox.pghv.registry.PghvBlockEntities;
+import com.dindjiari.pghv.block.entity.CoolingFanTopBlockEntity;
+import com.dindjiari.pghv.registry.PghvBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

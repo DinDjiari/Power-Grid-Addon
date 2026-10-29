@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
  * Modified from Create: Power Grid by patryk3211, Apache-2.0
  * (based on ElectricFanBlockEntity and the removed HvTransformerBlockEntity).
  */
-package com.tomrox.pghv.block.entity;
+package com.dindjiari.pghv.block.entity;
 
-import com.tomrox.pghv.registry.PghvSounds;
+import com.dindjiari.pghv.registry.PghvSounds;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
@@ -31,7 +31,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import com.simibubi.create.infrastructure.config.AllConfigs;
-import com.tomrox.pghv.block.HvCoolingFanBlock;
+import com.dindjiari.pghv.block.HvCoolingFanBlock;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.math.VecHelper;
@@ -485,7 +485,7 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
 
     private void tickFanAnimation() {
         if (!isVirtual())
-            com.tomrox.pghv.client.CoolingFanSound.tick(this);
+            com.dindjiari.pghv.client.CoolingFanSound.tick(this);
         float target = getRotorTargetSpeed();
         fanRotSpeed += (target - fanRotSpeed) * 0.08f;
         if (target == 0 && fanRotSpeed < 0.05f)

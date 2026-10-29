@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.client;
+package com.dindjiari.pghv.client;
 
-import com.tomrox.pghv.Pghv;
-import com.tomrox.pghv.block.entity.CableBoxBlockEntity;
-import com.tomrox.pghv.cable.CableCores;
-import com.tomrox.pghv.registry.PghvBlocks;
-import com.tomrox.pghv.registry.PghvItems;
+import com.dindjiari.pghv.Pghv;
+import com.dindjiari.pghv.block.entity.CableBoxBlockEntity;
+import com.dindjiari.pghv.cable.CableCores;
+import com.dindjiari.pghv.registry.PghvBlocks;
+import com.dindjiari.pghv.registry.PghvItems;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

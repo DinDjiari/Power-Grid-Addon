@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.client;
+package com.dindjiari.pghv.client;
 
-import com.tomrox.pghv.Pghv;
-import com.tomrox.pghv.client.ponder.PghvPonderPlugin;
-import com.tomrox.pghv.registry.PghvBlockEntities;
+import com.dindjiari.pghv.Pghv;
+import com.dindjiari.pghv.client.ponder.PghvPonderPlugin;
+import com.dindjiari.pghv.registry.PghvBlockEntities;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -45,7 +45,7 @@ public class PghvClient {
     public static void onClientSetup(FMLClientSetupEvent event) {
         // Partial-Modelle (Create/Flywheel) beim Client-Setup anmelden
         PghvPartialModels.init();
-        event.enqueueWork(() -> com.tomrox.pghv.registry.PghvItems.EU_LIGHT_BULB.get()
+        event.enqueueWork(() -> com.dindjiari.pghv.registry.PghvItems.EU_LIGHT_BULB.get()
                 .setupClient(PghvPartialModels.EU_BULB, PghvPartialModels.EU_BULB_DYED));
         // Ponder scenes (W in the inventory); Ponder registers all plugins at FMLLoadCompleteEvent.
         event.enqueueWork(() -> PonderIndex.addPlugin(new PghvPonderPlugin()));

@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Tomrox GmbH
+ * Copyright 2026 DinDjiari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomrox.pghv.registry;
+package com.dindjiari.pghv.registry;
 
-import com.tomrox.pghv.Pghv;
-import com.tomrox.pghv.block.CableBoxBlock;
-import com.tomrox.pghv.block.CableSegmentBlock;
-import com.tomrox.pghv.block.HvCoolingFanBlock;
-import com.tomrox.pghv.block.HvVoltmeterBlock;
+import com.dindjiari.pghv.Pghv;
+import com.dindjiari.pghv.block.CableBoxBlock;
+import com.dindjiari.pghv.block.CableSegmentBlock;
+import com.dindjiari.pghv.block.HvCoolingFanBlock;
+import com.dindjiari.pghv.block.HvVoltmeterBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -60,8 +60,8 @@ public class PghvBlocks {
                     .noOcclusion()));
 
     /** Data socket box: front socket for the data cable, connectors on top for the servo wires. */
-    public static final DeferredBlock<com.tomrox.pghv.block.DataSocketBoxBlock> DATA_SOCKET_BOX = BLOCKS.register("data_socket_box",
-            () -> new com.tomrox.pghv.block.DataSocketBoxBlock(BlockBehaviour.Properties.of()
+    public static final DeferredBlock<com.dindjiari.pghv.block.DataSocketBoxBlock> DATA_SOCKET_BOX = BLOCKS.register("data_socket_box",
+            () -> new com.dindjiari.pghv.block.DataSocketBoxBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_YELLOW)
                     .strength(1.5f, 6.0f)
                     .sound(SoundType.METAL)
@@ -74,22 +74,22 @@ public class PghvBlocks {
                 .noOcclusion().noCollission();
     }
 
-    public static final DeferredBlock<com.tomrox.pghv.wiring.WallBoxBlock> WALL_BOX = BLOCKS.register("wall_box",
-            () -> new com.tomrox.pghv.wiring.WallBoxBlock(wallDevice()));
-    public static final DeferredBlock<com.tomrox.pghv.wiring.WallSwitchBlock> WALL_SWITCH = BLOCKS.register("wall_switch",
-            () -> new com.tomrox.pghv.wiring.WallSwitchBlock(wallDevice(), false));
-    public static final DeferredBlock<com.tomrox.pghv.wiring.WallSwitchBlock> WALL_BUTTON = BLOCKS.register("wall_button",
-            () -> new com.tomrox.pghv.wiring.WallSwitchBlock(wallDevice(), true));
-    public static final DeferredBlock<com.tomrox.pghv.wiring.WallOutletBlock> OUTLET_EU = BLOCKS.register("outlet_eu",
-            () -> new com.tomrox.pghv.wiring.WallOutletBlock(wallDevice(), false));
-    public static final DeferredBlock<com.tomrox.pghv.wiring.WallOutletBlock> OUTLET_US = BLOCKS.register("outlet_us",
-            () -> new com.tomrox.pghv.wiring.WallOutletBlock(wallDevice(), true));
+    public static final DeferredBlock<com.dindjiari.pghv.wiring.WallBoxBlock> WALL_BOX = BLOCKS.register("wall_box",
+            () -> new com.dindjiari.pghv.wiring.WallBoxBlock(wallDevice()));
+    public static final DeferredBlock<com.dindjiari.pghv.wiring.WallSwitchBlock> WALL_SWITCH = BLOCKS.register("wall_switch",
+            () -> new com.dindjiari.pghv.wiring.WallSwitchBlock(wallDevice(), false));
+    public static final DeferredBlock<com.dindjiari.pghv.wiring.WallSwitchBlock> WALL_BUTTON = BLOCKS.register("wall_button",
+            () -> new com.dindjiari.pghv.wiring.WallSwitchBlock(wallDevice(), true));
+    public static final DeferredBlock<com.dindjiari.pghv.wiring.WallOutletBlock> OUTLET_EU = BLOCKS.register("outlet_eu",
+            () -> new com.dindjiari.pghv.wiring.WallOutletBlock(wallDevice(), false));
+    public static final DeferredBlock<com.dindjiari.pghv.wiring.WallOutletBlock> OUTLET_US = BLOCKS.register("outlet_us",
+            () -> new com.dindjiari.pghv.wiring.WallOutletBlock(wallDevice(), true));
 
-    public static final DeferredBlock<com.tomrox.pghv.wiring.DistributionBoardBlock> DISTRIBUTION_BOARD = BLOCKS.register("distribution_board",
-            () -> new com.tomrox.pghv.wiring.DistributionBoardBlock(BlockBehaviour.Properties.of().mapColor(MapColor.SNOW)
+    public static final DeferredBlock<com.dindjiari.pghv.wiring.DistributionBoardBlock> DISTRIBUTION_BOARD = BLOCKS.register("distribution_board",
+            () -> new com.dindjiari.pghv.wiring.DistributionBoardBlock(BlockBehaviour.Properties.of().mapColor(MapColor.SNOW)
                     .strength(1.5f, 6.0f).sound(SoundType.METAL).noOcclusion()));
-    public static final DeferredBlock<com.tomrox.pghv.wiring.HouseConnectionBoxBlock> HOUSE_CONNECTION_BOX = BLOCKS.register("house_connection_box",
-            () -> new com.tomrox.pghv.wiring.HouseConnectionBoxBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY)
+    public static final DeferredBlock<com.dindjiari.pghv.wiring.HouseConnectionBoxBlock> HOUSE_CONNECTION_BOX = BLOCKS.register("house_connection_box",
+            () -> new com.dindjiari.pghv.wiring.HouseConnectionBoxBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY)
                     .strength(1.5f, 6.0f).sound(SoundType.METAL).noOcclusion()));
 
     /** Cable piece placed by the laying code; no item, drops handled in code. */
