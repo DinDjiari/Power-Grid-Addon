@@ -189,5 +189,8 @@
   "pghv.subtitle.main_switch.on": "Hauptschalter ein",
   "pghv.subtitle.main_switch.off": "Hauptschalter aus",
   "pghv.subtitle.cooling_fan.run": "Kühllüfter surrt",
-  "pghv.subtitle.cooling_fan.trip": "Überhitzungsschutz löst aus"
+  "pghv.subtitle.cooling_fan.trip": "Überhitzungsschutz löst aus",
+  "pghv.terminal.wall_line": "Wandanschluss L (Phase)",
+  "pghv.terminal.wall_neutral": "Wandanschluss N (Neutralleiter)",
+  "pghv.wall.msg.connector": "%s – Rechtsklick wechselt L/N"
 }
