@@ -6,7 +6,7 @@ license = "Apache-2.0"
 modId = "pghv"
 version = "${version}"
 displayName = "Power Grid: High Voltage"
-authors = "Tomrox GmbH"
+authors = "DinDjiari"
 description = '''
 Hochspannungs-Addon fuer Create: Power Grid.
 Fuegt ein Messing-Voltmeter mit Messbereichen bis 2 MV, einen Trafo-Kuehllueffter
