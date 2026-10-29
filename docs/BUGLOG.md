@@ -42,3 +42,4 @@
 | 2026-10-28 | item/EuLightBulb (Konstruktor) | Compile-Fehler: reference to Properties is ambiguous | LightBulb erbt ILightBulb.Properties (record) und Item.Properties | Item.Properties explizit (Import net.minecraft.world.item.Item) |
 | 2026-10-28 | HouseInstallationTests.fuseBlowsAndResets | Test rot: Nennwert 13 statt 63 A | Test schaltete 7× weiter (16→…→63→6→10→13), von 16 auf 63 A sind es 4 Stufen | Schleife auf 4 Schritte (Spielcode unverändert) |
 | 2026-10-29 | models/item/rcd.json, main_switch.json | FI/Hauptschalter im Inventar seitlich aus dem Slot (Hauptschalter unsichtbar), beim Ziehen neben dem Mauszeiger | display-Verschiebung mit falschem Vorzeichen (wirkt nach der 180°-Drehung) | gui +8,4 / Hand +6 / 3. Person +3,6 statt negativ |
+| 2026-10-29 | models/block/hak_open_on/off.json | Hebel im Hausanschlusskasten ragt 2 px aus dem Kasten (Tom) | Hebel vor der Kastenfront modelliert | Kasten mit 3 px tiefer Nische, Hebel und Sockel darin |
