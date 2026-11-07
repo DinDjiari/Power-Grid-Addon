@@ -2,7 +2,7 @@
 
 Projekt: /home/claude/pghv (NeoForge 1.21.1, Mod-ID `pghv`, Addon für Create: Power Grid 0.6.2).
 Power-Grid-Quelle: /root/pg121 (Java: src/main/java/org/patryk3211/powergrid/..., Assets/Daten unter src/main/resources und fabric/src/main/generated).
-Bestehender Code als Stilvorlage: src/main/java/com/tomrox/pghv/** (Voltmeter, Kühllüfter, Registries mit DeferredRegister).
+Bestehender Code als Stilvorlage: src/main/java/com/dindjiari/pghv/** (Voltmeter, Kühllüfter, Registries mit DeferredRegister).
 Build im Sandbox NICHT möglich (Maven gesperrt) – nur statisch prüfen, API immer gegen /root/pg121 und dessen Nutzung von Create/NeoForge verifizieren.
 
 ## Spielablauf (Wunsch des Auftraggebers)

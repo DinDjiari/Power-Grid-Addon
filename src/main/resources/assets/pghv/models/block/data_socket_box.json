@@ -1,5 +1,5 @@
 {
-  "credit": "pghv - Tomrox GmbH; connectors: geometry of Power Grid wire_connector (Apache-2.0), texture referenced",
+  "credit": "pghv - DinDjiari; connectors: geometry of Power Grid wire_connector (Apache-2.0), texture referenced",
   "parent": "block/block",
   "render_type": "minecraft:cutout",
   "textures": {

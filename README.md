@@ -11,7 +11,7 @@ Addon fuer **Create: Power Grid 0.6.2** (NeoForge 1.21.1). Fuegt hinzu:
 - Hausinstallation: `house_connection_box`, `distribution_board` (bis 8×8, in der Wand) mit Power-Grid-Sicherungen,
   Power-Grid-Energiezähler, `rcd`, `main_switch`
 
-Autor: Tomrox GmbH · Lizenz: Apache-2.0 (siehe `LICENSE`, `NOTICE`)
+Autor: DinDjiari · Lizenz: Apache-2.0 (siehe `LICENSE`, `NOTICE`)
 
 ## Voraussetzungen
 
@@ -44,6 +44,6 @@ Test-Checkliste: siehe `TESTPLAN.md`.
 
 ## Projektstruktur
 
-- `src/main/java/com/tomrox/pghv/` – Mod-Code (Registries, Bloecke, BlockEntities, Client-Renderer)
+- `src/main/java/com/dindjiari/pghv/` – Mod-Code (Registries, Bloecke, BlockEntities, Client-Renderer)
 - `src/main/resources/` – `neoforge.mods.toml`, Assets und Daten
 - `libs/` – lokale Abhaengigkeiten (Power-Grid-Jar)
