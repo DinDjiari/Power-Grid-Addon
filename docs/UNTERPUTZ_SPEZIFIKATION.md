@@ -53,3 +53,7 @@ Power-Grid-Glühbirnen sind 120 V / 30 W und brennen an 230 V durch. Statt eigen
   (Hausanschlusskasten: Hausseite hinter dem Hauptschalter). Rechtsklick mit leerer Hand auf den Anschluss wechselt L/N.
 - Elektrik: zwei geschaltete Verbindungen (1 mΩ) von L bzw. N zum Anschluss, genau eine geschlossen.
 - Zähler-/Sicherungskasten: kein Wandanschluss (sitzt als ganzer Block in der Wand).
+
+## Klick mit isoliertem Kupferdraht auf ein Wandgerät (Fix 2026-11-17)
+- Startet immer eine Unterputz-Leitung, auch auf den sichtbaren Pins der Unterputzdose.
+- Normaler Power-Grid-Draht: Klick auf den Wandanschluss oder Schleichen + Klick auf einen sichtbaren Pin.
