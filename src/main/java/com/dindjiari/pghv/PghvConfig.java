@@ -17,7 +17,7 @@ package com.dindjiari.pghv;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-/** Server config (world/serverconfig/pghv-server.toml). */
+/** Server config (config/pghv-server.toml). */
 public final class PghvConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue OVERVOLTAGE_EXPLOSIONS;

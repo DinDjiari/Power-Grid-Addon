@@ -22,7 +22,7 @@ Discord-Wunsch (EpicGamer13082, weitergeleitet von Tom 2026-11-17): „make it t
 
 US-Steckdose an 230 V bleibt also bei der Warnung „Überspannung“ und explodiert erst über 240 V.
 
-## Config (`world/serverconfig/pghv-server.toml`, Abschnitt `overvoltage`)
+## Config (`config/pghv-server.toml`, Abschnitt `overvoltage`)
 - `explosions` (true): Explosionen an/aus.
 - `breakBlocks` (false): Explosion zerstört auch umliegende Blöcke.
 - `delayTicks` (40): Ticks über der Grenze bis zur Explosion.
