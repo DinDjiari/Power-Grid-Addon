@@ -27,6 +27,8 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import com.dindjiari.pghv.util.OvervoltageGuard;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -62,6 +64,7 @@ public abstract class WallDeviceBlockEntity extends ElectricBlockEntity implemen
     private static final double MIN_RESISTANCE = 1e-4;
     private static final float WALL_CONTACT = 1e-3f;
     // Wall connector switches, set in buildWallConnector only (buildCircuit runs in the super constructor).
+    private final OvervoltageGuard overvoltage = new OvervoltageGuard();
     private SwitchedWire wallLine;
     private SwitchedWire wallNeutral;
 
@@ -237,6 +240,10 @@ public abstract class WallDeviceBlockEntity extends ElectricBlockEntity implemen
         super.tick();
         if (level == null || level.isClientSide)
             return;
+        if (overvoltage.tick((ServerLevel) level, worldPosition, measuredVoltage(), overvoltageLimit())) {
+            blowUp();
+            return;
+        }
         ++timer;
         if (timer % 20 == 0) {
             for (InWallCable c : List.copyOf(owned)) {
@@ -401,6 +408,47 @@ public abstract class WallDeviceBlockEntity extends ElectricBlockEntity implemen
     protected void cableLines(List<Component> tooltip) {
         tooltip.add(Component.literal("      ").append(Component.translatable("pghv.wall.goggles.cables",
                 owned.size() + incoming.size()).withStyle(ChatFormatting.GRAY)));
+        tooltip.add(Component.literal("      ").append(Component.translatable("pghv.goggles.max_voltage",
+                String.format(java.util.Locale.ROOT, "%.0f", overvoltageLimit())).withStyle(ChatFormatting.DARK_GRAY)));
+    }
+
+    // ---- overvoltage ----
+
+    /** Highest L-N voltage at the device's ports (V); NaN = this block does not check (e.g. board, not controller). */
+    protected double measuredVoltage() {
+        if (!(getBlockState().getBlock() instanceof WallDeviceBlock<?> block))
+            return 0;
+        double u = 0;
+        for (int p = 0; p < block.portCount(); ++p)
+            u = Math.max(u, Math.abs(portVoltage(p)));
+        return u;
+    }
+
+    /** Voltage above which the device explodes (V). */
+    public double overvoltageLimit() {
+        return 500.0;
+    }
+
+    /** Explosion power of the device. */
+    protected float explosionPower() {
+        return 1.5f;
+    }
+
+    /** Overvoltage: the device is destroyed without drop (its cables drop their wire as usual) and explodes. */
+    protected void blowUp() {
+        if (!(level instanceof ServerLevel server))
+            return;
+        BlockPos pos = worldPosition;
+        server.removeBlock(pos, false);
+        OvervoltageGuard.explode(server, pos, explosionPower());
+    }
+
+    /** Voltage between two terminals (V), 0 if not simulated. */
+    protected double terminalVoltage(int a, int b) {
+        if (getElectricBehaviour() == null || !getElectricBehaviour().hasTerminal(a) || !getElectricBehaviour().hasTerminal(b))
+            return 0;
+        double u = getElectricBehaviour().getTerminal(a).getVoltage() - getElectricBehaviour().getTerminal(b).getVoltage();
+        return Double.isFinite(u) ? u : 0;
     }
 
     protected static void line(List<Component> tooltip, Component text, int indent) {

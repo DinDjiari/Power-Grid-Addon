@@ -192,5 +192,6 @@
   "pghv.subtitle.cooling_fan.trip": "Überhitzungsschutz löst aus",
   "pghv.terminal.wall_line": "Wandanschluss L (Phase)",
   "pghv.terminal.wall_neutral": "Wandanschluss N (Neutralleiter)",
-  "pghv.wall.msg.connector": "%s – Rechtsklick wechselt L/N"
+  "pghv.wall.msg.connector": "%s – Rechtsklick wechselt L/N",
+  "pghv.goggles.max_voltage": "Explodiert über %s V"
 }

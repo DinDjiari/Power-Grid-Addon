@@ -41,6 +41,17 @@ public class WallOutletBlockEntity extends WallDeviceBlockEntity {
         buildWallConnector(builder);
     }
 
+    /** Outlets explode at twice their nominal voltage (EU 460 V, US 240 V). */
+    @Override
+    public double overvoltageLimit() {
+        return 2 * nominal();
+    }
+
+    @Override
+    protected float explosionPower() {
+        return 1.0f;
+    }
+
     public double nominal() {
         return getBlockState().getBlock() instanceof WallOutletBlock o ? o.nominalVoltage() : 230.0;
     }
