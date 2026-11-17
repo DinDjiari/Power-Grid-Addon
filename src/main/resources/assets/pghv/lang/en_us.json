@@ -192,5 +192,6 @@
   "pghv.subtitle.cooling_fan.trip": "Overheat protection trips",
   "pghv.terminal.wall_line": "Wall connector L (line)",
   "pghv.terminal.wall_neutral": "Wall connector N (neutral)",
-  "pghv.wall.msg.connector": "%s – right-click switches L/N"
+  "pghv.wall.msg.connector": "%s – right-click switches L/N",
+  "pghv.goggles.max_voltage": "Explodes above %s V"
 }

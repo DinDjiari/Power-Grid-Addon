@@ -120,6 +120,17 @@ public class DistributionBoardBlockEntity extends WallDeviceBlockEntity {
         return ratings[slot];
     }
 
+    /** Only the controller block checks (all blocks share L/N; one explosion per board). */
+    @Override
+    protected double measuredVoltage() {
+        return isController ? super.measuredVoltage() : 0;
+    }
+
+    @Override
+    protected float explosionPower() {
+        return 2.0f;
+    }
+
     public boolean isController() {
         return isController;
     }

@@ -43,6 +43,22 @@ public class HouseConnectionBoxBlockEntity extends WallDeviceBlockEntity {
         builder.connect(CONTACT, builder.terminalNode(1), builder.terminalNode(3));
     }
 
+    /** Mains entry: rated higher, checks the grid side (0/1) too. */
+    @Override
+    public double overvoltageLimit() {
+        return 1000.0;
+    }
+
+    @Override
+    protected double measuredVoltage() {
+        return Math.max(super.measuredVoltage(), Math.abs(terminalVoltage(0, 1)));
+    }
+
+    @Override
+    protected float explosionPower() {
+        return 2.0f;
+    }
+
     public void setOn(boolean on) {
         if (mainSwitch != null)
             mainSwitch.setState(on);

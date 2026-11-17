@@ -307,4 +307,20 @@ public class WallWiringTests {
             helper.succeed();
         });
     }
+
+    /** Insulated wire on the visible pins of the wall box starts an in-wall cable (Tom: cables could not be laid). */
+    @GameTest(template = PghvTestUtil.TEMPLATE, timeoutTicks = 60)
+    public static void insulatedWireOnBoxPinStartsInWallCable(GameTestHelper helper) {
+        wall(helper);
+        device(helper, BOX, PghvBlocks.WALL_BOX.get());
+        helper.runAfterDelay(2, () -> {
+            FakePlayer p = layer(helper, GameType.SURVIVAL, 16);
+            BlockPos abs = helper.absolutePos(BOX);
+            Vec3 hit = Vec3.atLowerCornerOf(abs).add(5.5 / 16, 8 / 16.0, 11 / 16.0); // front face of the L pin
+            p.gameMode.useItemOn(p, helper.getLevel(), p.getMainHandItem(), InteractionHand.MAIN_HAND,
+                    new BlockHitResult(hit, OUT, abs, false));
+            helper.assertTrue(InWallLaying.laying(p.getMainHandItem()) != null, "laying started on the pin");
+            helper.succeed();
+        });
+    }
 }

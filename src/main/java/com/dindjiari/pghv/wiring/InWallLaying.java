@@ -106,9 +106,18 @@ public final class InWallLaying {
         CompoundTag laying = stack.get(PghvDataComponents.INWALL_LAYING.get());
         var state = level.getBlockState(pos);
         boolean device = state.getBlock() instanceof WallDeviceBlock<?>;
-        if (laying == null && (!device || ((WallDeviceBlock<?>) state.getBlock()).terminalAt(state,
-                event.getHitVec().getLocation().subtract(Vec3.atLowerCornerOf(pos))) != null))
-            return; // Power Grid's normal wire handling (also on the visible terminals of the wall box)
+        if (laying == null && !device)
+            return; // Power Grid's normal wire handling
+        if (laying == null) {
+            // On a wall device the insulated wire starts an in-wall cable, also when the visible pins of the wall box
+            // are hit (Tom: "Kabel lassen sich nicht in die Wand legen"). Normal Power Grid wire: wall connector, or
+            // sneak + click on a visible terminal.
+            WallDeviceBlock<?> block = (WallDeviceBlock<?>) state.getBlock();
+            Vec3 hitLocal = event.getHitVec().getLocation().subtract(Vec3.atLowerCornerOf(pos));
+            if (block.isOnWallConnector(state, hitLocal)
+                    || (player.isShiftKeyDown() && block.terminalAt(state, hitLocal) != null))
+                return;
+        }
         event.setCanceled(true);
         event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide));
         if (level.isClientSide)

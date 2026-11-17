@@ -25,6 +25,7 @@ import com.dindjiari.pghv.registry.PghvTabs;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 
 @Mod(Pghv.MOD_ID)
 public class Pghv {
@@ -39,5 +40,6 @@ public class Pghv {
         PghvRecipes.RECIPE_SERIALIZERS.register(modBus);
         PghvSounds.SOUNDS.register(modBus);
         modBus.addListener(com.dindjiari.pghv.wiring.AutoRoutePayload::register);
+        container.registerConfig(ModConfig.Type.SERVER, PghvConfig.SPEC);
     }
 }

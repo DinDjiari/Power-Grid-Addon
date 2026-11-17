@@ -42,6 +42,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import com.dindjiari.pghv.util.OvervoltageGuard;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -114,6 +115,8 @@ import java.util.List;
 public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHaveGoggleInformation, IAirCurrentSource {
     // ---- electrical ----
     public static final float RATED_VOLTAGE = 240.0f;
+    /** Explodes above twice the rated voltage (Discord request). */
+    public static final double OVERVOLTAGE_LIMIT = 2.0 * RATED_VOLTAGE;
     public static final float RATED_POWER = 300.0f;
     public static final double R0 = (double) RATED_VOLTAGE * RATED_VOLTAGE / RATED_POWER;
     public static final double R_OFF = 1.0e9;
@@ -356,6 +359,16 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         sendData();
     }
 
+    /** Overvoltage: all four parts are destroyed without drop, then the fan explodes. */
+    private void blowUp(ServerLevel server) {
+        BlockState state = getBlockState();
+        BlockPos main = worldPosition;
+        Direction facing = state.getValue(HvCoolingFanBlock.FACING);
+        for (int part = 3; part >= 0; --part)
+            server.removeBlock(HvCoolingFanBlock.cellOf(main, facing, part), false);
+        OvervoltageGuard.explode(server, main, 2.0f);
+    }
+
     /** Measured voltage between two terminals of this fan (V), 0 if not available. */
     public double getTerminalVoltage(int plus, int minus) {
         if (electricBehaviour == null)
@@ -433,7 +446,14 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         tickAir();
     }
 
+    private final OvervoltageGuard overvoltage = new OvervoltageGuard();
+
     private void tickServer() {
+        if (level instanceof ServerLevel server
+                && overvoltage.tick(server, worldPosition, getTerminalVoltage(0, 1), OVERVOLTAGE_LIMIT)) {
+            blowUp(server);
+            return;
+        }
         int wanted;
         if (isBrass()) {
             // Automatic: re-evaluate at most every REGULATE_INTERVAL ticks, output in 5 % steps.
@@ -772,6 +792,8 @@ public class HvCoolingFanBlockEntity extends ElectricBlockEntity implements IHav
         tooltip.add(Component.literal("     ")
                 .append(Component.literal(Math.round(voltage) + " V, " + Math.round(power) + " W")
                         .withStyle(ChatFormatting.AQUA)));
+        tooltip.add(Component.literal("     ").append(Component.translatable("pghv.goggles.max_voltage",
+                String.valueOf(Math.round(OVERVOLTAGE_LIMIT))).withStyle(ChatFormatting.DARK_GRAY)));
 
         if (isBrass()) {
             float hottest = getHottestTransformerTemperature();

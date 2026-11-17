@@ -102,3 +102,8 @@ Spezifikation: `docs/UEBERHITZUNGSSCHUTZ_SPEZIFIKATION.md`. Automatisch: `Overhe
 - [ ] Lüfter Andesit 0 → 100 %: Laufgeräusch wird lauter und höher, bei 0 % blendet es aus; Messing bei voller Kühlung höher
 - [ ] Lüfter abbauen oder Welt verlassen: Geräusch hört sofort auf, kein Dauerton
 - [ ] Untertitel (Einstellungen → Musik & Geräusche → Untertitel) deutsch und englisch vorhanden
+
+## Überspannung (Branch feature/ueberspannung)
+- [ ] Kreativ-Quelle 230 V an Schuko-Steckdose: nichts passiert. Auf 500 V stellen: Rauch/Funken, nach ~2 s Explosion, kein Drop.
+- [ ] Kühllüfter an 600 V: explodiert, alle 4 Teile weg. An 240 V: läuft normal.
+- [ ] Goggles zeigen „Explodiert über … V“. Config `breakBlocks = true`: Explosion zerstört auch Wandblöcke.
